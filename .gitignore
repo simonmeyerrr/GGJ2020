@@ -1,0 +1,16 @@
+# builds
+build/
+cmake-build-*/
+ggj
+./*.dll
+
+# IDE's folders
+.idea
+.vs
+.vscode
+
+# useless files
+*~
+*#
+vgcore*
+CmakeSettings.json
