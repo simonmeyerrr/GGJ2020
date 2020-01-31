@@ -2,7 +2,11 @@
 build/
 cmake-build-*/
 ggj
-./*.dll
+ggj.exe
+*.zip
+*.dll
+!/lib/win64/*.dll
+!/lib/win32/*.dll
 
 # IDE's folders
 .idea

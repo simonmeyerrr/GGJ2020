@@ -10,11 +10,13 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 # Link libaries directories for Windows, MacOsX or Linux
 if (WIN32)
     if (CMAKE_CL_64)
-        link_directories(${CMAKE_SOURCE_DIR}/libs/win64)
+        link_directories(${CMAKE_SOURCE_DIR}/lib/win64)
     else (CMAKE_CL_64)
-        link_directories(${CMAKE_SOURCE_DIR}/libs/win32)
+        link_directories(${CMAKE_SOURCE_DIR}/lib/win32)
     endif (CMAKE_CL_64)
-endif (WIN32)
+elseif (APPLE)
+	link_directories(${CMAKE_SOURCE_DIR}/lib/osx)
+endif ()
 
 # Build type: Debug, RelWithDebInfo, MinSizeRel or Release
 # Debug: print debug messages and use -g for valgrind
@@ -53,14 +55,14 @@ add_custom_command(TARGET ggj POST_BUILD
         ARGS -E copy $<TARGET_FILE:ggj> ${CMAKE_SOURCE_DIR}/)
 
 if (WIN32)
-    set(DLLS_FILES openal32.dll sfml-audio-2.dll sfml-system-2.dll sfml-graphics-2.dll sfml-window-2.dll)
+    set(DLLS_FILES openal32.dll sfml-audio-2.dll sfml-system-2.dll sfml-graphics-2.dll sfml-window-2.dll msvcp140d.dll vcruntime140d.dll ucrtbased.dll)
     if (CMAKE_CL_64)
-        set(DLLS_PATH ${CMAKE_SOURCE_DIR}/libs/win64/)
+        set(DLLS_PATH ${CMAKE_SOURCE_DIR}/lib/win64/)
     else (CMAKE_CL_64)
-        set(DLLS_PATH ${CMAKE_SOURCE_DIR}/libs/win32/)
+        set(DLLS_PATH ${CMAKE_SOURCE_DIR}/lib/win32/)
     endif (CMAKE_CL_64)
     foreach (file_i ${DLLS_FILES})
-        add_custom_command(TARGET bomberman POST_BUILD
+        add_custom_command(TARGET ggj POST_BUILD
                 COMMAND ${CMAKE_COMMAND}
                 ARGS -E copy ${DLLS_PATH}${file_i} ${CMAKE_SOURCE_DIR}/)
     endforeach (file_i)
