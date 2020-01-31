@@ -4,6 +4,18 @@ project("GGJ2020")
 # Set c++ version
 set(CMAKE_CXX_STANDARD 17)
 
+# Set include directory
+include_directories(${CMAKE_SOURCE_DIR}/include)
+
+# Link libaries directories for Windows, MacOsX or Linux
+if (WIN32)
+    if (CMAKE_CL_64)
+        link_directories(${CMAKE_SOURCE_DIR}/libs/win64)
+    else (CMAKE_CL_64)
+        link_directories(${CMAKE_SOURCE_DIR}/libs/win32)
+    endif (CMAKE_CL_64)
+endif (WIN32)
+
 # Build type: Debug, RelWithDebInfo, MinSizeRel or Release
 # Debug: print debug messages and use -g for valgrind
 # RelWithDebInfo: print debug messages and don't use -g
@@ -31,12 +43,25 @@ SET(SOURCES
 add_executable(ggj ${SOURCES})
 
 if (WIN32)
-    target_link_libraries(ggj)
+    target_link_libraries(ggj sfml-audio sfml-system sfml-graphics sfml-window)
 else (WIN32)
-    target_link_libraries(ggj pthread)
+    target_link_libraries(ggj pthread sfml-audio sfml-system sfml-graphics sfml-window)
 endif (WIN32)
 
 add_custom_command(TARGET ggj POST_BUILD
         COMMAND ${CMAKE_COMMAND}
         ARGS -E copy $<TARGET_FILE:ggj> ${CMAKE_SOURCE_DIR}/)
 
+if (WIN32)
+    set(DLLS_FILES openal32.dll sfml-audio-2.dll sfml-system-2.dll sfml-graphics-2.dll sfml-window-2.dll)
+    if (CMAKE_CL_64)
+        set(DLLS_PATH ${CMAKE_SOURCE_DIR}/libs/win64/)
+    else (CMAKE_CL_64)
+        set(DLLS_PATH ${CMAKE_SOURCE_DIR}/libs/win32/)
+    endif (CMAKE_CL_64)
+    foreach (file_i ${DLLS_FILES})
+        add_custom_command(TARGET bomberman POST_BUILD
+                COMMAND ${CMAKE_COMMAND}
+                ARGS -E copy ${DLLS_PATH}${file_i} ${CMAKE_SOURCE_DIR}/)
+    endforeach (file_i)
+endif (WIN32)
