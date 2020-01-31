@@ -21,7 +21,9 @@ public:
 
     // Setters & Getters
     sf::Vector2i getMousePosition() const;
+    sf::RenderWindow &getRenderWindow() const;
     void setMousePosition(sf::Vector2i);
+
 
 private:
     // Variables
@@ -29,4 +31,4 @@ private:
     sf::Vector2i _posMouse;
 };
 
-#endif /* MAINWINDOW_HPP */
+#endif /* !MAINWINDOW_HPP */

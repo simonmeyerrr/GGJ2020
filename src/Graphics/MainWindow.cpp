@@ -20,3 +20,7 @@ void MainWindow::setMousePosition(sf::Vector2i pos)
 {
     _posMouse = sf::Mouse::getPosition(*_renderWindow);
 }
+
+sf::RenderWindow &MainWindow::getRenderWindow() const {
+    return *_renderWindow;
+}
