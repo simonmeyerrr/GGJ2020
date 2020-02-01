@@ -24,7 +24,7 @@ public:
     // Methods
     void update(sf::Time);
     void addFrame(const Animation &, Frame);
-    void addFrames(const Animation &, Frames);
+    void addFrames(const Animation &, Frames, float);
     
 protected:
     // Variables

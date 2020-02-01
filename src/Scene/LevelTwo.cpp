@@ -200,6 +200,8 @@ IScene::Event LevelTwo::event(sf::RenderWindow &win, sf::Event &e)
         else if (e.key.code == sf::Keyboard::Up)
             takeDoor(_rooms.at(_actual));
     }
+    if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Escape)
+        return Event{EVENT_POP_SCENE, SCENE_INTRO};
     return {EVENT_NONE, SCENE_INTRO};
 }
 

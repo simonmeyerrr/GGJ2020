@@ -8,7 +8,7 @@
 
 AScene::AScene(IScene::TypeScene type)
     : _type(type), _font("./assets/font/coolvetica.ttf"),
-    _uiObject()
+    _gameObject(), _uiObject()
 {
 
 }
