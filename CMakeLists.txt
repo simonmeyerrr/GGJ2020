@@ -59,10 +59,10 @@ SET(SOURCES
         src/Scene/Settings.cpp
         src/Scene/Settings.hpp
         src/Utils/Using.hpp
-        src/Object/SoundObject/ISoundObject.hpp src/Object/SoundObject/SoundObject.cpp src/Object/SoundObject/SoundObject.hpp src/Object/SoundObject/MusicObject.cpp src/Object/SoundObject/MusicObject.hpp)
+        )
 
 # Binary
-add_executable(ggj ${SOURCES} src/Object/SoundObject/ISoundObject.hpp src/Object/SoundObject/SoundObject.cpp src/Object/SoundObject/SoundObject.hpp src/Object/SoundObject/MusicObject.cpp src/Object/SoundObject/MusicObject.hpp)
+add_executable(ggj ${SOURCES})
 
 if (WIN32)
     target_link_libraries(ggj sfml-audio sfml-system sfml-graphics sfml-window)
