@@ -12,28 +12,30 @@
 class AnimatedGameObject : public AGameObject {
 public:
     // Constructors
-    AnimatedGameObject(sf::Time = sf::seconds(0.2f), bool = false, bool = true);
+    AnimatedGameObject(const std::string &, sf::Time = sf::seconds(2.0f));
     AnimatedGameObject(const AnimatedGameObject &);
     AnimatedGameObject &operator=(const AnimatedGameObject &);
     virtual ~AnimatedGameObject() = default;
 
     // Setters & Getters
-    bool isPaused() const;
-    bool isLooped() const;
-
-    void setPaused(bool);
-    void setLooped(bool);
+    void setCurrentAnimation(const std::string &);
+    void setCurrentFrame(std::size_t);
 
     // Methods
     void update(sf::Time);
-    void play();
-    void play(const Animation &);
-    void pause();
-    void stop();
+    
+protected:
+    // Methods
+    void addFrame(const Animation &, Frame);
+    void addFrames(const Animation &, Frames);
 
-private:
-    bool _isPaused;
-    bool _isLooped;
+    // Variables
+    Animations _anims;
+    std::string _currentAnimation;
+    std::size_t _currentFrame;
+    sf::Time _frameTime;
+    sf::Time _elapsedTime;
+
 };
 
 #endif /*ANIMATEDGAMEOBJECT_HPP*/

@@ -12,7 +12,7 @@
 class StaticGameObject : public AGameObject {
 public:
     // Constructors
-    StaticGameObject(sf::Time = sf::seconds(0.2f));
+    StaticGameObject(const std::string &, sf::IntRect);
     StaticGameObject(const StaticGameObject &);
     StaticGameObject &operator=(const StaticGameObject &);
     virtual ~StaticGameObject() = default;
