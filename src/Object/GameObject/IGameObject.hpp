@@ -7,7 +7,7 @@
 #ifndef IGAMEOBJECT_HPP
     #define IGAMEOBJECT_HPP
 
-    #include <map>
+    #include <unordered_map>
     #include <SFML/Graphics/Rect.hpp>
     #include <SFML/Graphics/Texture.hpp>
     #include <SFML/Graphics/Sprite.hpp>
