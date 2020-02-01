@@ -21,7 +21,7 @@ public:
     // Setters & Getters
     sf::Vector2f const &getPosition() const;
     void setPosition(const sf::Vector2f &);
-    void setString(std::string const &);
+    virtual void setString(std::string const &);
     std::string getString() const;
 
     // Operators
@@ -32,7 +32,7 @@ public:
     void event(sf::RenderWindow &window, sf::Event &) override;
     void draw(sf::RenderWindow &window) const override;
 
-private:
+protected:
     s_ptr<sf::Text> _text;
 };
 

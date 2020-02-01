@@ -21,6 +21,7 @@ public:
     Type getType() const;
     const sf::Texture &getTexture() const;
     const sf::Sprite &getSprite() const;
+    sf::Uint8 *getMask() const;
     void setTexture(const sf::Texture &);
 
 protected:
@@ -28,6 +29,9 @@ protected:
     Type _type;
     sf::Texture _t;
     sf::Sprite _s;
+    sf::Uint8 *_mask;
+
+
 };
 
 #endif /*AGAMEOBJECT_HPP*/

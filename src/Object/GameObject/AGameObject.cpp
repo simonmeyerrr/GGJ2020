@@ -12,6 +12,11 @@ AGameObject::AGameObject(IGameObject::Type type, const std::string &path, const 
     _t.loadFromFile(path);
     _s.setTexture(_t);
     _s.setTextureRect(r);
+    sf::Image image;
+    image.loadFromFile(path);
+    _mask = std::make_shared<sf::Uint8 *>(createMask(*_texture, image));
+    _sprite->setTextureRect(rect);
+
 }
 
 AGameObject::AGameObject(const AGameObject &other)

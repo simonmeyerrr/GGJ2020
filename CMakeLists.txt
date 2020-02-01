@@ -92,7 +92,7 @@ SET(SOURCES
         src/Scene/LevelTwo.hpp
         src/Scene/LevelOne.cpp
         src/Scene/LevelOne.hpp
-        )
+        src/Object/UIObject/TippingText.cpp src/Object/UIObject/TippingText.hpp)
 
 # Binary
 add_executable(ggj ${SOURCES})
