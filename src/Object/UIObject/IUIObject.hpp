@@ -11,6 +11,7 @@
     #include <SFML/Graphics/Rect.hpp>
     #include <SFML/Graphics/Texture.hpp>
     #include <SFML/Graphics/Color.hpp>
+    #include <SFML/Graphics/RenderWindow.hpp>
 
 class IUIObject {
 public:
@@ -33,7 +34,7 @@ public:
     virtual sf::FloatRect getGlobalBounds() = 0;
 
     // Methods
-    virtual void draw() const = 0;
+    virtual void draw(sf::RenderWindow window) const = 0;
 };
 
 #endif /* !IUIOBJECT_HPP */
