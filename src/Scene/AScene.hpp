@@ -29,7 +29,7 @@ protected:
 
     //std::vector<std::shared_ptr<IGameObject>> _gameObject;
     //std::vector<std::shared_ptr<ISoundObject>> _soundObject;
-    std::vector<std::shared_ptr<IUIObject>> _uiObject;
+    std::map<int, std::shared_ptr<IUIObject>> _uiObject;
 };
 
 #endif /*ASCENE_HPP*/

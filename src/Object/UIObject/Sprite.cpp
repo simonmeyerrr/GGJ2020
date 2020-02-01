@@ -4,58 +4,58 @@
 
 #include "Sprite.hpp"
 
-const sf::Vector2f &Sprite::getPosition() const {
+Sprite::Sprite(const sf::Texture &texture, const sf::IntRect &rect)
+: _sprite(std::make_shared<sf::Sprite>(texture, rect)) {}
 
+const sf::Vector2f &Sprite::getPosition() const {
+    return _sprite->getPosition();
 }
 
 void Sprite::setPosition(sf::Vector2f &f) {
-
+    _sprite->setPosition(f.x, f.y);
 }
 
 void Sprite::setScale(const sf::Vector2f &f) {
-
+    _sprite->setScale(f.x, f.y);
 }
 
 const sf::Vector2f &Sprite::getScale() const {
-
+    return _sprite->getScale();
 }
 
 void Sprite::setOrigin(const sf::Vector2f &f) {
-
+    _sprite->setOrigin(f.x, f.y);
 }
 
 const sf::Vector2f &Sprite::getOrigin() const {
-
+    return _sprite->getOrigin();
 }
 
 void Sprite::setTexture(const sf::Texture &texture, bool resetRect) {
-
-}
-
-sf::Texture &Sprite::getTexture() const {
-
+    _sprite->setTexture(texture, resetRect);
 }
 
 void Sprite::setTextureRect(const sf::IntRect &rectangle) {
-
-}
-
-const sf::IntRect &Sprite::getTextureRect() {
-
+    _sprite->setTextureRect(rectangle);
 }
 
 void Sprite::setColor(const sf::Color &color) {
-
+    _sprite->setColor(color);
 }
 
 const sf::Color &Sprite::getColor() {
-
+    return _sprite->getColor();
 }
 
 sf::FloatRect Sprite::getGlobalBounds() {
     return sf::FloatRect();
 }
 
-void Sprite::draw() const {
+void Sprite::draw(sf::RenderWindow &window) const {
+    window.draw(*_sprite);
+}
 
+Sprite &Sprite::operator=(Sprite const &sprite) {
+    _sprite = sprite._sprite;
+    return *this;
 }

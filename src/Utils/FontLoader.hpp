@@ -8,8 +8,10 @@ class FontLoader {
 public:
     ~FontLoader() = default;
     explicit FontLoader(const std::string &path)
-    : _font(std::make_unique<sf::Font>(path))
-    {}
+    : _font(std::make_unique<sf::Font>())
+    {
+        _font->loadFromFile(path);
+    }
 
     sf::Font &get() {return *_font;}
     const sf::Font &get() const {return *_font;}

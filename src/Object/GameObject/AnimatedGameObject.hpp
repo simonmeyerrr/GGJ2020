@@ -1,0 +1,12 @@
+/*
+**
+** GLOBAL GAME JAM
+**
+*/
+
+#ifndef ANIMATEDGAMEOBJECT_HPP
+    #define ANIMATEDGAMEOBJECT_HPP
+
+
+
+#endif /*ANIMATEDGAMEOBJECT_HPP*/

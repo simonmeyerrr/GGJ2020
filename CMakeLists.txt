@@ -44,9 +44,11 @@ SET(SOURCES
         src/Object/GameObject/IGameObject.hpp
         src/Object/GameObject/AGameObject.cpp
         src/Object/GameObject/AGameObject.hpp
+        src/Object/GameObject/StaticGameObject.cpp
+        src/Object/GameObject/StaticGameObject.hpp
+        src/Object/GameObject/AnimatedGameObject.cpp
+        src/Object/GameObject/AnimatedGameObject.hpp
         src/Object/UIObject/IUIObject.hpp
-        src/Object/UIObject/AUIObject.cpp
-        src/Object/UIObject/AUIObject.hpp
         src/Object/SoundObject/MusicObject.cpp
         src/Object/SoundObject/MusicObject.hpp
         src/Object/SoundObject/SoundObject.cpp
@@ -64,6 +66,10 @@ SET(SOURCES
         src/Scene/Settings.hpp
         src/Utils/Using.hpp
         src/Utils/FontLoader.hpp
+        src/Utils/Collision/BitMaskManager.cpp
+        src/Utils/Collision/BitMaskManager.hpp
+        src/Utils/Collision/Collision.cpp
+        src/Utils/Collision/BitMaskManager.hpp
         src/Utils/Exception/Exception.cpp
         src/Utils/Exception/Exception.hpp
         src/Utils/Exception/ObjectError.cpp
@@ -78,6 +84,8 @@ SET(SOURCES
         src/Object/UIObject/Sprite.hpp
         src/Object/UIObject/Text.cpp
         src/Object/UIObject/Text.hpp
+        src/Object/UIObject/Button.cpp
+        src/Object/UIObject/Button.hpp
         )
 
 # Binary
