@@ -5,7 +5,6 @@
 #ifndef GGJ2020_BUTTON_HPP
     #define GGJ2020_BUTTON_HPP
 
-
     #include "IUIObject.hpp"
     #include "Text.hpp"
     #include "Sprite.hpp"
