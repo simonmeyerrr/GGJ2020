@@ -36,7 +36,5 @@ void Fade::event(sf::RenderWindow &window, sf::Event &)
 
 void Fade::draw(sf::RenderWindow &window) const
 {
-    if (_actual >= _goal)
-        return;
     window.draw(_rect);
 }

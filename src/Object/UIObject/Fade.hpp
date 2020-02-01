@@ -4,7 +4,7 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "IUIObject.hpp"
 
-class Fade : virtual public IUIObject {
+class Fade : public IUIObject {
 public:
     Fade();
     ~Fade() override = default;

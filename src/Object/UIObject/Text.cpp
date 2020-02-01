@@ -4,9 +4,10 @@
 
 #include "Text.hpp"
 
-Text::Text(const std::string &string, const sf::Font &font, const sf::Vector2f &pos, unsigned int characterSize)
+Text::Text(const std::string &string, const sf::Font &font, const sf::Vector2f &pos, const sf::Color &color, unsigned int characterSize)
 : _text(std::make_shared<sf::Text>(sf::String(string), font, characterSize))
 {
+    _text->setFillColor(color);
     _text->setPosition(pos);
 }
 

@@ -30,7 +30,7 @@ protected:
     TypeScene _type;
     FontLoader _font;
 
-    std::vector<std::shared_ptr<IGameObject>> _gameObject;
+    std::map<int, std::shared_ptr<IGameObject>> _gameObject;
     //std::vector<std::shared_ptr<ISoundObject>> _soundObject;
     std::map<int, std::shared_ptr<IUIObject>> _uiObject;
 
