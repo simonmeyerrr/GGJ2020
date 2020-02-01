@@ -22,7 +22,7 @@ public:
     const sf::Texture &getTexture() const;
     const sf::Sprite &getSprite() const;
     const sf::Vector2f &getPosition() const;
-    sf::Uint8 *getMask() const;
+    sf::Uint8 *getMask() const override;
 
     void setTexture(const sf::Texture &);
     void setPosition(const sf::Vector2f &);

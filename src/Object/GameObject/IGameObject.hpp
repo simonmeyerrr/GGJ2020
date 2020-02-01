@@ -38,6 +38,7 @@ public:
     virtual const sf::Vector2f &getPosition() const = 0;
     virtual void setTexture(const sf::Texture &) = 0;
     virtual void setPosition(const sf::Vector2f &) = 0;
+    virtual sf::Uint8 *getMask() const = 0;
 
     // Methods
     virtual void update() = 0;
