@@ -27,8 +27,8 @@ void Core::initShaders()
 
 void Core::start()
 {
-    _sceneManager->push(IScene::SCENE_LEVEL2);
     initShaders();
+    manageEvent(IScene::Event{IScene::EVENT_PUSH_SCENE, IScene::SCENE_LEVEL2});
 
     _displayTimer.restart();
     _updateTimer.restart();
@@ -90,10 +90,12 @@ void Core::manageEvent(IScene::Event event)
         case IScene::EVENT_POP_SCENE:
             _sceneManager->pop();
             _currentShader = _sceneShaders.at(_sceneManager->get()->getType());
+            std::cout << "shader: " << _currentShader << std::endl;
             break;
         case IScene::EVENT_PUSH_SCENE:
             _sceneManager->push(event.scene);
             _currentShader = _sceneShaders.at(event.scene);
+            std::cout << "shader: " << _currentShader << std::endl;
         default:
             break;
     }

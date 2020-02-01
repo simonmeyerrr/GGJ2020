@@ -58,8 +58,8 @@ public:
 private:
     void takeDoor(RoomInfo &room);
     void takeKey(RoomInfo &room);
-    void displayRect(sf::RenderWindow &win, const sf::Color &, const sf::Vector2f &pos, const sf::Vector2f &size);
-    void displayRoom(sf::RenderWindow &, const RoomInfo &room);
+    void displayRect(sf::RenderWindow &win, const sf::Color &, const sf::Vector2f &pos, const sf::Vector2f &size, sf::Shader *shader);
+    void displayRoom(sf::RenderWindow &, const RoomInfo &room, sf::Shader *shader);
 
     std::map<Room, RoomInfo> _rooms;
     sf::Vector2f _pos;

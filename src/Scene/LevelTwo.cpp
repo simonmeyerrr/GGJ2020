@@ -234,38 +234,38 @@ void LevelTwo::takeKey(RoomInfo &room)
     _rooms.at(room.keyOpen.second).links.at(room.keyOpen.first).opened = true;
 }
 
-void LevelTwo::displayRect(sf::RenderWindow &win, const sf::Color &color, const sf::Vector2f &pos, const sf::Vector2f &size)
+void LevelTwo::displayRect(sf::RenderWindow &win, const sf::Color &color, const sf::Vector2f &pos, const sf::Vector2f &size, sf::Shader *shader)
 {
     sf::RectangleShape rect;
 
     rect.setFillColor(color);
     rect.setSize(size);
     rect.setPosition(pos);
-    win.draw(rect);
+    win.draw(rect, shader);
 }
 
-void LevelTwo::displayRoom(sf::RenderWindow &win, const RoomInfo &room)
+void LevelTwo::displayRoom(sf::RenderWindow &win, const RoomInfo &room, sf::Shader *shader)
 {
     sf::Text text(room.name, _font.get(), 30);
 
     text.setFillColor(sf::Color::Black);
-    displayRect(win, sf::Color::White, {0, 0}, {1600, 900});
+    displayRect(win, sf::Color::White, {0, 0}, {1600, 900}, shader);
     win.draw(text);
     for (const auto &door: room.links) {
-        displayRect(win, door.second.opened ? sf::Color::Blue : sf::Color::Red, door.second.pos, {DOOR_WIDTH, DOOR_HEIGHT});
+        displayRect(win, door.second.opened ? sf::Color::Blue : sf::Color::Red, door.second.pos, {DOOR_WIDTH, DOOR_HEIGHT}, shader);
         text.setString(_rooms.at(door.first).name);
         text.setPosition(door.second.pos);
         win.draw(text);
     }
     if (room.hasKey) {
-        displayRect(win, sf::Color::Magenta, room.keyPos, {50, 50});
+        displayRect(win, sf::Color::Magenta, room.keyPos, {50, 50}, shader);
     }
-    displayRect(win, sf::Color::Green, _pos, {PLAYER_WIDTH, PLAYER_HEIGHT});
+    displayRect(win, sf::Color::Green, _pos, {PLAYER_WIDTH, PLAYER_HEIGHT}, shader);
 }
 
-void LevelTwo::display(sf::RenderWindow &win, sf::Shader *)
+void LevelTwo::display(sf::RenderWindow &win, sf::Shader *shader)
 {
-    displayRoom(win, _rooms.at(_actual));
+    displayRoom(win, _rooms.at(_actual), shader);
 }
 
 void LevelTwo::resume()
