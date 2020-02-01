@@ -1,9 +1,19 @@
-uniform vec2 lightLocation;
+uniform vec2 location[64];
+uniform float power[64];
+uniform vec4 color[64];
+
+uniform float data_size;
 
 void main(void)
 {
-    float distance = length(lightLocation - gl_FragCoord.xy);
-    float attenuation = 100.0 / distance;
-    vec4 color = vec4(attenuation, attenuation, attenuation, 4) * vec4(230.0 / 255.0, 167.0 / 255.0, 73.0 / 255.0, 1);
-    gl_FragColor = gl_Color * color;
+    vec4 finalColor = gl_Color;
+
+    for (int i = 0; i < 3; i++) {
+        float distance = length(location[i] - gl_FragCoord.xy);
+        float attenuation = power[i] / distance;
+        vec4 color = vec4(attenuation, attenuation, attenuation, 4) * color[i];
+        finalColor *= color;
+    }
+
+    gl_FragColor = finalColor;
 }
