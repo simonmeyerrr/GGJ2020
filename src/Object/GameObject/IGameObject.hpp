@@ -40,7 +40,7 @@ public:
     virtual void setPosition(const sf::Vector2f &) = 0;
 
     // Methods
-    virtual void update(sf::Time) = 0;
+    virtual void update() = 0;
 };
 
 #endif /*IGAMEOBJECT_HPP*/

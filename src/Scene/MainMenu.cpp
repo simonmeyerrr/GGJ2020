@@ -35,6 +35,7 @@ int MainMenu::inFrontOf() const
 
 IScene::Event MainMenu::update()
 {
+    _player.update();
     if (_walking) {
         if (_right && _x > -8800 + 1600)
             _x -= 3;
@@ -93,6 +94,7 @@ void MainMenu::display(sf::RenderWindow &win, sf::Shader *shader)
         _uiObject[1]->draw(win);
         _uiObject[2]->draw(win);
     }
+    win.draw(_player.getSprite());
 }
 
 void MainMenu::resume()

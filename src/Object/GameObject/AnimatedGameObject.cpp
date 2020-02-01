@@ -6,9 +6,9 @@
 
 #include "AnimatedGameObject.hpp"
 
-AnimatedGameObject::AnimatedGameObject(const std::string &path, sf::Time frameTime)
+AnimatedGameObject::AnimatedGameObject(const std::string &path)
     : AGameObject(IGameObject::Type::ANIMATED, path, sf::IntRect(0, 0, 0, 0)),
-    _currentAnimation(""), _currentFrame(0), _frameTime(frameTime), _elapsedTime(sf::Time::Zero)
+    _currentAnimation(""), _currentFrame(0), _elapsed(0)
 {
 
 }
@@ -18,8 +18,6 @@ AnimatedGameObject::AnimatedGameObject(const AnimatedGameObject &other)
 {
     _anims = other._anims;
     _currentAnimation = other._currentAnimation;
-    _frameTime = other._frameTime;
-    _elapsedTime = other._elapsedTime;
 }
 
 AnimatedGameObject &AnimatedGameObject::operator=(const AnimatedGameObject &other)
@@ -30,8 +28,6 @@ AnimatedGameObject &AnimatedGameObject::operator=(const AnimatedGameObject &othe
         _s = other._s;
         _anims = other._anims;
         _currentAnimation = other._currentAnimation;
-        _frameTime = other._frameTime;
-        _elapsedTime = other._elapsedTime;
     }
     return *this;
 }
@@ -48,17 +44,17 @@ void AnimatedGameObject::setCurrentFrame(std::size_t frame)
     _s.setTextureRect(std::get<0>(_anims[_currentAnimation])[_currentFrame]);
 }
 
-void AnimatedGameObject::update(sf::Time elapsed)
+void AnimatedGameObject::update()
 {
-    _elapsedTime += elapsed;
-    if (_elapsedTime.asSeconds() >= std::get<1>(_anims[_currentAnimation])) {
+    _elapsed += 0.01f;
+    if (_elapsed >= std::get<1>(_anims[_currentAnimation])) {
         if (_currentFrame + 1 < std::get<0>(_anims[_currentAnimation]).size())
             _currentFrame += 1;
         else {
             _currentFrame = 0;
         }
-        _elapsedTime -= _frameTime;
         setCurrentFrame(_currentFrame);
+        _elapsed -= std::get<1>(_anims[_currentAnimation]);
     }
 }
 
