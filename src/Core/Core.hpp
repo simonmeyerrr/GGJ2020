@@ -4,9 +4,12 @@
 **
 */
 
-#include "../Scene/SceneManager.hpp"
-#include <string>
-#include <bits/unique_ptr.h>
+#ifndef CORE_HPP
+    #define CORE_HPP
+
+    #include "../Scene/SceneManager.hpp"
+    #include <string>
+    #include <bits/unique_ptr.h>
 
 class Core {
 public:
@@ -19,8 +22,4 @@ private:
     std::unique_ptr<SceneManager> _sceneManager;
 };
 
-
-// IScene _currentScene
-// get / set
-
-// vector IScene;
+#endif /*CORE_HPP*/

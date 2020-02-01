@@ -4,8 +4,11 @@
 **
 */
 
-#include <stack>
-#include "IScene.hpp"
+#ifndef SCENE_MANAGER_HPP
+    #define SCENE_MANAGER_HPP
+
+    #include <stack>
+    #include "IScene.hpp"
 
 class SceneManager {
 public:
@@ -22,3 +25,5 @@ public:
 private:
     std::stack<std::shared_ptr<IScene>> _scenes;
 };
+
+#endif /*SCENE_MANAGER_HPP*/
