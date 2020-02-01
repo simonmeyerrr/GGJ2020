@@ -14,22 +14,22 @@
 
 class AScene : virtual public IScene {
 public:
-    // Constructors 
+    // Constructors
     AScene(IScene::TypeScene);
     AScene(AScene &) = delete;
-    virtual ~AScene() = default;
+    virtual ~AScene() override = default;
+    AScene &operator=(const AScene &) = delete;
 
     // Setters & Getters
-    AScene &operator=(const AScene &) = delete;
-    TypeScene getType() const;
+    TypeScene getType() const override;
 
 private:
     // Variable
     TypeScene _type;
 
-    const std::vector<shared_ptr<IGameObject>> _gameObject;
-    const std::vector<shared_ptr<ISoundObject>> _soundObject;
-    const std::vector<shared_ptr<IUIObject>> _uiObject;
+    //std::vector<std::shared_ptr<IGameObject>> _gameObject;
+    //std::vector<std::shared_ptr<ISoundObject>> _soundObject;
+    //std::vector<std::shared_ptr<IUIObject>> _uiObject;
 };
 
 #endif /*ASCENE_HPP*/

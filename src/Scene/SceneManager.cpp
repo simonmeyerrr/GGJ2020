@@ -4,8 +4,10 @@
 **
 */
 
-#include <bits/shared_ptr.h>
 #include "SceneManager.hpp"
+#include "Intro.hpp"
+#include "MainMenu.hpp"
+#include "Settings.hpp"
 
 SceneManager::SceneManager()
     : _scenes()
@@ -13,30 +15,37 @@ SceneManager::SceneManager()
 }
 
 SceneManager::~SceneManager() {
-
+    while (!isEmpty()) {
+        delete _scenes.top();
+        _scenes.pop();
+    }
 }
 
 void SceneManager::push(IScene::TypeScene type) {
     switch (type) {
-        case IScene::TypeScene::INTRO:
-            //_scenes.push(std::make_shared<Intro>());
-        case IScene::TypeScene::MAIN_MENU:
-            //_scenes.push(std::make_shared<MainMenu>());
-        case IScene::TypeScene::SETTINGS:
-            ;
-            //_scenes.push(std::make_shared<Settings>());
+        case IScene::SCENE_INTRO:
+            _scenes.push(new Intro());
+            break;
+        case IScene::SCENE_MAIN_MENU:
+            _scenes.push(new MainMenu());
+            break;
+        case IScene::SCENE_SETTINGS:
+            _scenes.push(new Settings());
+            break;
+        default:
+            break;
     }
 }
 
 void SceneManager::pop() {
+    delete _scenes.top();
     _scenes.pop();
-    if (!_scenes.empty()) {
-        //_scenes.top()->resume();
-    }
+    if (!isEmpty())
+        _scenes.top()->resume();
 }
 
-std::shared_ptr<IScene> SceneManager::get() {
-    return _scenes.top();
+IScene *SceneManager::get() {
+    return isEmpty() ? nullptr : _scenes.top();
 }
 
 bool SceneManager::isEmpty() const {
