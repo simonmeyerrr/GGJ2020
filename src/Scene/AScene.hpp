@@ -9,7 +9,6 @@
 
     #include "IScene.hpp"
     #include "../Object/GameObject/IGameObject.hpp"
-    #include "../Object/SoundObject/ISoundObject.hpp"
     #include "../Object/UIObject/IUIObject.hpp"
 
 class AScene : virtual public IScene {

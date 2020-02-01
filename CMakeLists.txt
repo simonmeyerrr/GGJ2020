@@ -44,6 +44,10 @@ SET(SOURCES
         src/Object/GameObject/IGameObject.hpp
         src/Object/GameObject/AGameObject.cpp
         src/Object/GameObject/AGameObject.hpp
+        src/Object/GameObject/StaticGameObject.cpp
+        src/Object/GameObject/StaticGameObject.hpp
+        src/Object/GameObject/AnimatedGameObject.cpp
+        src/Object/GameObject/AnimatedGameObject.hpp
         src/Object/UIObject/IUIObject.hpp
         src/Object/UIObject/AUIObject.cpp
         src/Object/UIObject/AUIObject.hpp
