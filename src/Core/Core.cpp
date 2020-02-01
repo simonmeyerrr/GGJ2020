@@ -27,9 +27,8 @@ void Core::initShaders()
 
 void Core::start()
 {
-    _sceneManager->push(IScene::SCENE_LEVEL1);
     initShaders();
-    manageEvent(IScene::Event{IScene::EVENT_PUSH_SCENE, IScene::SCENE_LEVEL2});
+    manageEvent(IScene::Event{IScene::EVENT_PUSH_SCENE, IScene::SCENE_LEVEL1});
 
     _displayTimer.restart();
     _updateTimer.restart();
