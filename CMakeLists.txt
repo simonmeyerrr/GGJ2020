@@ -68,10 +68,8 @@ SET(SOURCES
         src/Scene/Settings.hpp
         src/Utils/Using.hpp
         src/Utils/FontLoader.hpp
-        src/Utils/Collision/BitMaskManager.cpp
-        src/Utils/Collision/BitMaskManager.hpp
         src/Utils/Collision/Collision.cpp
-        src/Utils/Collision/BitMaskManager.hpp
+        src/Utils/Collision/Collision.hpp
         src/Utils/Exception/Exception.cpp
         src/Utils/Exception/Exception.hpp
         src/Utils/Exception/ObjectError.cpp

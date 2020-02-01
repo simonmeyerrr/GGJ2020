@@ -9,7 +9,7 @@
 
     #include "../Scene/SceneManager.hpp"
     #include <string>
-    #include <bits/unique_ptr.h>
+    #include <memory>
     #include <map>
     #include <SFML/Graphics/Shader.hpp>
     #include "../Utils/Exception/ShaderError.hpp"
