@@ -40,30 +40,28 @@ void Button::cb() {
 
 void Button::update() {}
 
+void Button::setLeftRect(int rect) {
+    sf::FloatRect bounds = _sprite->getGlobalBounds();
+    bounds.left = rect;
+    _sprite->setTextureRect(sf::IntRect(bounds));
+}
+
 void Button::event(sf::RenderWindow &window, sf::Event &e) {
     if (e.MouseButtonPressed && MOUSE_IN_BUTTON) {
         if (_state == HOVER) {
-            sf::FloatRect bounds = _sprite->getGlobalBounds();
-            bounds.left = _rect * 2;
-            _sprite->setTextureRect(sf::IntRect(bounds));
             _state = CLICKED;
+            setLeftRect(_rect * 2);
         }
     } else if (MOUSE_IN_BUTTON) {
         _state = HOVER;
-        sf::FloatRect bounds = _sprite->getGlobalBounds();
-        bounds.left = _rect;
-        _sprite->setTextureRect(sf::IntRect(bounds));
+        setLeftRect(_rect);
     }
     if (e.MouseButtonReleased && MOUSE_IN_BUTTON) {
-        sf::FloatRect bounds = _sprite->getGlobalBounds();
-        bounds.left = 0;
-        _sprite->setTextureRect(sf::IntRect(bounds));
         _state = NONE;
+        setLeftRect(0);
         cb();
     } else if (e.MouseButtonReleased && !MOUSE_IN_BUTTON) {
-        sf::FloatRect bounds = _sprite->getGlobalBounds();
-        bounds.left = 0;
-        _sprite->setTextureRect(sf::IntRect(bounds));
         _state = NONE;
+        setLeftRect(0);
     }
 }

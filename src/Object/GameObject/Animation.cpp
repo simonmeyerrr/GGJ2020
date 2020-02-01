@@ -18,7 +18,10 @@ Animation::Animation(const Animation &other)
 
 Animation &Animation::operator=(const Animation &other)
 {
+    if (&other != this) {
 
+    }
+    return *this;
 }
 
 Animation::~Animation()

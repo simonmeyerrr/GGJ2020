@@ -22,6 +22,7 @@ AGameObject &AGameObject::operator=(const AGameObject &other)
     if (&other != this) {
         _type = other._type;
     }
+    return *this;
 }
 
 AGameObject::~AGameObject()
@@ -34,17 +35,10 @@ IGameObject::GameObjectType AGameObject::getType() const
     return _type;
 }
 
-sf::FloatRect AGameObject::getLocalBounds() const
+void AGameObject::setColor(const sf::Color &color)
 {
-
-}
-
-sf::FloatRect AGameObject::getGlobalBounds() const
-{
-    
-}
-
-void AGameObject::setColor(const sf::Color &)
-{
-
+    _vertices[0].color = color;
+    _vertices[1].color = color;
+    _vertices[2].color = color;
+    _vertices[3].color = color;
 }

@@ -40,6 +40,7 @@ public:
     void cb();
 
 private:
+    void setLeftRect(int rect);
     LambdaMethod _function;
     State _state;
     Text *_text;
