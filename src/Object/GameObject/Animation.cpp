@@ -7,6 +7,7 @@
 #include "Animation.hpp"
 
 Animation::Animation()
+    : _t(nullptr)
 {
 
 }
