@@ -30,7 +30,6 @@ public:
     virtual sf::FloatRect getGlobalBounds() const = 0;
     virtual void setColor(const sf::Color &) = 0;
 
-
 protected:
     // Methods
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const = 0;

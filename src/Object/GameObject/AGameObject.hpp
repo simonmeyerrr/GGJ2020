@@ -9,6 +9,7 @@
 
     #include <SFML/System/Vector2.hpp>
     #include "IGameObject.hpp"
+    #include "Animation.hpp"
 
 class AGameObject {
 public:
@@ -20,8 +21,6 @@ public:
 
     // Setters & Getters
     IGameObject::GameObjectType getType() const;
-    sf::FloatRect getLocalBounds() const;
-    sf::FloatRect getGlobalBounds() const;
     void setColor(const sf::Color &);
 
 private:
