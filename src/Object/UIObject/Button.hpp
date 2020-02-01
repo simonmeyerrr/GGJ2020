@@ -16,13 +16,13 @@ public:
     enum State {
         NONE,
         HOVER,
-        CLICKED
+        CLICKED,
     };
 
     using LambdaMethod = std::function<void ()>;
 
     // Constructors
-    Button(const Text &, const Sprite &, LambdaMethod &);
+    Button(const Text &, const Sprite &, LambdaMethod &, int);
     ~Button() override = default;
 
     // Setters & Getters
@@ -44,6 +44,7 @@ private:
     State _state;
     Text *_text;
     Sprite *_sprite;
+    int _rect;
 };
 
 
