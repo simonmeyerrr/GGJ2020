@@ -243,7 +243,10 @@ void LevelTwo::displayRect(sf::RenderWindow &win, const sf::Color &color, const 
     rect.setFillColor(color);
     rect.setSize(size);
     rect.setPosition(pos);
-    win.draw(rect, shader);
+    if (shader)
+        win.draw(rect, shader);
+    else
+        win.draw(rect);
 }
 
 void LevelTwo::displayRoom(sf::RenderWindow &win, const RoomInfo &room, sf::Shader *shader)
@@ -269,7 +272,7 @@ void LevelTwo::display(sf::RenderWindow &win, sf::Shader *shader)
 {
     std::vector<sf::Glsl::Vec2> locations;
     locations.emplace_back(150, 150);
-    locations.emplace_back(300, 150);
+    locations.emplace_back(200, 150);
 
     std::vector<float> powers;
     powers.emplace_back(50);
