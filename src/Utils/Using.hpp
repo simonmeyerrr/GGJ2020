@@ -16,5 +16,6 @@ using u_ptr = std::unique_ptr<T>;
 template <typename T>
 using s_ptr = std::shared_ptr<T>;
 using suint = short unsigned int;
+using id = short unsigned int;
 
 #endif /* USING_HPP */

@@ -1,0 +1,12 @@
+/*
+**
+** GLOBAL GAME JAM
+**
+*/
+
+#ifndef STATICGAMEOBJECT_HPP
+    #define STATICGAMEOBJECT_HPP
+
+
+
+#endif /*STATICGAMEOBJECT_HPP*/

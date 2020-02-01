@@ -5,13 +5,14 @@
 ** SoundObject.cpp
 */
 
+#include "../../Utils/Exception/MusicError.hpp"
 #include "SoundObject.hpp"
 
 SoundObject::SoundObject(const std::string &str)
     : _buffer(), _sound()
 {
     if (!_buffer.loadFromFile(str))
-        throw "erreur load file";
+        throw MusicError("Error : loading sound from file", "SoundObject");
     _sound.setBuffer(_buffer);
 }
 

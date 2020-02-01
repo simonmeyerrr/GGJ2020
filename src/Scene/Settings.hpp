@@ -9,7 +9,7 @@
     
     #include "AScene.hpp"
 
-class Settings : virtual public AScene {
+class Settings : public AScene {
 public:
     ~Settings() override = default;
     Settings();

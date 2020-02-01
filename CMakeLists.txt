@@ -44,9 +44,15 @@ SET(SOURCES
         src/Object/GameObject/IGameObject.hpp
         src/Object/GameObject/AGameObject.cpp
         src/Object/GameObject/AGameObject.hpp
+        src/Object/GameObject/StaticGameObject.cpp
+        src/Object/GameObject/StaticGameObject.hpp
+        src/Object/GameObject/AnimatedGameObject.cpp
+        src/Object/GameObject/AnimatedGameObject.hpp
         src/Object/UIObject/IUIObject.hpp
-        src/Object/UIObject/AUIObject.cpp
-        src/Object/UIObject/AUIObject.hpp
+        src/Object/SoundObject/MusicObject.cpp
+        src/Object/SoundObject/MusicObject.hpp
+        src/Object/SoundObject/SoundObject.cpp
+        src/Object/SoundObject/SoundObject.hpp
         src/Scene/IScene.hpp
         src/Scene/AScene.cpp
         src/Scene/AScene.hpp
@@ -59,7 +65,28 @@ SET(SOURCES
         src/Scene/Settings.cpp
         src/Scene/Settings.hpp
         src/Utils/Using.hpp
-        src/Utils/Exception/Exception.cpp src/Utils/Exception/Exception.hpp src/Utils/Exception/ObjectError.cpp src/Utils/Exception/ObjectError.hpp src/Utils/Exception/SceneError.cpp src/Utils/Exception/SceneError.hpp src/Utils/Exception/MusicError.cpp src/Utils/Exception/MusicError.hpp src/Utils/Exception/ShaderError.cpp src/Utils/Exception/ShaderError.hpp)
+        src/Utils/FontLoader.hpp
+        src/Utils/Collision/BitMaskManager.cpp
+        src/Utils/Collision/BitMaskManager.hpp
+        src/Utils/Collision/Collision.cpp
+        src/Utils/Collision/BitMaskManager.hpp
+        src/Utils/Exception/Exception.cpp
+        src/Utils/Exception/Exception.hpp
+        src/Utils/Exception/ObjectError.cpp
+        src/Utils/Exception/ObjectError.hpp
+        src/Utils/Exception/SceneError.cpp
+        src/Utils/Exception/SceneError.hpp
+        src/Utils/Exception/MusicError.cpp
+        src/Utils/Exception/MusicError.hpp
+        src/Utils/Exception/ShaderError.cpp
+        src/Utils/Exception/ShaderError.hpp
+        src/Object/UIObject/Sprite.cpp
+        src/Object/UIObject/Sprite.hpp
+        src/Object/UIObject/Text.cpp
+        src/Object/UIObject/Text.hpp
+        src/Object/UIObject/Button.cpp
+        src/Object/UIObject/Button.hpp
+        )
 
 # Binary
 add_executable(ggj ${SOURCES})

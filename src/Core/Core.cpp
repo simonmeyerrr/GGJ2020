@@ -56,13 +56,13 @@ void Core::event()
 
 void Core::update()
 {
-    auto elapsed = _updateTimer.getElapsedTime().asMilliseconds() + _updateRest;
+    auto elapsed = _updateTimer.getElapsedTime().asMicroseconds() + _updateRest;
 
     _updateTimer.restart();
-    while (elapsed >= (1.0 / 30.0) * 1000.0) {
+    while (elapsed >= (1.0 / 30.0) * 1000000.0) {
         if (_win->isOpen() && !_sceneManager->isEmpty())
             manageEvent(_sceneManager->get()->update());
-        elapsed -= (1.0 / 30.0) * 1000.0;
+        elapsed -= (1.0 / 30.0) * 1000000.0;
     }
     _updateRest = elapsed;
 }

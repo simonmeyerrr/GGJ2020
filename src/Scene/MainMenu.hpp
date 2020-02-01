@@ -9,7 +9,7 @@
 
     #include "AScene.hpp"
 
-class MainMenu : virtual public AScene {
+class MainMenu : public AScene {
 public:
     // Constructors
     ~MainMenu() override = default;
