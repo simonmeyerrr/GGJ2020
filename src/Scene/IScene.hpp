@@ -16,7 +16,8 @@ public:
     enum TypeScene {
         SCENE_INTRO,
         SCENE_MAIN_MENU,
-        SCENE_SETTINGS
+        SCENE_SETTINGS,
+        SCENE_LEVEL2
     };
 
     enum TypeEvent {
