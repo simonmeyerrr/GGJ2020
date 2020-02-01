@@ -21,6 +21,11 @@ public:
     Event event(sf::RenderWindow &, sf::Event &) override;
     void display(sf::RenderWindow &, sf::Shader *) override;
     void resume() override;
+
+private:
+    bool _right;
+    bool _walking;
+    bool _escape;
 };
 
 #endif /*MAIN_MENU_HPP*/

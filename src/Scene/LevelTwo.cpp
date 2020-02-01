@@ -200,6 +200,8 @@ IScene::Event LevelTwo::event(sf::RenderWindow &win, sf::Event &e)
         else if (e.key.code == sf::Keyboard::Up)
             takeDoor(_rooms.at(_actual));
     }
+    if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Escape)
+        return Event{EVENT_POP_SCENE, SCENE_INTRO};
     return {EVENT_NONE, SCENE_INTRO};
 }
 
@@ -265,7 +267,7 @@ void LevelTwo::displayRoom(sf::RenderWindow &win, const RoomInfo &room, sf::Shad
 
 void LevelTwo::display(sf::RenderWindow &win, sf::Shader *shader)
 {
-    shader->setUniform("lightLocation", sf::Glsl::Vec2(800, 900 - 150));
+    shader->setUniform("lightLocation", sf::Glsl::Vec2(_pos.x + 25, _pos.y - 200));
     displayRoom(win, _rooms.at(_actual), shader);
 }
 

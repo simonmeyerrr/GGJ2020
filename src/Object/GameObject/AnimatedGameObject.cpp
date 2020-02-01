@@ -7,8 +7,8 @@
 #include "AnimatedGameObject.hpp"
 
 AnimatedGameObject::AnimatedGameObject(const std::string &path, sf::Time frameTime)
-    : AGameObject(IGameObject::Type::ANIMATED, path, sf::IntRect(0, 0, 0, 0)), _frameTime(frameTime),
-    _elapsedTime(sf::Time::Zero), _currentFrame(0), _currentAnimation("")
+    : AGameObject(IGameObject::Type::ANIMATED, path, sf::IntRect(0, 0, 0, 0)),
+    _currentAnimation(""), _currentFrame(0), _frameTime(frameTime), _elapsedTime(sf::Time::Zero)
 {
 
 }
@@ -44,23 +44,29 @@ void AnimatedGameObject::setCurrentAnimation(const std::string &anim)
 void AnimatedGameObject::setCurrentFrame(std::size_t frame)
 {
     _currentFrame = frame;
+    _s.setTextureRect(std::get<0>(_anims[_currentAnimation])[_currentFrame]);
 }
 
 void AnimatedGameObject::update(sf::Time elapsed)
 {
     _elapsedTime += elapsed;
-    if (_elapsedTime >= _frameTime) {
-        
+    if (_elapsedTime.asSeconds() >= std::get<1>(_anims[_currentAnimation])) {
+        if (_currentFrame + 1 < std::get<0>(_anims[_currentAnimation]).size())
+            _currentFrame += 1;
+        else {
+            _currentFrame = 0;
+        }
         _elapsedTime -= _frameTime;
+        setCurrentFrame(_currentFrame);
     }
 }
 
 void AnimatedGameObject::addFrame(const Animation &anim, Frame frame)
 {
-    _anims[anim].push_back(frame);
+    std::get<0>(_anims[anim]).push_back(frame);
 }
 
-void AnimatedGameObject::addFrames(const Animation &anim, Frames frames)
+void AnimatedGameObject::addFrames(const Animation &anim, Frames frames, float frameTime)
 {
-    _anims[anim] = frames;
+    _anims[anim] = std::make_tuple(frames, frameTime);
 }

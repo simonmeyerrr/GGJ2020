@@ -86,8 +86,12 @@ SET(SOURCES
         src/Object/UIObject/Fade.hpp
         src/Object/UIObject/Button.cpp
         src/Object/UIObject/Button.hpp
+        src/Object/UIObject/Rect.cpp
+        src/Object/UIObject/Rect.hpp
         src/Scene/LevelTwo.cpp
         src/Scene/LevelTwo.hpp
+        src/Scene/LevelOne.cpp
+        src/Scene/LevelOne.hpp
         )
 
 # Binary
