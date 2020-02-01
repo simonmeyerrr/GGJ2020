@@ -5,4 +5,10 @@
 #ifndef GGJ2020_EROSION_HPP
 #define GGJ2020_EROSION_HPP
 
+
+class Erosion {
+
+};
+
+
 #endif //GGJ2020_EROSION_HPP
