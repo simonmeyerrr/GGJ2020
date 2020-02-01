@@ -5,9 +5,8 @@
 #include <SFML/Window/Event.hpp>
 #include "Button.hpp"
 
-Button::Button(const Text &text, const Sprite &sprite, Button::LambdaMethod func, int rect)
-: _text(text), _sprite(sprite), _function(func), _rect(rect),  _state(NONE) {
-}
+Button::Button(const std::string &text, const sf::Font &font, sf::Vector2f tPos, unsigned int characterSize, const std::string &filename, sf::Vector2f sPos, sf::IntRect rect, Button::LambdaMethod func, int decade)
+: _text(text, font, tPos, characterSize), _sprite(filename, rect, sPos), _function(func), _rect(decade), _state(NONE) {}
 
 Text Button::getText() const {
     return _text;

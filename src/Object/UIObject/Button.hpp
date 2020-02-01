@@ -23,7 +23,7 @@ public:
     using LambdaMethod = std::function<void ()>;
 
     // Constructors
-    Button(const Text &, const Sprite &, LambdaMethod, int);
+    Button(const std::string &text, const sf::Font &font, sf::Vector2f tPos, unsigned int characterSize, const std::string &filename, sf::Vector2f sPos, sf::IntRect rect, Button::LambdaMethod func, int decade);
     ~Button() override = default;
 
     // Setters & Getters
