@@ -22,6 +22,9 @@ public:
     void setTextureRect(const sf::IntRect &rectangle);
     sf::IntRect getTextureRect() const;
     sf::FloatRect getGlobalBounds() const;
+    sf::Texture getTexture() const;
+    sf::Sprite getSprite() const;
+    sf::Uint8 *getMask() const;
 
     // Operators
     Sprite &operator=(Sprite const &);
@@ -34,6 +37,7 @@ public:
 private:
     s_ptr<sf::Texture> _texture;
     s_ptr<sf::Sprite> _sprite;
+    s_ptr<sf::Uint8 *> _mask;
 };
 
 

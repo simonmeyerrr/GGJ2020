@@ -15,7 +15,7 @@
 class Text : public IUIObject {
 public:
     // Constructors
-    Text(const std::string &, const sf::Font &, const sf::Vector2f &pos, unsigned int characterSize = 30);
+    Text(const std::string &, const sf::Font &, const sf::Vector2f &pos, const sf::Color &color = sf::Color::Black, unsigned int characterSize = 30);
     ~Text() override = default;
 
     // Setters & Getters

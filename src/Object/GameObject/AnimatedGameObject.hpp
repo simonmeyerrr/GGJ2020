@@ -12,7 +12,7 @@
 class AnimatedGameObject : public AGameObject {
 public:
     // Constructors
-    AnimatedGameObject(const std::string &, sf::Time = sf::seconds(2.0f));
+    AnimatedGameObject(const std::string &, sf::Time = sf::seconds(0.2f));
     AnimatedGameObject(const AnimatedGameObject &);
     AnimatedGameObject &operator=(const AnimatedGameObject &);
     virtual ~AnimatedGameObject() = default;
@@ -23,12 +23,10 @@ public:
 
     // Methods
     void update(sf::Time);
+    void addFrame(const Animation &, Frame);
+    void addFrames(const Animation &, Frames, float);
     
 protected:
-    // Methods
-    void addFrame(const Animation &, Frame);
-    void addFrames(const Animation &, Frames);
-
     // Variables
     Animations _anims;
     std::string _currentAnimation;
