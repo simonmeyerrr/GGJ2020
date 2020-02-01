@@ -44,9 +44,6 @@ SET(SOURCES
         src/Object/GameObject/IGameObject.hpp
         src/Object/GameObject/AGameObject.cpp
         src/Object/GameObject/AGameObject.hpp
-        src/Object/SoundObject/ISoundObject.hpp
-        src/Object/SoundObject/ASoundObject.cpp
-        src/Object/SoundObject/ASoundObject.hpp
         src/Object/UIObject/IUIObject.hpp
         src/Object/UIObject/AUIObject.cpp
         src/Object/UIObject/AUIObject.hpp
@@ -62,10 +59,10 @@ SET(SOURCES
         src/Scene/Settings.cpp
         src/Scene/Settings.hpp
         src/Utils/Using.hpp
-        )
+        src/Object/SoundObject/ISoundObject.hpp src/Object/SoundObject/SoundObject.cpp src/Object/SoundObject/SoundObject.hpp src/Object/SoundObject/MusicObject.cpp src/Object/SoundObject/MusicObject.hpp)
 
 # Binary
-add_executable(ggj ${SOURCES})
+add_executable(ggj ${SOURCES} src/Object/SoundObject/ISoundObject.hpp src/Object/SoundObject/SoundObject.cpp src/Object/SoundObject/SoundObject.hpp src/Object/SoundObject/MusicObject.cpp src/Object/SoundObject/MusicObject.hpp)
 
 if (WIN32)
     target_link_libraries(ggj sfml-audio sfml-system sfml-graphics sfml-window)
