@@ -39,6 +39,7 @@ public:
     void cb();
 
 private:
+    bool mouseInButton(sf::Event &e) const;
     void setLeftRect(int rect);
     LambdaMethod _function;
     State _state;
