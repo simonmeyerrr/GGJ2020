@@ -34,3 +34,7 @@ void Button::draw(sf::RenderWindow &window) const {
 void Button::cb() {
     _function();
 }
+
+void Button::update() {}
+
+void Button::event(sf::RenderWindow &window, sf::Event &) {}

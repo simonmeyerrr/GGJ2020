@@ -34,6 +34,8 @@ public:
     // Operators
 
     // Methods
+    void update() override;
+    void event(sf::RenderWindow &window, sf::Event &) override;
     void draw(sf::RenderWindow &window) const override;
     void cb();
 
