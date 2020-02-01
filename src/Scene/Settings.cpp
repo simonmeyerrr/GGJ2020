@@ -1,18 +1,28 @@
+/*
+**
+** GLOBAL GAME JAM
+**
+*/
+
 #include "Settings.hpp"
 
-Settings::Settings(IScene::TypeScene unnamed) : AScene(unnamed) {
+Settings::Settings(IScene::TypeScene type)
+    : AScene(type)
+{
 
 }
 
-void Settings::update() {
+void Settings::update()
+{
 
 }
 
-void Settings::event(std::shared_ptr<MainWindow> &) {
+void Settings::event(sf::Event &event, s_ptr<MainWindow> &win)
+{
 
 }
 
-void Settings::display() {
+void Settings::display(s_ptr<MainWindow> &win)
+{
 
 }
-

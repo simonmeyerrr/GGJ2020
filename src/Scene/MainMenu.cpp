@@ -1,20 +1,29 @@
+/*
+**
+** GLOBAL GAME JAM
+**
+*/
 
 #include "MainMenu.hpp"
 
-MainMenu::MainMenu(IScene::TypeScene unnamed) : AScene(unnamed) {
+MainMenu::MainMenu(IScene::TypeScene type)
+    : AScene(type)
+{
 
 }
 
-void MainMenu::update() {
+void MainMenu::update()
+{
 
 }
 
-void MainMenu::event(std::shared_ptr<MainWindow> &) {
+void MainMenu::event(sf::Event &event, s_ptr<MainWindow> &win)
+{
 
 }
 
-void MainMenu::display() {
+void MainMenu::display(s_ptr<MainWindow> &win)
+{
 
 }
-
 

@@ -15,18 +15,21 @@
 
 class IScene {
 public:
-    virtual ~IScene() = default;
+    // Enum
     enum TypeScene {
         INTRO,
         MAIN_MENU,
         SETTINGS
     };
+    
+    // Constructors
+    virtual ~IScene() = default;
+
+    // Setters & Getters
     virtual TypeScene getType() const = 0;
+
+    // Methods
     virtual void update() = 0;
-
-    virtual void event(std::shared_ptr<MainWindow> &) = 0;
-    virtual void display() = 0;
-
     virtual void event(sf::Event &, s_ptr<MainWindow> &) = 0;
     virtual void display(s_ptr<MainWindow> &) = 0;
 };

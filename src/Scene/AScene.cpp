@@ -8,7 +8,7 @@
 
 AScene::AScene(IScene::TypeScene)
 {
-
+    
 }
 
 IScene::TypeScene AScene::getType() const

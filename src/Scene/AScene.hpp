@@ -18,9 +18,9 @@ public:
     AScene(IScene::TypeScene);
     AScene(AScene &) = delete;
     virtual ~AScene() = default;
+    AScene &operator=(const AScene &) = delete;
 
     // Setters & Getters
-    AScene &operator=(const AScene &) = delete;
     TypeScene getType() const;
 
 private:

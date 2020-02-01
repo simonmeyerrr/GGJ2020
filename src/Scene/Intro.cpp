@@ -1,18 +1,29 @@
+/*
+**
+** GLOBAL GAME JAM
+**
+*/
+
 #include "Intro.hpp"
 
-Intro::Intro(IScene::TypeScene unnamed) : AScene(unnamed) {
+Intro::Intro(IScene::TypeScene type)
+    : AScene(type)
+{
 
 }
 
-void Intro::update() {
+void Intro::update()
+{
 
 }
 
-void Intro::event(std::shared_ptr<MainWindow> &) {
+void Intro::event(sf::Event &event, s_ptr<MainWindow> &win)
+{
 
 }
 
-void Intro::display() {
+void Intro::display(s_ptr<MainWindow> &win)
+{
 
 }
 
