@@ -19,9 +19,12 @@ MainMenu::MainMenu()
     _gameObject[1] = std::make_shared<StaticGameObject>("./assets/textures/tableau_militaire.png", sf::IntRect{0, 0, 330, 450});
     _gameObject[2] = std::make_shared<StaticGameObject>("./assets/textures/tableau_rentree.png", sf::IntRect{0, 0, 330, 450});
     _gameObject[3] = std::make_shared<StaticGameObject>("./assets/textures/tableau_maison.png", sf::IntRect{0, 0, 330, 450});
+    _gameObject[4] = std::make_shared<Character>();
     _gameObject[1]->setPosition({2000, 200});
     _gameObject[2]->setPosition({4000, 200});
     _gameObject[3]->setPosition({6000, 200});
+    _gameObject[4]->setPosition({500, 250});
+    dynamic_cast<AnimatedGameObject &>(*_gameObject[4]).setCurrentAnimation("idleRight");
 }
 
 int MainMenu::inFrontOf() const
@@ -35,7 +38,8 @@ int MainMenu::inFrontOf() const
 
 IScene::Event MainMenu::update()
 {
-    _player.update();
+    for (const auto &object: _gameObject)
+        object.second->update();
     if (_walking) {
         if (_right && _x > -8800 + 1600)
             _x -= 3;
@@ -64,6 +68,7 @@ IScene::Event MainMenu::event(sf::RenderWindow &win, sf::Event &e)
         } else if (!_walking && (e.key.code == sf::Keyboard::Right || e.key.code == sf::Keyboard::Left)) {
             _walking = true;
             _right = e.key.code == sf::Keyboard::Right;
+            dynamic_cast<AnimatedGameObject &>(*_gameObject[4]).setCurrentAnimation(std::string("walk") + (_right ? "Right" : "Left"));
         } else if (e.key.code == sf::Keyboard::A) {
             return Event{EVENT_PUSH_SCENE, SCENE_SETTINGS};
         } else if (e.key.code == sf::Keyboard::Up) {
@@ -79,8 +84,10 @@ IScene::Event MainMenu::event(sf::RenderWindow &win, sf::Event &e)
         }
     }
     if (e.type == sf::Event::KeyReleased) {
-        if (_walking && ((e.key.code == sf::Keyboard::Right && _right) || (e.key.code == sf::Keyboard::Left && !_right)))
+        if (_walking && ((e.key.code == sf::Keyboard::Right && _right) || (e.key.code == sf::Keyboard::Left && !_right))) {
             _walking = false;
+            dynamic_cast<AnimatedGameObject &>(*_gameObject[4]).setCurrentAnimation(std::string("idle") + (_right ? "Right" : "Left"));
+        }
     }
     return Event{EVENT_NONE, SCENE_INTRO};
 }
@@ -94,7 +101,6 @@ void MainMenu::display(sf::RenderWindow &win, sf::Shader *shader)
         _uiObject[1]->draw(win);
         _uiObject[2]->draw(win);
     }
-    win.draw(_player.getSprite());
 }
 
 void MainMenu::resume()

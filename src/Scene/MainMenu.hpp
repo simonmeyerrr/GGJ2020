@@ -30,7 +30,6 @@ private:
     bool _walking;
     bool _escape;
     int _x;
-    Character _player;
 };
 
 #endif /*MAIN_MENU_HPP*/
