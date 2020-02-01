@@ -139,12 +139,13 @@ void LevelOne::moveLeft() {
 }
 
 void LevelOne::gravity() {
-    _pos.x += _velocity.x;
-    _pos.y += _velocity.y;
-    _velocity.y += 10;
-    if (pixelPerfectTest(*_gameObject[BACKGROUND], *_gameObject[CHARACTER])) {
+    if (!pixelPerfectTest(*_gameObject[BACKGROUND], *_gameObject[CHARACTER])) {
+        _pos.x += _velocity.x;
+        _pos.y += _velocity.y;
+        _velocity.y += 1;
+    } else if (pixelPerfectTest(*_gameObject[BACKGROUND], *_gameObject[CHARACTER])) {
         _velocity.y = 0;
-        _pos.y = 700;
+        //_pos.y = 700;
         _isJumping = false;
     }
     _gameObject[CHARACTER]->setPosition(_pos);
