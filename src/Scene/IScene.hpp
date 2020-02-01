@@ -18,7 +18,6 @@ public:
     enum TypeScene {
         INTRO,
         MAIN_MENU,
-        SCENE_MANAGER,
         SETTINGS
     };
     virtual TypeScene getType() const = 0;
