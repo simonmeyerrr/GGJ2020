@@ -16,11 +16,6 @@ sf::Vector2i MainWindow::getMousePosition() const
     return sf::Mouse::getPosition(*_renderWindow);
 }
 
-void MainWindow::setMousePosition(sf::Vector2i pos)
-{
-    _posMouse = sf::Mouse::getPosition(*_renderWindow);
-}
-
 const s_ptr<sf::RenderWindow> &MainWindow::getRenderWindow() const {
     return _renderWindow;
 }

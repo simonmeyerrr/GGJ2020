@@ -23,13 +23,10 @@ public:
     // Setters & Getters
     sf::Vector2i getMousePosition() const;
     const s_ptr<sf::RenderWindow> &getRenderWindow() const;
-    void setMousePosition(sf::Vector2i);
-
 
 private:
     // Variables
     s_ptr<sf::RenderWindow> _renderWindow;
-    sf::Vector2i _posMouse;
 };
 
 #endif /* !MAINWINDOW_HPP */
