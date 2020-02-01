@@ -23,9 +23,12 @@ public:
     void resume() override;
 
 private:
+    int inFrontOf() const;
+
     bool _right;
     bool _walking;
     bool _escape;
+    int _x;
 };
 
 #endif /*MAIN_MENU_HPP*/
