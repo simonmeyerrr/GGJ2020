@@ -25,7 +25,7 @@ public:
     const sf::Vector2f &getOrigin() const override;
     void setTexture(const sf::Texture &texture, bool resetRect) override;
     void setTextureRect(const sf::IntRect &rectangle) override;
-    const sf::IntRect &getTextureRect() override;
+    const sf::IntRect &getTextureRect();
     void setColor(const sf::Color &color) override;
     const sf::Color &getColor() override;
     sf::FloatRect getGlobalBounds() override;
