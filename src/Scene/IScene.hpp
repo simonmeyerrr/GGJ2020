@@ -16,7 +16,7 @@ protected:
     };
     virtual TypeScene getType() const = 0;
     virtual void update() = 0;
-    virtual void event(const  std::shared_ptr<MainWindow>) = 0;
+    virtual void event(std::shared_ptr<MainWindow> &) = 0;
     virtual void display() = 0;
 };
 

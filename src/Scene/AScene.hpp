@@ -3,6 +3,7 @@
     #include "IScene.hpp"
 
 class AScene : virtual public IScene {
+public:
     AScene(IScene::TypeScene);
     AScene(AScene &) = delete;
     virtual ~AScene() = default;
@@ -13,9 +14,9 @@ class AScene : virtual public IScene {
 private:
     TypeScene _type;
 
-    const std::vector<shared_ptr<IGameObject>> _gameObject;
-    const std::vector<shared_ptr<ISoundObject>> _soundObject;
-    const std::vector<shared_ptr<IUIObject>> _uiObject;
+    const std::vector<std::shared_ptr<IGameObject>> _gameObject;
+    const std::vector<std::shared_ptr<ISoundObject>> _soundObject;
+    const std::vector<std:shared_ptr<IUIObject>> _uiObject;
 };
 
 #endif /*ASCENE_HPP*/
