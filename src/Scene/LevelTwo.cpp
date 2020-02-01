@@ -99,7 +99,7 @@ LevelTwo::LevelTwo()
             TYPE_CLASSROOM,
             "Classroom 5",
             true,
-            {CLASS_7, CORIDOR_B},
+            {CLASS_7, CORIDOR_A},
             {750, 500},
             {
                     {CORIDOR_A, RoomInfoLink{true, {200, HEIGHT - DOOR_HEIGHT}}},
@@ -205,6 +205,20 @@ IScene::Event LevelTwo::event(sf::RenderWindow &win, sf::Event &e)
 
 void LevelTwo::takeDoor(RoomInfo &room)
 {
+    for (auto &door: room.links) {
+        if (door.second.pos.x <= _pos.x && door.second.pos.x + DOOR_WIDTH >= _pos.x + PLAYER_WIDTH) {
+            std::cout << "door found" << std::endl;
+            if (door.second.opened) {
+                std::cout << "go in door" << std::endl;
+                _rooms.at(door.first).links.at(_actual).opened = true;
+                _pos.x = _rooms.at(door.first).links.at(_actual).pos.x + 10;
+                _actual = door.first;
+            } else {
+                std::cout << "door closed" << std::endl;
+            }
+            return;
+        }
+    }
     std::cout << "no door in front of you" << std::endl;
 }
 
@@ -232,11 +246,16 @@ void LevelTwo::displayRect(sf::RenderWindow &win, const sf::Color &color, const 
 
 void LevelTwo::displayRoom(sf::RenderWindow &win, const RoomInfo &room)
 {
-    //sf::Text text("", _font.get(), 30);
+    sf::Text text(room.name, _font.get(), 30);
 
+    text.setFillColor(sf::Color::Black);
     displayRect(win, sf::Color::White, {0, 0}, {1600, 900});
+    win.draw(text);
     for (const auto &door: room.links) {
         displayRect(win, door.second.opened ? sf::Color::Blue : sf::Color::Red, door.second.pos, {DOOR_WIDTH, DOOR_HEIGHT});
+        text.setString(_rooms.at(door.first).name);
+        text.setPosition(door.second.pos);
+        win.draw(text);
     }
     if (room.hasKey) {
         displayRect(win, sf::Color::Magenta, room.keyPos, {50, 50});
