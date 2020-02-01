@@ -34,7 +34,7 @@ public:
     virtual TypeScene getType() const = 0;
     virtual Event update() = 0;
     virtual Event event(sf::RenderWindow &, sf::Event &) = 0;
-    virtual void display(sf::RenderWindow &) = 0;
+    virtual void display(sf::RenderWindow &, sf::Shader *) = 0;
     virtual void resume() = 0;
 };
 

@@ -17,12 +17,17 @@ void Core::initShaders()
 {
     for (int i = 0; i < SHADERS_SIZE; ++i) {
         if (!_shaders[static_cast<ShaderType>(i)].loadFromFile(
-            "resources/shaders/" + SHADERS[i] + ".vert", 
-            "resources/shaders/" + SHADERS[i] + ".frag")
+            "assets/shaders/" + SHADERS[i] + ".vert",
+            "assets/shaders/" + SHADERS[i] + ".frag")
             ) {
-            std::cerr << "Error: Unable to load shader " << SHADERS[i] << std::endl;
+            throw ShaderError("Unable to load shader " + SHADERS[i]);
         }
     }
+}
+
+void Core::setShader(ShaderType shader)
+{
+    this->_currentShader = shader;
 }
 
 void Core::start()
@@ -56,13 +61,13 @@ void Core::event()
 
 void Core::update()
 {
-    auto elapsed = _updateTimer.getElapsedTime().asMilliseconds() + _updateRest;
+    auto elapsed = _updateTimer.getElapsedTime().asMicroseconds() + _updateRest;
 
     _updateTimer.restart();
-    while (elapsed >= (1.0 / 30.0) * 1000.0) {
+    while (elapsed >= (1.0 / 30.0) * 1000000.0) {
         if (_win->isOpen() && !_sceneManager->isEmpty())
             manageEvent(_sceneManager->get()->update());
-        elapsed -= (1.0 / 30.0) * 1000.0;
+        elapsed -= (1.0 / 30.0) * 1000000.0;
     }
     _updateRest = elapsed;
 }
@@ -75,7 +80,7 @@ void Core::display()
         _displayTimer.restart();
         if (_win->isOpen() && !_sceneManager->isEmpty()) {
             _win->clear(sf::Color::Black);
-            _sceneManager->get()->display(*_win);
+            _sceneManager->get()->display(*_win, &_shaders[_currentShader]);
             _win->display();
         }
     }

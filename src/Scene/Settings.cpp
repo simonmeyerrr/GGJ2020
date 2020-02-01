@@ -22,7 +22,7 @@ IScene::Event Settings::event(sf::RenderWindow &, sf::Event &)
     return Event{EVENT_NONE, SCENE_INTRO};
 }
 
-void Settings::display(sf::RenderWindow &)
+void Settings::display(sf::RenderWindow &, sf::Shader *)
 {}
 
 void Settings::resume()

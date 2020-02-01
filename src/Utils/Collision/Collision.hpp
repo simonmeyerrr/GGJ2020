@@ -10,8 +10,6 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 
-bool PixelPerfectTest(const sf::Sprite &Object1, const sf::Sprite &Object2,
-    sf::Uint8 AlphaLimit
-);
+bool collisionTest(const sf::Sprite &sprite1, const sf::Sprite &sprite2);
 
 #endif /* GGJ2020_COLLISION_HPP */

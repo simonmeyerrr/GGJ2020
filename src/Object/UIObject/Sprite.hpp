@@ -6,33 +6,28 @@
     #define GGJ2020_SPRITE_HPP
 
 
-#include "AUIObject.hpp"
+#include "IUIObject.hpp"
 #include <SFML/Graphics/Sprite.hpp>
 #include "../../Utils/Using.hpp"
 
-class Sprite : AUIObject {
+class Sprite : IUIObject {
 public:
     // Constructors
-    Sprite(const sf::Texture &, const sf::IntRect &);
+    Sprite(sf::Texture const &, const sf::IntRect &, const sf::Vector2f &);
     ~Sprite() override = default;
 
     // Setters & Getters
-    const sf::Vector2f &getPosition() const override;
-    void setPosition(sf::Vector2f &f) override;
-    void setScale(const sf::Vector2f &f) override;
-    const sf::Vector2f &getScale() const override;
-    void setOrigin(const sf::Vector2f &f) override;
-    const sf::Vector2f &getOrigin() const override;
-    void setTexture(const sf::Texture &texture, bool resetRect) override;
-    void setTextureRect(const sf::IntRect &rectangle) override;
-    void setColor(const sf::Color &color) override;
-    const sf::Color &getColor() override;
-    sf::FloatRect getGlobalBounds() override;
+    const sf::Vector2f &getPosition() const;
+    void setPosition(sf::Vector2f &f);
+    void setTextureRect(const sf::IntRect &rectangle);
+    sf::FloatRect getGlobalBounds();
 
     // Operators
     Sprite &operator=(Sprite const &);
 
     // Methods
+    void update() override;
+    void event(sf::RenderWindow &window, sf::Event &) override;
     void draw(sf::RenderWindow &) const override;
 
 private:

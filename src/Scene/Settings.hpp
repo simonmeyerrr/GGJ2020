@@ -9,7 +9,7 @@
     
     #include "AScene.hpp"
 
-class Settings : virtual public AScene {
+class Settings : public AScene {
 public:
     ~Settings() override = default;
     Settings();
@@ -18,7 +18,7 @@ public:
 
     Event update() override;
     Event event(sf::RenderWindow &, sf::Event &) override;
-    void display(sf::RenderWindow &) override;
+    void display(sf::RenderWindow &, sf::Shader *) override;
     void resume() override;
 };
 

@@ -12,12 +12,12 @@
     #include <bits/unique_ptr.h>
     #include <map>
     #include <SFML/Graphics/Shader.hpp>
+    #include "../Utils/Exception/ShaderError.hpp"
 
     #define SHADERS_SIZE 1
 
 class Core {
 public:
-
     enum ShaderType {
         TEST_SHADER
     };
@@ -32,6 +32,7 @@ public:
     ~Core() = default;
 
     void initShaders();
+    void setShader(ShaderType shaderType);
     void start();
 
 private:
@@ -42,11 +43,12 @@ private:
 
     sf::Clock _displayTimer;
     sf::Clock _updateTimer;
-    sf::Int32  _updateRest;
+    sf::Int64  _updateRest;
     std::unique_ptr<sf::RenderWindow> _win;
     std::unique_ptr<SceneManager> _sceneManager;
 
     std::map<ShaderType, sf::Shader> _shaders;
+    ShaderType _currentShader;
 };
 
 #endif /*CORE_HPP*/
