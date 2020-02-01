@@ -33,10 +33,10 @@ bool pixelPerfectTest(const Sprite &Object1, const Sprite &Object2,
 )
 {
     sf::FloatRect intersection;
-    if (Object1.getGlobalBounds().intersects(Object2.getGlobalBounds(),
+    if (Object1.getSprite().getGlobalBounds().intersects(Object2.getSprite().getGlobalBounds(),
         intersection)) {
-        sf::IntRect O1SubRect = Object1.getTextureRect();
-        sf::IntRect O2SubRect = Object2.getTextureRect();
+        sf::IntRect O1SubRect = Object1.getSprite().getTextureRect();
+        sf::IntRect O2SubRect = Object2.getSprite().getTextureRect();
 
         sf::Uint8 *mask1 = Object1.getMask();
         sf::Uint8 *mask2 = Object2.getMask();
