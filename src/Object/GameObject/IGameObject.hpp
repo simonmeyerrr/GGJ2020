@@ -7,7 +7,8 @@
 #ifndef IGAMEOBJECT_HPP
     #define IGAMEOBJECT_HPP
 
-    #include <unordered_map>
+    #include <tuple>
+    #include <unordered_map> 
     #include <SFML/Graphics/Rect.hpp>
     #include <SFML/Graphics/Texture.hpp>
     #include <SFML/Graphics/Sprite.hpp>
@@ -17,7 +18,7 @@
 using Frame = sf::IntRect;
 using Frames = std::vector<Frame>;
 using Animation = std::string;
-using Animations = std::unordered_map<std::string, Frames>;
+using Animations = std::unordered_map<std::string, std::tuple<Frames, float>>;
 
 class IGameObject {
 public:
