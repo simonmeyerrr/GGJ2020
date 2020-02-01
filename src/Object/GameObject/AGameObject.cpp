@@ -46,7 +46,17 @@ const sf::Sprite &AGameObject::getSprite() const
     return _s;
 }
 
+const sf::Vector2f &AGameObject::getPosition() const
+{
+    return _s.getPosition();
+}
+
 void AGameObject::setTexture(const sf::Texture &t)
 {
     _t = t;
+}
+
+void AGameObject::setPosition(const sf::Vector2f &pos)
+{
+    _s.setPosition(pos);
 }

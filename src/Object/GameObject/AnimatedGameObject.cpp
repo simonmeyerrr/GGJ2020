@@ -39,6 +39,7 @@ AnimatedGameObject &AnimatedGameObject::operator=(const AnimatedGameObject &othe
 void AnimatedGameObject::setCurrentAnimation(const std::string &anim)
 {
     _currentAnimation = anim;
+    setCurrentFrame(_currentFrame);
 }
 
 void AnimatedGameObject::setCurrentFrame(std::size_t frame)

@@ -21,7 +21,9 @@ public:
     Type getType() const;
     const sf::Texture &getTexture() const;
     const sf::Sprite &getSprite() const;
+    const sf::Vector2f &getPosition() const;
     void setTexture(const sf::Texture &);
+    void setPosition(const sf::Vector2f &);
 
 protected:
     // Variables
