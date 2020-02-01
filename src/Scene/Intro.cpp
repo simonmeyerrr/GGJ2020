@@ -37,7 +37,7 @@ IScene::Event Intro::event(sf::RenderWindow &win, sf::Event &event)
     return Event{EVENT_NONE, SCENE_INTRO};
 }
 
-void Intro::display(sf::RenderWindow &win)
+void Intro::display(sf::RenderWindow &win, sf::Shader *)
 {
     for (const auto &object: _uiObject)
         object.second->draw(win);

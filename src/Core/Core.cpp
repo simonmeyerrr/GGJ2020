@@ -25,6 +25,11 @@ void Core::initShaders()
     }
 }
 
+void Core::setShader(ShaderType shader)
+{
+    this->_currentShader = shader;
+}
+
 void Core::start()
 {
     _sceneManager->push(IScene::SCENE_INTRO);
@@ -75,7 +80,7 @@ void Core::display()
         _displayTimer.restart();
         if (_win->isOpen() && !_sceneManager->isEmpty()) {
             _win->clear(sf::Color::Black);
-            _sceneManager->get()->display(*_win);
+            _sceneManager->get()->display(*_win, &_shaders[_currentShader]);
             _win->display();
         }
     }

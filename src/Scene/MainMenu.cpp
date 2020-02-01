@@ -29,7 +29,7 @@ IScene::Event MainMenu::event(sf::RenderWindow &win, sf::Event &e)
     return Event{EVENT_NONE, SCENE_INTRO};
 }
 
-void MainMenu::display(sf::RenderWindow &win)
+void MainMenu::display(sf::RenderWindow &win, sf::Shader *shader)
 {
     for (const auto &object: _uiObject)
         object.second->draw(win);

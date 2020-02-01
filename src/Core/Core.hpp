@@ -18,7 +18,6 @@
 
 class Core {
 public:
-
     enum ShaderType {
         TEST_SHADER
     };
@@ -33,6 +32,7 @@ public:
     ~Core() = default;
 
     void initShaders();
+    void setShader(ShaderType shaderType);
     void start();
 
 private:
@@ -48,6 +48,7 @@ private:
     std::unique_ptr<SceneManager> _sceneManager;
 
     std::map<ShaderType, sf::Shader> _shaders;
+    ShaderType _currentShader;
 };
 
 #endif /*CORE_HPP*/
