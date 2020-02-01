@@ -15,10 +15,10 @@ Erosion::Erosion()
 
 void Erosion::putPixel(unsigned int x, unsigned int y, sf::Color color)
 {
-    _pixels[(y * 1600 + x)] = color.r;
-    _pixels[(y * 1600 + x) + 1] = color.g;
-    _pixels[(y * 1600 + x) + 2] = color.b;
-    _pixels[(y * 1600 + x) + 3] = color.a;
+    _pixels[(y * 1600 + x) * 4] = color.r;
+    _pixels[(y * 1600 + x) * 4 + 1] = color.g;
+    _pixels[(y * 1600 + x) * 4 + 2] = color.b;
+    _pixels[(y * 1600 + x) * 4 + 3] = color.a;
 }
 
 void Erosion::clearBuffer()
@@ -38,6 +38,14 @@ void Erosion::update()
 
     if (_update >= 10) {
         std::cout << "update" << std::endl;
+        for (int i = 0; i < 1600 * 3; i += 4) {
+            if (i % 1600 > 50)
+                continue;
+            printf("%3d, ", _pixels[i]);
+            if (i % 1600 == 50)
+                printf("\n");
+        }
+
         _update = 0;
         redraw();
     }
@@ -48,7 +56,7 @@ void Erosion::redraw() {
     if (_progress == 0)
         return;
     for (unsigned int y = 0; y < 900; ++y)
-        for (unsigned int x = 0; x < 1600 / _progress + (random() % 20); ++x)
+        for (unsigned int x = 0; x < _progress * 1600 / 100 + (random() % 20); ++x)
             putPixel(x, y, sf::Color::Black);
     _texture.update(_pixels);
 }
