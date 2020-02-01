@@ -265,6 +265,7 @@ void LevelTwo::displayRoom(sf::RenderWindow &win, const RoomInfo &room, sf::Shad
 
 void LevelTwo::display(sf::RenderWindow &win, sf::Shader *shader)
 {
+    shader->setUniform("lightLocation", sf::Glsl::Vec2(800, 900 - 150));
     displayRoom(win, _rooms.at(_actual), shader);
 }
 
