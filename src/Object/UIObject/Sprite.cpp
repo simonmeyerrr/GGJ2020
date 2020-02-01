@@ -15,6 +15,7 @@ Sprite::Sprite(const std::string &filename, const sf::IntRect &rect, const sf::V
     sf::Image image;
     image.loadFromFile(filename);
     _mask = std::make_shared<sf::Uint8 *>(createMask(*_texture, image));
+    _sprite->setTextureRect(rect);
 }
 
 const sf::Vector2f &Sprite::getPosition() const {

@@ -45,7 +45,7 @@ public:
 
 protected:
     // Methods
-    virtual void draw(sf::RenderTarget &, sf::RenderStates) const = 0;
+    void draw(sf::RenderTarget &, sf::RenderStates) const override = 0;
 };
 
 #endif /*IGAMEOBJECT_HPP*/

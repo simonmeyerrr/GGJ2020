@@ -9,7 +9,7 @@
 Core::Core()
     : _displayTimer(), _updateTimer(), _updateRest(0),
     _win(std::make_unique<sf::RenderWindow>(sf::VideoMode(1600, 900, 32), "GGJ2020")),
-    _sceneManager(std::make_unique<SceneManager>())
+    _sceneManager(std::make_unique<SceneManager>()), _currentShader(NONE)
 {
 }
 
@@ -25,15 +25,10 @@ void Core::initShaders()
     }
 }
 
-void Core::setShader(ShaderType shader)
-{
-    this->_currentShader = shader;
-}
-
 void Core::start()
 {
-    _sceneManager->push(IScene::SCENE_INTRO);
     initShaders();
+    manageEvent(IScene::Event{IScene::EVENT_PUSH_SCENE, IScene::SCENE_LEVEL2});
 
     _displayTimer.restart();
     _updateTimer.restart();
@@ -80,7 +75,7 @@ void Core::display()
         _displayTimer.restart();
         if (_win->isOpen() && !_sceneManager->isEmpty()) {
             _win->clear(sf::Color::Black);
-            _sceneManager->get()->display(*_win, &_shaders[_currentShader]);
+            _sceneManager->get()->display(*_win, _currentShader != NONE ? &_shaders[_currentShader] : nullptr);
             _win->display();
         }
     }
@@ -94,9 +89,13 @@ void Core::manageEvent(IScene::Event event)
             break;
         case IScene::EVENT_POP_SCENE:
             _sceneManager->pop();
+            _currentShader = _sceneShaders.at(_sceneManager->get()->getType());
+            std::cout << "shader: " << _currentShader << std::endl;
             break;
         case IScene::EVENT_PUSH_SCENE:
             _sceneManager->push(event.scene);
+            _currentShader = _sceneShaders.at(event.scene);
+            std::cout << "shader: " << _currentShader << std::endl;
         default:
             break;
     }

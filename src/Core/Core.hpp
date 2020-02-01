@@ -19,11 +19,19 @@
 class Core {
 public:
     enum ShaderType {
-        TEST_SHADER
+        NONE = -1,
+        TEST_SHADER = 0
     };
 
     const std::string SHADERS[SHADERS_SIZE] = {
         "test_shader"
+    };
+
+    const std::map<IScene::TypeScene, ShaderType> _sceneShaders = {
+        { IScene::TypeScene::SCENE_INTRO, NONE },
+        { IScene::TypeScene::SCENE_MAIN_MENU, NONE },
+        { IScene::TypeScene::SCENE_SETTINGS, NONE },
+        { IScene::TypeScene::SCENE_LEVEL2, TEST_SHADER }
     };
 
     Core();
@@ -32,7 +40,6 @@ public:
     ~Core() = default;
 
     void initShaders();
-    void setShader(ShaderType shaderType);
     void start();
 
 private:

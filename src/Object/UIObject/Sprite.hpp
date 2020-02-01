@@ -14,7 +14,7 @@ class Sprite : IUIObject {
 public:
     // Constructors
     Sprite(const std::string &filename, const sf::IntRect &, const sf::Vector2f &);
-    ~Sprite() override {std::cout << "Sprite end" << std::endl;};
+    ~Sprite() override = default;
 
     // Setters & Getters
     const sf::Vector2f &getPosition() const;
