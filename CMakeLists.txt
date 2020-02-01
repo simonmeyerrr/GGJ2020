@@ -84,6 +84,8 @@ SET(SOURCES
         src/Object/UIObject/Sprite.hpp
         src/Object/UIObject/Text.cpp
         src/Object/UIObject/Text.hpp
+        src/Object/UIObject/Fade.cpp
+        src/Object/UIObject/Fade.hpp
         src/Object/UIObject/Button.cpp
         src/Object/UIObject/Button.hpp
         )
