@@ -19,6 +19,9 @@ public:
     Event event(sf::RenderWindow &, sf::Event &) override;
     void display(sf::RenderWindow &) override;
     void resume() override;
+
+private:
+    unsigned int _updates;
 };
 
 #endif /*INTRO_HPP*/

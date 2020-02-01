@@ -42,7 +42,7 @@ private:
 
     sf::Clock _displayTimer;
     sf::Clock _updateTimer;
-    sf::Int32  _updateRest;
+    sf::Int64  _updateRest;
     std::unique_ptr<sf::RenderWindow> _win;
     std::unique_ptr<SceneManager> _sceneManager;
 
