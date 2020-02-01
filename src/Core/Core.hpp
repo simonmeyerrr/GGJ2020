@@ -32,8 +32,18 @@ public:
     ~Core() = default;
 
     void initShaders();
+    void start();
 
 private:
+    void event();
+    void update();
+    void display();
+    void manageEvent(IScene::Event);
+
+    sf::Clock _displayTimer;
+    sf::Clock _updateTimer;
+    sf::Int32  _updateRest;
+    std::unique_ptr<sf::RenderWindow> _win;
     std::unique_ptr<SceneManager> _sceneManager;
 
     std::map<ShaderType, sf::Shader> _shaders;

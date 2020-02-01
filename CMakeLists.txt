@@ -41,17 +41,9 @@ SET(SOURCES
         src/Main.cpp
         src/Core/Core.cpp
         src/Core/Core.hpp
-        src/Core/Event/IEventManager.hpp
-        src/Core/Event/AEventManager.cpp
-        src/Core/Event/AEventManager.hpp
-        src/Graphics/MainWindow.cpp
-        src/Graphics/MainWindow.hpp
         src/Object/GameObject/IGameObject.hpp
         src/Object/GameObject/AGameObject.cpp
         src/Object/GameObject/AGameObject.hpp
-        src/Object/SoundObject/ISoundObject.hpp
-        src/Object/SoundObject/ASoundObject.cpp
-        src/Object/SoundObject/ASoundObject.hpp
         src/Object/UIObject/IUIObject.hpp
         src/Object/UIObject/AUIObject.cpp
         src/Object/UIObject/AUIObject.hpp
@@ -67,7 +59,7 @@ SET(SOURCES
         src/Scene/Settings.cpp
         src/Scene/Settings.hpp
         src/Utils/Using.hpp
-        )
+        src/Utils/Exception/Exception.cpp src/Utils/Exception/Exception.hpp src/Utils/Exception/ObjectError.cpp src/Utils/Exception/ObjectError.hpp src/Utils/Exception/SceneError.cpp src/Utils/Exception/SceneError.hpp src/Utils/Exception/MusicError.cpp src/Utils/Exception/MusicError.hpp src/Utils/Exception/ShaderError.cpp src/Utils/Exception/ShaderError.hpp)
 
 # Binary
 add_executable(ggj ${SOURCES})
