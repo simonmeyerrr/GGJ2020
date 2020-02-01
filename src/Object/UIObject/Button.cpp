@@ -8,7 +8,7 @@
 Button::Button(const std::string &text, const sf::Font &font, sf::Vector2f tPos, unsigned int characterSize, const std::string &filename, sf::Vector2f sPos, sf::IntRect rect, Button::LambdaMethod func, int decade)
 : _text(text, font, tPos, characterSize), _sprite(filename, rect, sPos), _function(func), _rect(decade), _state(NONE) {}
 
-Text Button::getText() const {
+Text const &Button::getText() const {
     return _text;
 }
 
@@ -16,7 +16,7 @@ void Button::setText(const Text &text) {
     _text = text;
 }
 
-Sprite Button::getSprite() const {
+Sprite const &Button::getSprite() const {
     return _sprite;
 }
 
