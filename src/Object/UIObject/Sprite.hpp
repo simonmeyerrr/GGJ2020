@@ -12,8 +12,8 @@
 
 class Sprite : AUIObject {
 public:
-    Sprite();
-    ~Sprite();
+    Sprite(const sf::Texture &, const sf::IntRect &);
+    ~Sprite() override = default;
 
     const sf::Vector2f &getPosition() const override;
     void setPosition(sf::Vector2f &f) override;
@@ -22,14 +22,13 @@ public:
     void setOrigin(const sf::Vector2f &f) override;
     const sf::Vector2f &getOrigin() const override;
     void setTexture(const sf::Texture &texture, bool resetRect) override;
-    sf::Texture &getTexture() const override;
     void setTextureRect(const sf::IntRect &rectangle) override;
     const sf::IntRect &getTextureRect() override;
     void setColor(const sf::Color &color) override;
     const sf::Color &getColor() override;
     sf::FloatRect getGlobalBounds() override;
 
-    void draw() const override;
+    void draw(sf::RenderWindow) const override;
 
 private:
     s_ptr<sf::Sprite> _sprite;

@@ -28,7 +28,6 @@ public:
     virtual void setTexture(const sf::Texture &texture, bool resetRect = false) = 0;
     virtual sf::Texture &getTexture() const = 0;
     virtual void setTextureRect(const sf::IntRect &rectangle) = 0;
-    virtual sf::IntRect const &getTextureRect() = 0;
     virtual void setColor(const sf::Color &) = 0;
     virtual sf::Color const &getColor() = 0;
     virtual sf::FloatRect getGlobalBounds() = 0;
