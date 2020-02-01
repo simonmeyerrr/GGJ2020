@@ -6,8 +6,9 @@
 
 #include "AnimatedGameObject.hpp"
 
-AnimatedGameObject::AnimatedGameObject(sf::Time frameTime, bool paused, bool looped)
-    : AGameObject(IGameObject::GameObjectType::ANIMATED, frameTime), _isPaused(paused), _isLooped(looped)
+AnimatedGameObject::AnimatedGameObject(const std::string &path, sf::Time frameTime)
+    : AGameObject(IGameObject::Type::ANIMATED, path, sf::IntRect(0, 0, 0, 0)), _frameTime(frameTime),
+    _elapsedTime(sf::Time::Zero), _currentFrame(0), _currentAnimation("")
 {
 
 }
@@ -15,84 +16,47 @@ AnimatedGameObject::AnimatedGameObject(sf::Time frameTime, bool paused, bool loo
 AnimatedGameObject::AnimatedGameObject(const AnimatedGameObject &other)
     : AGameObject(other)
 {
-    _isPaused = other._isPaused;
-    _isLooped = other._isLooped;
+    _anims = other._anims;
+    _currentAnimation = other._currentAnimation;
+    _frameTime = other._frameTime;
+    _elapsedTime = other._elapsedTime;
 }
 
 AnimatedGameObject &AnimatedGameObject::operator=(const AnimatedGameObject &other)
 {
-    if (&other != this) {
+    if (this != &other) {
         _type = other._type;
-        _currentFrame = other._currentFrame;
         _t = other._t;
-        _anim = other._anim;
+        _s = other._s;
+        _anims = other._anims;
+        _currentAnimation = other._currentAnimation;
         _frameTime = other._frameTime;
-        _currentTime = other._currentTime;
-        _isPaused = other._isPaused;
-        _isLooped = other._isLooped;
+        _elapsedTime = other._elapsedTime;
     }
     return *this;
 }
 
-bool AnimatedGameObject::isPaused() const
+void AnimatedGameObject::setCurrentAnimation(const std::string &anim)
 {
-    return _isPaused;
+    _currentAnimation = anim;
 }
 
-bool AnimatedGameObject::isLooped() const
+void AnimatedGameObject::setCurrentFrame(std::size_t frame)
 {
-    return _isLooped;
+    _currentFrame = frame;
 }
 
-void AnimatedGameObject::setPaused(bool paused)
+void AnimatedGameObject::update(sf::Time elapsed)
 {
-    _isPaused = paused;
+
 }
 
-void AnimatedGameObject::setLooped(bool looped)
+void AnimatedGameObject::addFrame(const Animation &anim, Frame frame)
 {
-    _isLooped = looped;
+    _anims[anim].push_back(frame);
 }
 
-void AnimatedGameObject::update(sf::Time elapsedTime)
+void AnimatedGameObject::addFrames(const Animation &anim, Frames frames)
 {
-    if (!_isPaused && _anim) {
-        _currentTime += elapsedTime;
-        if (_currentTime >= _frameTime) {
-            _currentTime = sf::microseconds(_currentTime.asMicroseconds() % _frameTime.asMicroseconds());
-            if (_currentFrame + 1 < _anim->getSize())
-                _currentFrame += 1;
-            else {
-                if (!_isLooped)
-                    _isPaused = true;
-                else
-                    _currentFrame = 0;
-            }
-            setFrame(_currentFrame, false);
-        }
-    }
-}
-
-void AnimatedGameObject::play()
-{
-    _isPaused = false;
-}
-
-void AnimatedGameObject::play(const Animation &anim)
-{
-    if (getAnimation() != &anim)
-        setAnimation(anim);
-    play();
-}
-
-void AnimatedGameObject::pause()
-{
-    _isPaused = true;
-}
-
-void AnimatedGameObject::stop()
-{
-    _isPaused = true;
-    _currentFrame = 0;
-    setFrame(_currentFrame);
+    _anims[anim] = frames;
 }
