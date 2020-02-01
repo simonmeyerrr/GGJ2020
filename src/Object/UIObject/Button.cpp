@@ -5,8 +5,6 @@
 #include <SFML/Window/Event.hpp>
 #include "Button.hpp"
 
-#define MOUSE_IN_BUTTON ((float)e.mouseButton.x >= _sprite->getPosition().x && (float)e.mouseButton.x <= _sprite->getPosition().x + _sprite->getGlobalBounds().width && (float)e.mouseButton.y >= _sprite->getPosition().y && (float)e.mouseButton.y <= _sprite->getPosition().y + _sprite->getGlobalBounds().height)
-
 Button::Button(const Text &text, const Sprite &sprite, Button::LambdaMethod &func, int rect)
 : _function(func), _state(NONE), _rect(rect) {
     *_text = text;
@@ -46,21 +44,30 @@ void Button::setLeftRect(int rect) {
     _sprite->setTextureRect(sf::IntRect(bounds));
 }
 
+bool Button::mouseInButton(sf::Event &e) const {
+    return ((float)e.mouseButton.x >= _sprite->getPosition().x
+    && (float)e.mouseButton.x <= _sprite->getPosition().x
+    + _sprite->getGlobalBounds().width
+    && (float)e.mouseButton.y >= _sprite->getPosition().y
+    && (float)e.mouseButton.y <= _sprite->getPosition().y
+    + _sprite->getGlobalBounds().height);
+}
+
 void Button::event(sf::RenderWindow &window, sf::Event &e) {
-    if (e.MouseButtonPressed && MOUSE_IN_BUTTON) {
+    if (e.MouseButtonPressed && mouseInButton(e)) {
         if (_state == HOVER) {
             _state = CLICKED;
             setLeftRect(_rect * 2);
         }
-    } else if (MOUSE_IN_BUTTON) {
+    } else if (mouseInButton(e)) {
         _state = HOVER;
         setLeftRect(_rect);
     }
-    if (e.MouseButtonReleased && MOUSE_IN_BUTTON) {
+    if (e.MouseButtonReleased && mouseInButton(e)) {
         _state = NONE;
         setLeftRect(0);
         cb();
-    } else if (e.MouseButtonReleased && !MOUSE_IN_BUTTON) {
+    } else if (e.MouseButtonReleased && !mouseInButton(e)) {
         _state = NONE;
         setLeftRect(0);
     }

@@ -15,18 +15,25 @@ MainMenu::MainMenu()
 
 IScene::Event MainMenu::update()
 {
+    for (const auto &object: _uiObject)
+        object.second->update();
     return Event{EVENT_NONE, SCENE_INTRO};
 }
 
 IScene::Event MainMenu::event(sf::RenderWindow &win, sf::Event &e)
 {
+    for (const auto &object: _uiObject)
+        object.second->event(win, e);
     if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Escape)
         win.close();
     return Event{EVENT_NONE, SCENE_INTRO};
 }
 
-void MainMenu::display(sf::RenderWindow &)
-{}
+void MainMenu::display(sf::RenderWindow &win)
+{
+    for (const auto &object: _uiObject)
+        object.second->draw(win);
+}
 
 void MainMenu::resume()
 {}
