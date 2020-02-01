@@ -32,5 +32,5 @@ private:
     const sf::Texture *_t;
     const Animation* _anim;
 };
-
+    
 #endif /*AGAMEOBJECT_HPP*/
