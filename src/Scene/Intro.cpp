@@ -5,11 +5,12 @@
 */
 
 #include "Intro.hpp"
+#include "../Object/UIObject/Text.hpp"
 
 Intro::Intro()
     : AScene(SCENE_INTRO)
 {
-
+    _uiObject.push_back(std::make_shared<Text>("INTRO", _font.get()));
 }
 
 IScene::Event Intro::update()

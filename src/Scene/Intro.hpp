@@ -8,7 +8,7 @@
     #define INTRO_HPP
     #include "AScene.hpp"
 
-class Intro : virtual public AScene {
+class Intro : public AScene {
 public:
     ~Intro() override = default;
     Intro();

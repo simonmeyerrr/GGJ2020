@@ -63,7 +63,17 @@ SET(SOURCES
         src/Scene/Settings.cpp
         src/Scene/Settings.hpp
         src/Utils/Using.hpp
-        src/Utils/Exception/Exception.cpp src/Utils/Exception/Exception.hpp src/Utils/Exception/ObjectError.cpp src/Utils/Exception/ObjectError.hpp src/Utils/Exception/SceneError.cpp src/Utils/Exception/SceneError.hpp src/Utils/Exception/MusicError.cpp src/Utils/Exception/MusicError.hpp src/Utils/Exception/ShaderError.cpp src/Utils/Exception/ShaderError.hpp
+        src/Utils/FontLoader.hpp
+        src/Utils/Exception/Exception.cpp
+        src/Utils/Exception/Exception.hpp
+        src/Utils/Exception/ObjectError.cpp
+        src/Utils/Exception/ObjectError.hpp
+        src/Utils/Exception/SceneError.cpp
+        src/Utils/Exception/SceneError.hpp
+        src/Utils/Exception/MusicError.cpp
+        src/Utils/Exception/MusicError.hpp
+        src/Utils/Exception/ShaderError.cpp
+        src/Utils/Exception/ShaderError.hpp
         src/Object/UIObject/Sprite.cpp
         src/Object/UIObject/Sprite.hpp
         src/Object/UIObject/Text.cpp

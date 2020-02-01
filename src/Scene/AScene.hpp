@@ -8,11 +8,10 @@
     #define ASCENE_HPP
 
     #include "IScene.hpp"
-    #include "../Object/GameObject/IGameObject.hpp"
-    #include "../Object/SoundObject/ISoundObject.hpp"
     #include "../Object/UIObject/IUIObject.hpp"
+    #include "../Utils/FontLoader.hpp"
 
-class AScene : virtual public IScene {
+class AScene : public IScene {
 public:
     // Constructors
     AScene(IScene::TypeScene);
@@ -23,13 +22,14 @@ public:
     // Setters & Getters
     TypeScene getType() const override;
 
-private:
+protected:
     // Variable
     TypeScene _type;
+    FontLoader _font;
 
     //std::vector<std::shared_ptr<IGameObject>> _gameObject;
     //std::vector<std::shared_ptr<ISoundObject>> _soundObject;
-    //std::vector<std::shared_ptr<IUIObject>> _uiObject;
+    std::vector<std::shared_ptr<IUIObject>> _uiObject;
 };
 
 #endif /*ASCENE_HPP*/
