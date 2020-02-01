@@ -418,7 +418,7 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Apply a new shader
     ///
-    /// \param shader Shader to apply
+    /// \param shader ShaderType to apply
     ///
     ////////////////////////////////////////////////////////////
     void applyShader(const Shader* shader);

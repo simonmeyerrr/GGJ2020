@@ -46,7 +46,7 @@ class Texture;
 class Transform;
 
 ////////////////////////////////////////////////////////////
-/// \brief Shader class (vertex, geometry and fragment)
+/// \brief ShaderType class (vertex, geometry and fragment)
 ///
 ////////////////////////////////////////////////////////////
 class SFML_GRAPHICS_API Shader : GlResource, NonCopyable
@@ -451,9 +451,9 @@ public:
     ///
     /// To use the texture of the object being drawn, which cannot be
     /// known in advance, you can pass the special value
-    /// sf::Shader::CurrentTexture:
+    /// sf::ShaderType::CurrentTexture:
     /// \code
-    /// shader.setUniform("the_texture", sf::Shader::CurrentTexture).
+    /// shader.setUniform("the_texture", sf::ShaderType::CurrentTexture).
     /// \endcode
     ///
     /// \param name    Name of the texture in the shader
@@ -468,7 +468,7 @@ public:
     /// This overload maps a shader texture variable to the
     /// texture of the object being drawn, which cannot be
     /// known in advance. The second argument must be
-    /// sf::Shader::CurrentTexture.
+    /// sf::ShaderType::CurrentTexture.
     /// The corresponding parameter in the shader must be a 2D texture
     /// (\p sampler2D GLSL type).
     ///
@@ -477,7 +477,7 @@ public:
     /// uniform sampler2D current; // this is the variable in the shader
     /// \endcode
     /// \code
-    /// shader.setUniform("current", sf::Shader::CurrentTexture);
+    /// shader.setUniform("current", sf::ShaderType::CurrentTexture);
     /// \endcode
     ///
     /// \param name Name of the texture in the shader
@@ -642,20 +642,20 @@ public:
     ///
     /// This function is not part of the graphics API, it mustn't be
     /// used when drawing SFML entities. It must be used only if you
-    /// mix sf::Shader with OpenGL code.
+    /// mix sf::ShaderType with OpenGL code.
     ///
     /// \code
-    /// sf::Shader s1, s2;
+    /// sf::ShaderType s1, s2;
     /// ...
-    /// sf::Shader::bind(&s1);
+    /// sf::ShaderType::bind(&s1);
     /// // draw OpenGL stuff that use s1...
-    /// sf::Shader::bind(&s2);
+    /// sf::ShaderType::bind(&s2);
     /// // draw OpenGL stuff that use s2...
-    /// sf::Shader::bind(NULL);
+    /// sf::ShaderType::bind(NULL);
     /// // draw OpenGL stuff that use no shader...
     /// \endcode
     ///
-    /// \param shader Shader to bind, can be null to use no shader
+    /// \param shader ShaderType to bind, can be null to use no shader
     ///
     ////////////////////////////////////////////////////////////
     static void bind(const Shader* shader);
@@ -665,7 +665,7 @@ public:
     ///
     /// This function should always be called before using
     /// the shader features. If it returns false, then
-    /// any attempt to use sf::Shader will fail.
+    /// any attempt to use sf::ShaderType will fail.
     ///
     /// \return True if shaders are supported, false otherwise
     ///
@@ -677,7 +677,7 @@ public:
     ///
     /// This function should always be called before using
     /// the geometry shader features. If it returns false, then
-    /// any attempt to use sf::Shader geometry shader features will fail.
+    /// any attempt to use sf::ShaderType geometry shader features will fail.
     ///
     /// This function can only return true if isAvailable() would also
     /// return true, since shaders in general have to be supported in
@@ -758,7 +758,7 @@ private:
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::Shader
+/// \class sf::ShaderType
 /// \ingroup graphics
 ///
 /// Shaders are programs written using a specific language,
@@ -770,7 +770,7 @@ private:
 /// \li Geometry shaders, that process primitives
 /// \li Fragment (pixel) shaders, that process pixels
 ///
-/// A sf::Shader can be composed of either a vertex shader
+/// A sf::ShaderType can be composed of either a vertex shader
 /// alone, a geometry shader alone, a fragment shader alone,
 /// or any combination of them. (see the variants of the
 /// load functions).
@@ -782,7 +782,7 @@ private:
 ///
 /// Like any C/C++ program, a GLSL shader has its own variables
 /// called \a uniforms that you can set from your C++ application.
-/// sf::Shader handles different types of uniforms:
+/// sf::ShaderType handles different types of uniforms:
 /// \li scalars: \p float, \p int, \p bool
 /// \li vectors (2, 3 or 4 components)
 /// \li matrices (3x3 or 4x4)
@@ -811,13 +811,13 @@ private:
 /// shader.setUniform("color", sf::Glsl::Vec4(color));          // color is a sf::Color
 /// shader.setUniform("matrix", sf::Glsl::Mat4(transform));     // transform is a sf::Transform
 /// shader.setUniform("overlay", texture);                      // texture is a sf::Texture
-/// shader.setUniform("current", sf::Shader::CurrentTexture);
+/// shader.setUniform("current", sf::ShaderType::CurrentTexture);
 /// \endcode
 ///
 /// The old setParameter() overloads are deprecated and will be removed in a
 /// future version. You should use their setUniform() equivalents instead.
 ///
-/// The special Shader::CurrentTexture argument maps the
+/// The special ShaderType::CurrentTexture argument maps the
 /// given \p sampler2D uniform to the current texture of the
 /// object being drawn (which cannot be known in advance).
 ///
@@ -862,12 +862,12 @@ private:
 /// easily inserted anywhere without impacting all the code.
 ///
 /// Like sf::Texture that can be used as a raw OpenGL texture,
-/// sf::Shader can also be used directly as a raw shader for
+/// sf::ShaderType can also be used directly as a raw shader for
 /// custom OpenGL geometry.
 /// \code
-/// sf::Shader::bind(&shader);
+/// sf::ShaderType::bind(&shader);
 /// ... render OpenGL geometry ...
-/// sf::Shader::bind(NULL);
+/// sf::ShaderType::bind(NULL);
 /// \endcode
 ///
 /// \see sf::Glsl

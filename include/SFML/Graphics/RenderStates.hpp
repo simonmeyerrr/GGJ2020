@@ -87,7 +87,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Construct a default set of render states with a custom shader
     ///
-    /// \param theShader Shader to use
+    /// \param theShader ShaderType to use
     ///
     ////////////////////////////////////////////////////////////
     RenderStates(const Shader* theShader);
@@ -98,7 +98,7 @@ public:
     /// \param theBlendMode Blend mode to use
     /// \param theTransform Transform to use
     /// \param theTexture   Texture to use
-    /// \param theShader    Shader to use
+    /// \param theShader    ShaderType to use
     ///
     ////////////////////////////////////////////////////////////
     RenderStates(const BlendMode& theBlendMode, const Transform& theTransform,
@@ -115,7 +115,7 @@ public:
     BlendMode      blendMode; ///< Blending mode
     Transform      transform; ///< Transform
     const Texture* texture;   ///< Texture
-    const Shader*  shader;    ///< Shader
+    const Shader*  shader;    ///< ShaderType
 };
 
 } // namespace sf
