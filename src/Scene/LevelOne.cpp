@@ -21,6 +21,7 @@ LevelOne::LevelOne() : AScene(SCENE_LEVEL1), _pos(sf::Vector2f(200, 700)) {
     _angle = 0.0f;
     _isJumping = false;
     _velocity = {0, 0};
+    _erosion.setProgress(30);
 }
 
 void LevelOne::rotateBlock(sf::RectangleShape &elem, float ratio, float maxAngle) {
@@ -45,6 +46,7 @@ void LevelOne::fullRotate(sf::RectangleShape &elem, float ratio) {
 IScene::Event LevelOne::update() {
 //    rotateBlock(_rect, 2.0f, 30.0f);
 //    fullRotate(_rect, -3.0f);
+    _erosion.update();
     return {EVENT_NONE, SCENE_INTRO};
 }
 
@@ -62,6 +64,7 @@ void LevelOne::display(sf::RenderWindow &w, sf::Shader *shader) {
     w.draw(_bg);
     w.draw(_rect);
     w.draw(_back);
+    _erosion.display(w);
 }
 
 void LevelOne::resume() {
