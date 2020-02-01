@@ -35,10 +35,12 @@ public:
     virtual Type getType() const = 0;
     virtual const sf::Texture &getTexture() const = 0;
     virtual const sf::Sprite &getSprite() const = 0;
+    virtual const sf::Vector2f &getPosition() const = 0;
     virtual void setTexture(const sf::Texture &) = 0;
+    virtual void setPosition(const sf::Vector2f &) = 0;
 
     // Methods
-    virtual void update(sf::Time) = 0;
+    virtual void update() = 0;
 };
 
 #endif /*IGAMEOBJECT_HPP*/

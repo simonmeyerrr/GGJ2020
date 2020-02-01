@@ -10,7 +10,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include "../../Utils/Using.hpp"
 
-class Sprite : IUIObject {
+class Sprite : public IUIObject {
 public:
     // Constructors
     Sprite(const std::string &filename, const sf::IntRect &, const sf::Vector2f &);

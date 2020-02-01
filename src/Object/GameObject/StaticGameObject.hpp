@@ -18,7 +18,7 @@ public:
     virtual ~StaticGameObject() = default;
 
     // Methods
-    void update(sf::Time);
+    void update();
 };
 
 #endif /*STATICGAMEOBJECT_HPP*/

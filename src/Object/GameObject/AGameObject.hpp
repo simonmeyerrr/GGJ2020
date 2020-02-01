@@ -21,13 +21,20 @@ public:
     Type getType() const;
     const sf::Texture &getTexture() const;
     const sf::Sprite &getSprite() const;
+    const sf::Vector2f &getPosition() const;
+    sf::Uint8 *getMask() const;
+
     void setTexture(const sf::Texture &);
+    void setPosition(const sf::Vector2f &);
 
 protected:
     // Variables
     Type _type;
     sf::Texture _t;
     sf::Sprite _s;
+    sf::Uint8 *_mask;
+
+
 };
 
 #endif /*AGAMEOBJECT_HPP*/

@@ -48,6 +48,8 @@ SET(SOURCES
         src/Object/GameObject/StaticGameObject.hpp
         src/Object/GameObject/AnimatedGameObject.cpp
         src/Object/GameObject/AnimatedGameObject.hpp
+        src/Object/GameObject/Objects/Character.cpp
+        src/Object/GameObject/Objects/Character.hpp
         src/Object/UIObject/IUIObject.hpp
         src/Object/SoundObject/MusicObject.cpp
         src/Object/SoundObject/MusicObject.hpp
@@ -92,7 +94,9 @@ SET(SOURCES
         src/Scene/LevelTwo.hpp
         src/Scene/LevelOne.cpp
         src/Scene/LevelOne.hpp
-        src/Utils/Erosion.cpp src/Utils/Erosion.hpp)
+        src/Utils/Erosion.cpp src/Utils/Erosion.hpp
+        src/Object/UIObject/TippingText.cpp
+        src/Object/UIObject/TippingText.hpp)
 
 # Binary
 add_executable(ggj ${SOURCES})

@@ -46,7 +46,7 @@ void Core::event()
 {
     sf::Event event{};
 
-    while (_win->isOpen() && !_sceneManager->isEmpty() && _win->pollEvent(event)) {
+    for (char i = 0; i < 5 && _win->isOpen() && !_sceneManager->isEmpty() && _win->pollEvent(event); i++) {
         if (event.type == sf::Event::Closed)
             _win->close();
         else
@@ -59,10 +59,10 @@ void Core::update()
     auto elapsed = _updateTimer.getElapsedTime().asMicroseconds() + _updateRest;
 
     _updateTimer.restart();
-    while (elapsed >= (1.0 / 30.0) * 1000000.0) {
+    while (elapsed >= (1.0 / 60.0) * 1000000.0) {
         if (_win->isOpen() && !_sceneManager->isEmpty())
             manageEvent(_sceneManager->get()->update());
-        elapsed -= (1.0 / 30.0) * 1000000.0;
+        elapsed -= (1.0 / 60.0) * 1000000.0;
     }
     _updateRest = elapsed;
 }

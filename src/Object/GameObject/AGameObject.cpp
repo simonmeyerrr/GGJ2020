@@ -4,6 +4,7 @@
 **
 */
 
+#include "../../Utils/Collision/Collision.hpp"
 #include "AGameObject.hpp"
 
 AGameObject::AGameObject(IGameObject::Type type, const std::string &path, const Frame &r)
@@ -11,6 +12,9 @@ AGameObject::AGameObject(IGameObject::Type type, const std::string &path, const 
 {
     _t.loadFromFile(path);
     _s.setTexture(_t);
+    sf::Image image;
+    image.loadFromFile(path);
+    _mask = createMask(_t, image);
     _s.setTextureRect(r);
 }
 
@@ -46,7 +50,22 @@ const sf::Sprite &AGameObject::getSprite() const
     return _s;
 }
 
+const sf::Vector2f &AGameObject::getPosition() const
+{
+    return _s.getPosition();
+}
+
 void AGameObject::setTexture(const sf::Texture &t)
 {
     _t = t;
+}
+
+void AGameObject::setPosition(const sf::Vector2f &pos)
+{
+    _s.setPosition(pos);
+}
+
+sf::Uint8 *AGameObject::getMask() const
+{
+    return _mask;
 }

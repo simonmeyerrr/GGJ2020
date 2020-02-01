@@ -31,7 +31,7 @@ public:
         { IScene::TypeScene::SCENE_INTRO, NONE },
         { IScene::TypeScene::SCENE_MAIN_MENU, NONE },
         { IScene::TypeScene::SCENE_SETTINGS, NONE },
-        { IScene::TypeScene::SCENE_LEVEL2, TEST_SHADER },
+        { IScene::TypeScene::SCENE_LEVEL2, NONE },
         { IScene::TypeScene::SCENE_LEVEL1, NONE }
     };
 

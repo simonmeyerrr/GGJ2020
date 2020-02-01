@@ -243,7 +243,10 @@ void LevelTwo::displayRect(sf::RenderWindow &win, const sf::Color &color, const 
     rect.setFillColor(color);
     rect.setSize(size);
     rect.setPosition(pos);
-    win.draw(rect, shader);
+    if (shader)
+        win.draw(rect, shader);
+    else
+        win.draw(rect);
 }
 
 void LevelTwo::displayRoom(sf::RenderWindow &win, const RoomInfo &room, sf::Shader *shader)
@@ -267,7 +270,24 @@ void LevelTwo::displayRoom(sf::RenderWindow &win, const RoomInfo &room, sf::Shad
 
 void LevelTwo::display(sf::RenderWindow &win, sf::Shader *shader)
 {
-    shader->setUniform("lightLocation", sf::Glsl::Vec2(_pos.x + 25, _pos.y - 200));
+    if (shader) {
+        std::vector<sf::Glsl::Vec2> locations;
+        locations.emplace_back(150, 150);
+        locations.emplace_back(200, 150);
+
+        std::vector<float> powers;
+        powers.emplace_back(50);
+        powers.emplace_back(130);
+
+        std::vector<sf::Glsl::Vec4> colors;
+        colors.emplace_back(0.8, 0.2, 0.1, 1);
+        colors.emplace_back(0.2, 0.8, 0.1, 1);
+
+        shader->setUniformArray("location", locations.data(), locations.size());
+        shader->setUniformArray("power", powers.data(), powers.size());
+        shader->setUniformArray("color", colors.data(), colors.size());
+    }
+
     displayRoom(win, _rooms.at(_actual), shader);
 }
 
