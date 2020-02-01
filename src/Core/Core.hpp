@@ -12,6 +12,7 @@
     #include <bits/unique_ptr.h>
     #include <map>
     #include <SFML/Graphics/Shader.hpp>
+    #include "../Utils/Exception/ShaderError.hpp"
 
     #define SHADERS_SIZE 1
 
