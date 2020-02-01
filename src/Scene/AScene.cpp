@@ -1,9 +1,18 @@
+/*
+**
+** GLOBAL GAME JAM
+**
+*/
 
 #include "AScene.hpp"
 
-AScene::AScene(IScene::TypeScene) {}
+AScene::AScene(IScene::TypeScene)
+{
 
-IScene::TypeScene AScene::getType() const {
+}
+
+IScene::TypeScene AScene::getType() const
+{
     return _type;
 }
 
