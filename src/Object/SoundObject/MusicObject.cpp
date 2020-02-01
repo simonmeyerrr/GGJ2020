@@ -5,26 +5,29 @@
 ** MusicObject.cpp
 */
 
+#include "../../Utils/Exception/MusicError.hpp"
 #include "MusicObject.hpp"
 
 MusicObject::MusicObject(const std::string &str)
     : _filename(str), _music()
 {
     if (!_music.openFromFile(_filename))
-        throw "error load from file";
+        throw MusicError("Error : loading music from file", "MusicObject");
 }
 
 MusicObject::MusicObject(const MusicObject &cpy)
     : _music()
 {
     _filename = cpy._filename;
-    _music.openFromFile(_filename);
+    if (!_music.openFromFile(_filename))
+        throw MusicError("Error : loading music from file", "MusicObject");
 }
 
 MusicObject &MusicObject::operator=(const MusicObject &cpy)
 {
     _filename = cpy._filename;
-    _music.openFromFile(_filename);
+    if (!_music.openFromFile(_filename))
+        throw MusicError("Error : loading music from file", "MusicObject");
     return *this;
 }
 

@@ -8,30 +8,29 @@
 #ifndef GGJ2020_MUSICOBJECT_HPP
 #define GGJ2020_MUSICOBJECT_HPP
 
-#include "ISoundObject.hpp"
+#include <SFML/Audio/Music.hpp>
 
-class MusicObject : ISoundObject {
+class MusicObject {
 
 public:
     MusicObject(const std::string &);
     MusicObject(const MusicObject &);
     MusicObject &operator=(const MusicObject &);
 
-    ~MusicObject() override;
+    ~MusicObject();
 
-    void play() override;
-    void pause() override;
-    void stop() override;
-    void setLoop(bool) override;
-    void setVolume(const float) override;
-    float getVolume() const override;
-    const sf::SoundBuffer &getBuffer() const override = delete;
-    const sf::Sound &getSound() const override = delete;
-    const sf::Music &getMusic() const override;
+    void play();
+    void pause();
+    void stop();
+    void setLoop(bool);
+    void setVolume(const float);
+    float getVolume() const;
+    const sf::Music &getMusic() const;
 
     std::string _filename;
 private:
     sf::Music _music;
+
 };
 
 #endif /* GGJ2020_MUSICOBJECT_HPP */

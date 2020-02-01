@@ -47,6 +47,10 @@ SET(SOURCES
         src/Object/UIObject/IUIObject.hpp
         src/Object/UIObject/AUIObject.cpp
         src/Object/UIObject/AUIObject.hpp
+        src/Object/SoundObject/MusicObject.cpp
+        src/Object/SoundObject/MusicObject.hpp
+        src/Object/SoundObject/SoundObject.cpp
+        src/Object/SoundObject/SoundObject.hpp
         src/Scene/IScene.hpp
         src/Scene/AScene.cpp
         src/Scene/AScene.hpp
