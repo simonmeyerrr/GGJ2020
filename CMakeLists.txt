@@ -67,7 +67,7 @@ SET(SOURCES
         src/Scene/Settings.cpp
         src/Scene/Settings.hpp
         src/Utils/Using.hpp
-        )
+        src/Utils/Exception/Exception.cpp src/Utils/Exception/Exception.hpp src/Utils/Exception/ObjectError.cpp src/Utils/Exception/ObjectError.hpp src/Utils/Exception/SceneError.cpp src/Utils/Exception/SceneError.hpp)
 
 # Binary
 add_executable(ggj ${SOURCES})
