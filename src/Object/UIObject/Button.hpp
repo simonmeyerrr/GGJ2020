@@ -27,9 +27,9 @@ public:
     ~Button() override = default;
 
     // Setters & Getters
-    Text getText() const;
+    Text const &getText() const;
     void setText(const Text &);
-    Sprite getSprite() const;
+    Sprite const &getSprite() const;
     void setSprite(const Sprite &);
 
     // Operators

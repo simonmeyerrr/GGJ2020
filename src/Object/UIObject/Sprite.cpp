@@ -10,6 +10,7 @@ Sprite::Sprite(const std::string &filename, const sf::IntRect &rect, const sf::V
     _texture.get()->loadFromFile(filename);
     _sprite.get()->setTexture(*_texture);
     _sprite.get()->setPosition(pos);
+    _sprite->setTextureRect(rect);
 }
 
 const sf::Vector2f &Sprite::getPosition() const {
