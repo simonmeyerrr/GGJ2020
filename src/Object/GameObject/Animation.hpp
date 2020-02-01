@@ -24,7 +24,7 @@ public:
     ~Animation();
 
     // Setters & Getters
-    void setTexture(const sf::Texture &);
+    void setTexture(const sf::Texture *);
     
     const sf::Texture* getTexture() const;
     const frames &getFrames() const;
