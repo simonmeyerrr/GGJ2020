@@ -88,7 +88,7 @@ SET(SOURCES
         src/Object/UIObject/Button.hpp
         src/Scene/LevelTwo.cpp
         src/Scene/LevelTwo.hpp
-        )
+        src/Scene/LevelOne.cpp src/Scene/LevelOne.hpp)
 
 # Binary
 add_executable(ggj ${SOURCES})
