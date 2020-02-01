@@ -13,7 +13,7 @@
 class Sprite : IUIObject {
 public:
     // Constructors
-    Sprite(sf::Texture const &, const sf::IntRect &, const sf::Vector2f &);
+    Sprite(const std::string &filename, const sf::IntRect &, const sf::Vector2f &);
     ~Sprite() override {std::cout << "Sprite end" << std::endl;};
 
     // Setters & Getters

@@ -16,12 +16,8 @@ Intro::Intro()
     _uiObject[1] = std::make_shared<Text>(std::string("INTRO"), _font.get(), sf::Vector2f(700, 50));
     _uiObject[2] = std::make_shared<Text>(std::string("0"), _font.get(), sf::Vector2f(700, 200));
     _uiObject[3] = std::make_shared<Fade>();
-//    sf::Texture texture;
-//    texture.loadFromFile("./nike.png");
-    _texture.loadFromFile("./nike.png");
-    //_text = Text("Play", _font.get(), sf::Vector2f(0, 0));
     _uiObject[4] = std::make_shared<Button>(_text,
-    Sprite(_texture, sf::IntRect(100, 100, 100, 100), sf::Vector2f(0, 0)), []() {
+    Sprite("./nike.png", sf::IntRect(100, 100, 100, 100), sf::Vector2f(0, 0)), []() {
                 std::cout << "test" << std::endl;
             }, 100);
 
