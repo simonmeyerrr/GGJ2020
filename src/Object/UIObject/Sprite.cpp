@@ -39,10 +39,6 @@ void Sprite::setTextureRect(const sf::IntRect &rectangle) {
     _sprite->setTextureRect(rectangle);
 }
 
-const sf::IntRect &Sprite::getTextureRect() {
-    return _sprite->getTextureRect();
-}
-
 void Sprite::setColor(const sf::Color &color) {
     _sprite->setColor(color);
 }
@@ -55,6 +51,11 @@ sf::FloatRect Sprite::getGlobalBounds() {
     return sf::FloatRect();
 }
 
-void Sprite::draw(sf::RenderWindow window) const {
+void Sprite::draw(sf::RenderWindow &window) const {
     window.draw(*_sprite);
+}
+
+Sprite &Sprite::operator=(Sprite const &sprite) {
+    _sprite = sprite._sprite;
+    return *this;
 }

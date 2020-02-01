@@ -36,8 +36,11 @@ public:
     void setLetterSpacing(float spacing);
     float getLetterSpacing() const;
 
+    // Operators
+    Text &operator=(Text const &text);
+
     // Methods
-    void draw(sf::RenderWindow window) const override;
+    void draw(sf::RenderWindow &window) const override;
 
 private:
     s_ptr<sf::Text> _text;

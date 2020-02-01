@@ -72,6 +72,11 @@ float Text::getLetterSpacing() const {
     return _text->getLetterSpacing();
 }
 
-void Text::draw(sf::RenderWindow window) const {
+void Text::draw(sf::RenderWindow &window) const {
     window.draw(*_text);
+}
+
+Text &Text::operator=(Text const &text) {
+    _text = text._text;
+    return *this;
 }

@@ -33,7 +33,7 @@ public:
     virtual sf::FloatRect getGlobalBounds() = 0;
 
     // Methods
-    virtual void draw(sf::RenderWindow window) const = 0;
+    virtual void draw(sf::RenderWindow &window) const = 0;
 };
 
 #endif /* !IUIOBJECT_HPP */

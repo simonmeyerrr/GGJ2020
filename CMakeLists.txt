@@ -68,7 +68,7 @@ SET(SOURCES
         src/Object/UIObject/Sprite.hpp
         src/Object/UIObject/Text.cpp
         src/Object/UIObject/Text.hpp
-        )
+        src/Object/UIObject/Button.cpp src/Object/UIObject/Button.hpp)
 
 # Binary
 add_executable(ggj ${SOURCES})
