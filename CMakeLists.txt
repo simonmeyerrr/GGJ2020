@@ -90,10 +90,9 @@ SET(SOURCES
         src/Object/UIObject/Rect.hpp
         src/Scene/LevelTwo.cpp
         src/Scene/LevelTwo.hpp
-        src/Utils/Erosion.hpp
         src/Scene/LevelOne.cpp
         src/Scene/LevelOne.hpp
-        )
+        src/Utils/Erosion.cpp src/Utils/Erosion.hpp)
 
 # Binary
 add_executable(ggj ${SOURCES})
