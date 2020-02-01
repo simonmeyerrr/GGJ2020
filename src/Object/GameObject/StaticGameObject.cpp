@@ -22,7 +22,7 @@ StaticGameObject &StaticGameObject::operator=(const StaticGameObject &other)
     return *this;
 }
 
-void StaticGameObject::update(sf::Time elapsed)
+void StaticGameObject::update()
 {
     
 }
