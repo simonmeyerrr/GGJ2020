@@ -8,6 +8,7 @@
     #define ISCENE_HPP
 
     #include <SFML/Window.hpp>
+    #include <SFML/Window/Event.hpp>
     #include <memory>
     #include "../Graphics/MainWindow.hpp"
     #include "../Utils/Using.hpp"
@@ -22,8 +23,8 @@ public:
     };
     virtual TypeScene getType() const = 0;
     virtual void update() = 0;
-    virtual void event(const s_ptr<MainWindow>) = 0;
-    virtual void display() = 0;
+    virtual void event(sf::Event &, s_ptr<MainWindow> &) = 0;
+    virtual void display(s_ptr<MainWindow> &) = 0;
 };
 
 #endif /*ISCENE_HPP*/
