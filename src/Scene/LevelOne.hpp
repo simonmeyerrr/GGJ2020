@@ -7,6 +7,7 @@
 
 
 #include "AScene.hpp"
+#include "../Utils/Erosion.hpp"
 
 class LevelOne : public AScene {
     enum Type {
@@ -41,6 +42,8 @@ private:
     bool _right;
     bool _walking;
     sf::Vector2f _velocity;
+
+    Erosion _erosion;
 };
 
 

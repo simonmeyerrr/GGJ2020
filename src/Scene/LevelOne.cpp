@@ -25,6 +25,7 @@ LevelOne::LevelOne() : AScene(SCENE_LEVEL1), _pos(sf::Vector2f(200, 700)) {
     _isJumping = false;
     _right = false;
     _velocity = {0, 0};
+    _erosion.setProgress(30);
     _walking = false;
 //    _gameObject[BACKGROUND] = std::make_shared<AnimatedGameObject>("./assets/textures/lvl1_map.png");
     _gameObject[BACKGROUND] = std::make_shared<StaticGameObject>("./assets/textures/lvl1_map.png", sf::IntRect(0, 0, 16000, 900));
@@ -55,6 +56,7 @@ void LevelOne::fullRotate(sf::RectangleShape &elem, float ratio) {
 IScene::Event LevelOne::update() {
 //    rotateBlock(_rect, 2.0f, 30.0f);
 //    fullRotate(_rect, -3.0f);
+    _erosion.update();
     if (_walking) {
         if (_right)
             moveRight();
@@ -88,6 +90,7 @@ void LevelOne::display(sf::RenderWindow &w, sf::Shader *shader) {
     w.draw(_bg);
     w.draw(_rect);
     w.draw(_back);
+    _erosion.display(w);
     for (auto &elem : _gameObject) {
         w.draw(elem.second->getSprite());
     }

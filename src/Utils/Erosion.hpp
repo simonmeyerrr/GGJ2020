@@ -12,7 +12,7 @@ class Erosion {
 public:
     Erosion();
     Erosion(Erosion &) = delete;
-    ~Erosion() = delete;
+    ~Erosion() = default;
     Erosion &operator=(Erosion &) = delete;
 
     void putPixel(unsigned int, unsigned int, sf::Color);
