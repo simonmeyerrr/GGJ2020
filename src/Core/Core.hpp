@@ -15,8 +15,8 @@ class Core {
 public:
     Core();
     Core(Core &) = delete;
-    ~Core();
     Core &operator=(Core &) = delete;
+    ~Core() = default;
 
 private:
     std::unique_ptr<SceneManager> _sceneManager;
