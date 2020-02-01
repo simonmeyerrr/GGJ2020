@@ -5,31 +5,29 @@
 #include <SFML/Window/Event.hpp>
 #include "Button.hpp"
 
-Button::Button(const Text &text, const Sprite &sprite, Button::LambdaMethod &func, int rect)
-: _function(func), _state(NONE), _rect(rect) {
-    *_text = text;
-    *_sprite = sprite;
+Button::Button(const Text &text, const Sprite &sprite, Button::LambdaMethod func, int rect)
+: _text(text), _sprite(sprite), _function(func), _rect(rect),  _state(NONE) {
 }
 
-Text &Button::getText() const {
-    return *_text;
+Text Button::getText() const {
+    return _text;
 }
 
 void Button::setText(const Text &text) {
-    *_text = text;
+    _text = text;
 }
 
-Sprite &Button::getSprite() const {
-    return *_sprite;
+Sprite Button::getSprite() const {
+    return _sprite;
 }
 
 void Button::setSprite(const Sprite &sprite) {
-    *_sprite = sprite;
+    _sprite = sprite;
 }
 
 void Button::draw(sf::RenderWindow &window) const {
-    _text->draw(window);
-    _sprite->draw(window);
+    _sprite.draw(window);
+    _text.draw(window);
 }
 
 void Button::cb() {
@@ -39,36 +37,59 @@ void Button::cb() {
 void Button::update() {}
 
 void Button::setLeftRect(int rect) {
-    sf::FloatRect bounds = _sprite->getGlobalBounds();
+    sf::FloatRect bounds = _sprite.getGlobalBounds();
     bounds.left = rect;
-    _sprite->setTextureRect(sf::IntRect(bounds));
+    _sprite.setTextureRect(sf::IntRect(bounds));
 }
 
 bool Button::mouseInButton(sf::Event &e) const {
-    return ((float)e.mouseButton.x >= _sprite->getPosition().x
-    && (float)e.mouseButton.x <= _sprite->getPosition().x
-    + _sprite->getGlobalBounds().width
-    && (float)e.mouseButton.y >= _sprite->getPosition().y
-    && (float)e.mouseButton.y <= _sprite->getPosition().y
-    + _sprite->getGlobalBounds().height);
+    std::cout << "Pressed:" << std::endl;
+    std::cout << e.mouseButton.x << " >= " << _sprite.getPosition().x << std::endl;
+    std::cout << e.mouseButton.x << " <= " << (_sprite.getPosition().x + _sprite.getTextureRect().width) << std::endl;
+    std::cout << e.mouseButton.y << " >= " << _sprite.getPosition().y << std::endl;
+    std::cout << e.mouseButton.y << " >= " << (_sprite.getPosition().y + _sprite.getTextureRect().height) << std::endl;
+    return ((float)e.mouseButton.x >= _sprite.getPosition().x
+    && (float)e.mouseButton.x <= _sprite.getPosition().x
+    + _sprite.getTextureRect().width
+    && (float)e.mouseButton.y >= _sprite.getPosition().y
+    && (float)e.mouseButton.y <= _sprite.getPosition().y
+    + _sprite.getTextureRect().height);
 }
 
 void Button::event(sf::RenderWindow &window, sf::Event &e) {
-    if (e.MouseButtonPressed && mouseInButton(e)) {
+    if (e.type == sf::Event::MouseButtonPressed && mouseInButton(e)) {
+        std::cout << "MouseButtonPressed & mouseInButton" << std::endl;
         if (_state == HOVER) {
             _state = CLICKED;
             setLeftRect(_rect * 2);
         }
-    } else if (mouseInButton(e)) {
+    } else if (mouseInButtonMove(e)) {
+        std::cout << "HOVER" << std::endl;
         _state = HOVER;
         setLeftRect(_rect);
     }
-    if (e.MouseButtonReleased && mouseInButton(e)) {
+    if (e.type == sf::Event::MouseButtonReleased && mouseInButtonMove(e)) {
+        std::cout << "WTF" << std::endl;
         _state = NONE;
         setLeftRect(0);
         cb();
-    } else if (e.MouseButtonReleased && !mouseInButton(e)) {
+    } else if (e.type == sf::Event::MouseButtonReleased && !mouseInButtonMove(e)) {
+        std::cout << "NONE" << std::endl;
         _state = NONE;
         setLeftRect(0);
     }
+}
+
+bool Button::mouseInButtonMove(sf::Event &e) const {
+    std::cout << "Move:" << std::endl;
+    std::cout << e.mouseMove.x << " >= " << _sprite.getPosition().x << std::endl;
+    std::cout << e.mouseMove.x << " <= " << (_sprite.getPosition().x + _sprite.getTextureRect().width) << std::endl;
+    std::cout << e.mouseMove.y << " >= " << _sprite.getPosition().y << std::endl;
+    std::cout << e.mouseMove.y << " >= " << (_sprite.getPosition().y + _sprite.getTextureRect().height) << std::endl;
+    return ((float)e.mouseMove.x >= _sprite.getPosition().x
+    && (float)e.mouseMove.x <= _sprite.getPosition().x
+    + _sprite.getTextureRect().width
+    && (float)e.mouseMove.y >= _sprite.getPosition().y
+    && (float)e.mouseMove.y <= _sprite.getPosition().y
+    + _sprite.getTextureRect().height);
 }

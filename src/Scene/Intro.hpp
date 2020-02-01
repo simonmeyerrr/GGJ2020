@@ -7,6 +7,8 @@
 #ifndef INTRO_HPP
     #define INTRO_HPP
     #include "AScene.hpp"
+#include "../Object/UIObject/Text.hpp"
+#include "../Object/UIObject/Sprite.hpp"
 
 class Intro : public AScene {
 public:
@@ -21,6 +23,8 @@ public:
     void resume() override;
 
 private:
+    sf::Texture _texture;
+    Text _text;
     unsigned int _updates;
 };
 

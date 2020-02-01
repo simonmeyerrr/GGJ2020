@@ -8,8 +8,10 @@
     #include "IUIObject.hpp"
     #include "Text.hpp"
     #include "Sprite.hpp"
+    #include <functional>
 
-class Button : virtual public IUIObject {
+
+class Button : public IUIObject {
 public:
 
     enum State {
@@ -21,13 +23,13 @@ public:
     using LambdaMethod = std::function<void ()>;
 
     // Constructors
-    Button(const Text &, const Sprite &, LambdaMethod &, int);
+    Button(const Text &, const Sprite &, LambdaMethod, int);
     ~Button() override = default;
 
     // Setters & Getters
-    Text &getText() const;
+    Text getText() const;
     void setText(const Text &);
-    Sprite &getSprite() const;
+    Sprite getSprite() const;
     void setSprite(const Sprite &);
 
     // Operators
@@ -40,12 +42,13 @@ public:
 
 private:
     bool mouseInButton(sf::Event &e) const;
+    bool mouseInButtonMove(sf::Event &e) const;
     void setLeftRect(int rect);
+    Text _text;
+    Sprite _sprite;
     LambdaMethod _function;
-    State _state;
-    Text *_text;
-    Sprite *_sprite;
     int _rect;
+    State _state;
 };
 
 
