@@ -7,31 +7,35 @@
 #ifndef ISCENE_HPP
     #define ISCENE_HPP
 
-    #include <SFML/Window.hpp>
-    #include <SFML/Window/Event.hpp>
-    #include <memory>
-    #include "../Graphics/MainWindow.hpp"
+    #include <SFML/Graphics.hpp>
     #include "../Utils/Using.hpp"
 
 class IScene {
 public:
-    // Enum
-    enum TypeScene {
-        INTRO,
-        MAIN_MENU,
-        SETTINGS
-    };
-    
-    // Constructors
     virtual ~IScene() = default;
+    enum TypeScene {
+        SCENE_INTRO,
+        SCENE_MAIN_MENU,
+        SCENE_SETTINGS
+    };
 
-    // Setters & Getters
+    enum TypeEvent {
+        EVENT_NONE,
+        EVENT_CLOSE_WINDOW,
+        EVENT_POP_SCENE,
+        EVENT_PUSH_SCENE,
+    };
+
+    struct Event {
+        TypeEvent event;
+        TypeScene scene;
+    };
+
     virtual TypeScene getType() const = 0;
-
-    // Methods
-    virtual void update() = 0;
-    virtual void event(sf::Event &, s_ptr<MainWindow> &) = 0;
-    virtual void display(s_ptr<MainWindow> &) = 0;
+    virtual Event update() = 0;
+    virtual Event event(sf::RenderWindow &, sf::Event &) = 0;
+    virtual void display(sf::RenderWindow &) = 0;
+    virtual void resume() = 0;
 };
 
 #endif /*ISCENE_HPP*/

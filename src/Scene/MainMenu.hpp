@@ -12,15 +12,15 @@
 class MainMenu : virtual public AScene {
 public:
     // Constructors
-    MainMenu(IScene::TypeScene);
+    ~MainMenu() override = default;
+    MainMenu();
     MainMenu(MainMenu &) = delete;
-    ~MainMenu();
     MainMenu &operator=(const MainMenu &) = delete;
 
-    // Methods
-    void update();
-    void event(sf::Event &, s_ptr<MainWindow> &);
-    void display(s_ptr<MainWindow> &);
+    Event update() override;
+    Event event(sf::RenderWindow &, sf::Event &) override;
+    void display(sf::RenderWindow &) override;
+    void resume() override;
 };
 
 #endif /*MAIN_MENU_HPP*/

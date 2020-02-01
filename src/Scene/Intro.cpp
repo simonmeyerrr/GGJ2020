@@ -6,26 +6,25 @@
 
 #include "Intro.hpp"
 
-Intro::Intro(IScene::TypeScene type)
-    : AScene(type)
+Intro::Intro()
+    : AScene(SCENE_INTRO)
 {
 
 }
 
-void Intro::update()
+IScene::Event Intro::update()
 {
-
+    return Event{EVENT_NONE, SCENE_INTRO};
 }
 
-void Intro::event(sf::Event &event, s_ptr<MainWindow> &win)
+IScene::Event Intro::event(sf::RenderWindow &, sf::Event &)
 {
-
+    return Event{EVENT_NONE, SCENE_INTRO};
 }
 
-void Intro::display(s_ptr<MainWindow> &win)
-{
+void Intro::display(sf::RenderWindow &)
+{}
 
-}
-
-
+void Intro::resume()
+{}
 

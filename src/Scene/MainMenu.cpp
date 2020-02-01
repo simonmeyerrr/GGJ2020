@@ -6,24 +6,25 @@
 
 #include "MainMenu.hpp"
 
-MainMenu::MainMenu(IScene::TypeScene type)
-    : AScene(type)
+MainMenu::MainMenu()
+        : AScene(SCENE_MAIN_MENU)
 {
 
 }
 
-void MainMenu::update()
+IScene::Event MainMenu::update()
 {
-
+    return Event{EVENT_NONE, SCENE_INTRO};
 }
 
-void MainMenu::event(sf::Event &event, s_ptr<MainWindow> &win)
+IScene::Event MainMenu::event(sf::RenderWindow &, sf::Event &)
 {
-
+    return Event{EVENT_NONE, SCENE_INTRO};
 }
 
-void MainMenu::display(s_ptr<MainWindow> &win)
-{
+void MainMenu::display(sf::RenderWindow &)
+{}
 
-}
+void MainMenu::resume()
+{}
 

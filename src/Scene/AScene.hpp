@@ -17,19 +17,19 @@ public:
     // Constructors
     AScene(IScene::TypeScene);
     AScene(AScene &) = delete;
-    virtual ~AScene() = default;
+    virtual ~AScene() override = default;
     AScene &operator=(const AScene &) = delete;
 
     // Setters & Getters
-    TypeScene getType() const;
+    TypeScene getType() const override;
 
 private:
     // Variable
     TypeScene _type;
 
-    std::vector<std::shared_ptr<IGameObject>> _gameObject;
-    std::vector<std::shared_ptr<ISoundObject>> _soundObject;
-    std::vector<std::shared_ptr<IUIObject>> _uiObject;
+    //std::vector<std::shared_ptr<IGameObject>> _gameObject;
+    //std::vector<std::shared_ptr<ISoundObject>> _soundObject;
+    //std::vector<std::shared_ptr<IUIObject>> _uiObject;
 };
 
 #endif /*ASCENE_HPP*/

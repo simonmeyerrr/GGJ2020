@@ -6,23 +6,24 @@
 
 #include "Settings.hpp"
 
-Settings::Settings(IScene::TypeScene type)
-    : AScene(type)
+Settings::Settings()
+        : AScene(SCENE_SETTINGS)
 {
 
 }
 
-void Settings::update()
+IScene::Event Settings::update()
 {
-
+    return Event{EVENT_NONE, SCENE_INTRO};
 }
 
-void Settings::event(sf::Event &event, s_ptr<MainWindow> &win)
+IScene::Event Settings::event(sf::RenderWindow &, sf::Event &)
 {
-
+    return Event{EVENT_NONE, SCENE_INTRO};
 }
 
-void Settings::display(s_ptr<MainWindow> &win)
-{
+void Settings::display(sf::RenderWindow &)
+{}
 
-}
+void Settings::resume()
+{}

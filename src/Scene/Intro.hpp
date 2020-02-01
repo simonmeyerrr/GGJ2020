@@ -10,14 +10,15 @@
 
 class Intro : virtual public AScene {
 public:
-    Intro(IScene::TypeScene);
+    ~Intro() override = default;
+    Intro();
     Intro(Intro &) = delete;
-    ~Intro();
     Intro &operator=(const Intro &) = delete;
 
-    void update();
-    void event(sf::Event &, s_ptr<MainWindow> &);
-    void display(s_ptr<MainWindow> &);
+    Event update() override;
+    Event event(sf::RenderWindow &, sf::Event &) override;
+    void display(sf::RenderWindow &) override;
+    void resume() override;
 };
 
 #endif /*INTRO_HPP*/

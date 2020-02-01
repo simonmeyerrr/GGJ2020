@@ -11,16 +11,15 @@
 
 class Settings : virtual public AScene {
 public:
-    // Constructors
-    Settings(IScene::TypeScene);
+    ~Settings() override = default;
+    Settings();
     Settings(Settings &) = delete;
-    ~Settings();
     Settings &operator=(const Settings &) = delete;
 
-    // Methods
-    void update();
-    void event(sf::Event &, s_ptr<MainWindow> &);
-    void display(s_ptr<MainWindow> &);
+    Event update() override;
+    Event event(sf::RenderWindow &, sf::Event &) override;
+    void display(sf::RenderWindow &) override;
+    void resume() override;
 };
 
 #endif /*SETTINGS_HPP*/
