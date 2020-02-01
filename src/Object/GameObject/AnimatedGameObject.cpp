@@ -48,7 +48,11 @@ void AnimatedGameObject::setCurrentFrame(std::size_t frame)
 
 void AnimatedGameObject::update(sf::Time elapsed)
 {
-
+    _elapsedTime += elapsed;
+    if (_elapsedTime >= _frameTime) {
+        
+        _elapsedTime -= _frameTime;
+    }
 }
 
 void AnimatedGameObject::addFrame(const Animation &anim, Frame frame)
