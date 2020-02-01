@@ -63,16 +63,17 @@ void Button::event(sf::RenderWindow &window, sf::Event &e) {
         if (_state == HOVER) {
             _state = CLICKED;
         }
-    } else if (e.type == sf::Event::MouseMoved && mouseInButtonMove(e) && _state != HOVER) {
+        return;
+    } else if (e.type == sf::Event::MouseMoved && mouseInButtonMove(e) && _state != CLICKED) {
         _state = HOVER;
+        return;
     }
     if (e.type == sf::Event::MouseButtonReleased && mouseInButton(e) && _state == CLICKED) {
-        std::cout << "WTF" << std::endl;
         _state = NONE;
         cb();
-    } else if (e.type == sf::Event::MouseButtonReleased && !mouseInButton(e) && _state != CLICKED)
+    } else if (e.type == sf::Event::MouseButtonReleased && !mouseInButton(e))
         _state = NONE;
-    if (e.type == sf::Event::MouseMoved  && !mouseInButtonMove(e) && _state != CLICKED)
+    if (e.type == sf::Event::MouseMoved  && !mouseInButtonMove(e))
         _state = NONE;
 }
 
