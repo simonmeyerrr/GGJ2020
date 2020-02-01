@@ -10,9 +10,12 @@
     #include "IScene.hpp"
     #include "../Object/UIObject/IUIObject.hpp"
     #include "../Utils/FontLoader.hpp"
+    #include "../Object/GameObject/IGameObject.hpp"
+
 
 class AScene : public IScene {
 public:
+
     // Constructors
     AScene(IScene::TypeScene);
     AScene(AScene &) = delete;
@@ -27,9 +30,11 @@ protected:
     TypeScene _type;
     FontLoader _font;
 
-    //std::vector<std::shared_ptr<IGameObject>> _gameObject;
+    std::vector<std::shared_ptr<IGameObject>> _gameObject;
     //std::vector<std::shared_ptr<ISoundObject>> _soundObject;
     std::map<int, std::shared_ptr<IUIObject>> _uiObject;
+
+    bool _shaderType;
 };
 
 #endif /*ASCENE_HPP*/
