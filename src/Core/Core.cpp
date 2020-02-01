@@ -9,7 +9,7 @@
 Core::Core()
     : _displayTimer(), _updateTimer(), _updateRest(0),
     _win(std::make_unique<sf::RenderWindow>(sf::VideoMode(1600, 900, 32), "GGJ2020")),
-    _sceneManager(std::make_unique<SceneManager>()),
+    _sceneManager(std::make_unique<SceneManager>()), _currentShader(NONE)
 {
 }
 
