@@ -45,9 +45,9 @@ IScene::Event LevelThree::update() {
     }
     if (_walking) {
         if (!_right && _pos.x > -DIFF)
-            _pos.x -= 10;
+            _pos.x -= 5;
         else if (_right && _pos.x < 1600 - PLAYER_WIDTH + DIFF)
-            _pos.x += 10;
+            _pos.x += 5;
         _gameObject[CHARACTER]->setPosition(_pos);
     }
     if (_up) {
