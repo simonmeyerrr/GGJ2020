@@ -30,11 +30,10 @@ private:
     void moveRight();
     void moveLeft();
     void gravity();
+    void move();
 
     sf::RectangleShape _bg;
     sf::Vector2f _pos;
-    sf::RectangleShape _rect;
-    sf::RectangleShape _back;
     bool _left;
     float _angle;
     bool _isJumping;
