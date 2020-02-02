@@ -48,8 +48,10 @@ SET(SOURCES
         src/Object/GameObject/StaticGameObject.hpp
         src/Object/GameObject/AnimatedGameObject.cpp
         src/Object/GameObject/AnimatedGameObject.hpp
-        src/Object/GameObject/Objects/Character.cpp
-        src/Object/GameObject/Objects/Character.hpp
+        src/Object/GameObject/Objects/PlayerOld.cpp
+        src/Object/GameObject/Objects/PlayerOld.hpp
+        src/Object/GameObject/Objects/PlayerSchool.cpp
+        src/Object/GameObject/Objects/PlayerSchool.hpp
         src/Object/UIObject/IUIObject.hpp
         src/Object/SoundObject/MusicObject.cpp
         src/Object/SoundObject/MusicObject.hpp
@@ -97,7 +99,8 @@ SET(SOURCES
         src/Utils/Erosion.cpp
         src/Utils/Erosion.hpp
         src/Object/UIObject/TippingText.cpp
-        src/Object/UIObject/TippingText.hpp)
+        src/Object/UIObject/TippingText.hpp
+        )
 
 # Binary
 add_executable(ggj ${SOURCES})

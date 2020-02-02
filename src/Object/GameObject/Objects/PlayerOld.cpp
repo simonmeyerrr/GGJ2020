@@ -4,10 +4,10 @@
 **
 */
 
-#include "Character.hpp"
+#include "PlayerOld.hpp"
 
-Character::Character()
-    : AnimatedGameObject("assets/OLD_Player.png")
+PlayerOld::PlayerOld()
+    : AnimatedGameObject("assets/textures/player_old.png")
 {
     Frames idleRight;
     Frames idleLeft;
