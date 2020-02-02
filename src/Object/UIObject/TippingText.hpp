@@ -9,13 +9,13 @@
 #define GGJ2020_TIPPINGTEXT_HPP
 
 #include "Text.hpp"
+#include "Sprite.hpp"
 
 class TippingText : public Text {
-
 public:
     enum State {
         CLEAN,
-        WRITTING,
+        WRITING,
         ENDED,
     };
     TippingText(const std::string &, const sf::Font &, const sf::Vector2f &, const sf::Color & = sf::Color::Black, unsigned int = 30);
@@ -28,11 +28,15 @@ public:
     void start();
     void clean();
     State getState() const;
+    void drawAll(sf::RenderWindow &window) const;
+    void draw(sf::RenderWindow &w) const override;
 
 private:
     std::string _str;
     std::size_t _nbLetters;
     State _state;
+    sf::Sprite _s;
+    sf::Texture _t;
 
 };
 

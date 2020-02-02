@@ -15,15 +15,21 @@
 #include "../../Object/GameObject/IGameObject.hpp"
 #include "../../Object/UIObject/Sprite.hpp"
 
+typedef struct collisionDirection collisionDirection_t;
+
+struct collisionDirection {
+    bool up;
+    bool down;
+    bool left;
+    bool right;
+};
+
+
 sf::Uint8 *createMask(const sf::Texture &tex, const sf::Image &img);
 sf::Uint8 getPixel(const sf::Uint8 *mask, const sf::Texture &tex, std::size_t x,
     std::size_t y);
 
-bool pixelPerfectTest(const Sprite &Object1, const Sprite &Object2,
+collisionDirection_t pixelPerfectTest(const IGameObject &, const IGameObject &,
     sf::Uint8 AlphaLimit = 0);
-bool pixelPerfectTest(const IGameObject &, const IGameObject &,
-    sf::Uint8 AlphaLimit = 0);
-bool pixelPerfectTest(const sf::RectangleShape &Object1, const sf::RectangleShape &Object2
-);
 
 #endif /* GGJ2020_COLLISION_HPP */

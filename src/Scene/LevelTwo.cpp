@@ -296,58 +296,37 @@ void LevelTwo::takeKey(RoomInfo &room)
     _rooms.at(room.keyOpen.second).links.at(room.keyOpen.first).opened = true;
 }
 
-void LevelTwo::displayRect(sf::RenderWindow &win, const sf::Color &color, const sf::Vector2f &pos, const sf::Vector2f &size, sf::Shader *shader)
+void LevelTwo::displayRect(sf::RenderWindow &win, const sf::Color &color, const sf::Vector2f &pos, const sf::Vector2f &size)
 {
     sf::RectangleShape rect;
 
     rect.setFillColor(color);
     rect.setSize(size);
     rect.setPosition(pos);
-    if (shader)
-        win.draw(rect, shader);
-    else
-        win.draw(rect);
+    win.draw(rect);
 }
 
-void LevelTwo::displayRoom(sf::RenderWindow &win, const RoomInfo &room, sf::Shader *shader)
+void LevelTwo::displayRoom(sf::RenderWindow &win, const RoomInfo &room)
 {
     sf::Text text(room.name, _font.get(), 30);
 
     text.setFillColor(sf::Color::Black);
-    displayRect(win, sf::Color::White, {0, 0}, {1600, 900}, shader);
+    displayRect(win, sf::Color::White, {0, 0}, {1600, 900});
     win.draw(text);
     for (const auto &door: room.links) {
-        displayRect(win, door.second.opened ? sf::Color::Blue : sf::Color::Red, door.second.pos, {DOOR_WIDTH, DOOR_HEIGHT}, shader);
+        displayRect(win, door.second.opened ? sf::Color::Blue : sf::Color::Red, door.second.pos, {DOOR_WIDTH, DOOR_HEIGHT});
         text.setString(_rooms.at(door.first).name);
         text.setPosition(door.second.pos);
         win.draw(text);
     }
     if (room.hasKey) {
-        displayRect(win, sf::Color::Magenta, room.keyPos, {50, 50}, shader);
+        displayRect(win, sf::Color::Magenta, room.keyPos, {50, 50});
     }
 }
 
-void LevelTwo::display(sf::RenderWindow &win, sf::Shader *shader)
+void LevelTwo::display(sf::RenderWindow &win, shaders_map &shaders)
 {
-    if (shader) {
-        std::vector<sf::Glsl::Vec2> locations;
-        locations.emplace_back(150, 150);
-        locations.emplace_back(200, 150);
-
-        std::vector<float> powers;
-        powers.emplace_back(50);
-        powers.emplace_back(130);
-
-        std::vector<sf::Glsl::Vec4> colors;
-        colors.emplace_back(0.8, 0.2, 0.1, 1);
-        colors.emplace_back(0.2, 0.8, 0.1, 1);
-
-        shader->setUniformArray("location", locations.data(), locations.size());
-        shader->setUniformArray("power", powers.data(), powers.size());
-        shader->setUniformArray("color", colors.data(), colors.size());
-    }
-
-    displayRoom(win, _rooms.at(_actual), shader);
+    displayRoom(win, _rooms.at(_actual));
     for (const auto &object: _gameObject)
         win.draw(object.second->getSprite());
     _uiObject[0]->draw(win);
