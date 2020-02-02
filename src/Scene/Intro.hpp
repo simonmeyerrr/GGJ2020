@@ -23,8 +23,6 @@ public:
     void resume() override;
 
 private:
-    sf::Texture _texture;
-    Text _text;
     unsigned int _updates;
 };
 
