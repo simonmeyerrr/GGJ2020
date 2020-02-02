@@ -195,8 +195,8 @@ LevelTwo::LevelTwo(Saves &save)
     _gameObject[0] = std::make_shared<PlayerSchool>();
     _gameObject[0]->setPosition({static_cast<float>(_x), HEIGHT - PLAYER_HEIGHT});
     _sounds[DOOR] = std::make_shared<SoundObject>("./assets/sound/scene2/door_open.ogg");
-    _sounds[DOOR] = std::make_shared<SoundObject>("./assets/sound/scene2/keys_pickup.ogg");
-    _sounds[DOOR] = std::make_shared<SoundObject>("./assets/sound/scene2/locked_door.ogg");
+    _sounds[KEYS] = std::make_shared<SoundObject>("./assets/sound/scene2/keys_pickup.ogg");
+    _sounds[LOCKED] = std::make_shared<SoundObject>("./assets/sound/scene2/locked_door.ogg");
     _music = std::make_shared<MusicObject>("./assets/sound/scene2/stress_theme.ogg");
     _music->setLoop(true);
     _music->play();
