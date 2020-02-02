@@ -26,7 +26,17 @@ LevelOne::LevelOne() : AScene(SCENE_LEVEL1), _pos(sf::Vector2f(200, 700)) {
     _right = false;
     _velocity = {0, 0};
     _walking = false;
-//    _gameObject[BACKGROUND] = std::make_shared<AnimatedGameObject>("./assets/textures/lvl1_map.png");
+    _sounds[FOREST] = std::make_shared<SoundObject>("./assets/sound/scene1/forest_fx.ogg");
+    std::cout << "fail" << std::endl;
+    _sounds[JUMP_END] = std::make_shared<SoundObject>("./assets/sound/scene1/landing_forest.ogg");
+    _sounds[STEPS] = std::make_shared<SoundObject>("./assets/sound/scene1/steps_woods.ogg");
+    _sounds[WATER] = std::make_shared<SoundObject>("./assets/sound/scene1/water.ogg");
+    _music = std::make_shared<MusicObject>("./assets/sound/scene1/military_theme.ogg");
+    _music->setLoop(true);
+    _music->play();
+    _sounds[FOREST]->setLoop(true);
+    _sounds[FOREST]->play();
+//     _gameObject[BACKGROUND] = std::make_shared<AnimatedGameObject>("./assets/textures/lvl1_map.png");
     _gameObject[BACKGROUND] = std::make_shared<StaticGameObject>("./assets/textures/lvl1_map.png", sf::IntRect(0, 0, 16000, 900));
     _gameObject[CHARACTER] = std::make_shared<PlayerSchool>();
     _pos = {0, 0};
