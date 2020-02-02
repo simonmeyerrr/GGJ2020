@@ -40,6 +40,7 @@ MainMenu::MainMenu(Saves &save)
     std::srand(std::time(nullptr));
     for (int i = 0; i < 3; ++i)
         _lights[i] = true;
+    dynamic_cast<Fade &>(*(_uiObject[3])).start(sf::Color::Black, 200, false);
 }
 
 int MainMenu::inFrontOf() const
