@@ -5,7 +5,7 @@
 #include "FamilyCharacter.hpp"
 
 FamilyCharacter::FamilyCharacter(std::string const &fileName, size_t size, sf::Font &font, sf::Vector2f pos)
-: AnimatedGameObject(fileName)
+: AnimatedGameObject(fileName), _tipping(_font)
 {
     Frames idleRight;
     Frames idleLeft;
@@ -25,17 +25,16 @@ FamilyCharacter::FamilyCharacter(std::string const &fileName, size_t size, sf::F
     _pos = pos;
     _basePos = pos;
     _right = true;
+    _isFound = true;
     _isTalking = false;
     _quests.reserve(size);
     _font = font;
     setPosition(pos);
     setCurrentAnimation("idleRight");
-    _notFound = std::make_shared<TippingText>("Reviens me voir quand tu auras trouvé !", font, pos, sf::Color::Black, 60);
-    _successFull = std::make_shared<TippingText>("Tu as réussi à retrouver tous les objets perdus !", font, pos, sf::Color::Black, 60);
 }
 
 void FamilyCharacter::addQuest(std::string const &s) {
-    _quests.push_back(std::make_shared<TippingText>(s, _font, sf::Vector2f(0, 0), sf::Color::Black, 60));
+    _quests.push_back(s);
 }
 
 void FamilyCharacter::setTalking(bool talking) {
@@ -43,7 +42,7 @@ void FamilyCharacter::setTalking(bool talking) {
 }
 
 void FamilyCharacter::move(float max, float ratio) {
-    if (!_isTalking) {
+    if (_tipping.getState() == TippingText::CLEAN) {
         if (_right) {
             setCurrentAnimation("walkLeft");
             _pos.x += ratio;
@@ -67,21 +66,24 @@ void FamilyCharacter::setPosition(sf::Vector2f f) {
 }
 
 void FamilyCharacter::askQuest(size_t idx) {
-    _quests[idx]->start();
+
+    if (_isFound) {
+        _tipping.start(_quests[idx]);
+        _isFound = false;
+    } else {
+        _tipping.start("Reviens me voir plus tard quand tu auras\nretrouve l'objet !");
+    }
 }
 
 void FamilyCharacter::draw(sf::RenderWindow &w) {
-    for (auto &elem : _quests) {
-        elem->drawAll(w);
-    }
-    _successFull->drawAll(w);
-    _notFound->drawAll(w);
+    _tipping.draw(w);
 }
 
 void FamilyCharacter::updateBubble() {
-    for (auto &elem : _quests) {
-        elem->update();
-    }
-    _successFull->update();
-    _notFound->update();;
+    _tipping.update();
+}
+
+void FamilyCharacter::successQuest() {
+    _isFound = true;
+    _tipping.start("Felicitations tu as reussi à trouver cet objet!");
 }

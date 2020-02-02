@@ -11,7 +11,7 @@
 #include "../Object/UIObject/Text.hpp"
 #include "../Object/UIObject/Rect.hpp"
 
-LevelOne::LevelOne(Saves &save) : AScene(SCENE_LEVEL1, save), _pos(sf::Vector2f(200, 700)), _escape(false) {
+LevelOne::LevelOne(Saves &save) : AScene(SCENE_LEVEL1, save), _pos(sf::Vector2f(200, 700)), _escape(false), _end(false) {
     _bg.setFillColor(sf::Color::Green);
     _bg.setSize(sf::Vector2f(2000, 700));
     _bg.setPosition(sf::Vector2f(0, 0));
@@ -27,6 +27,7 @@ LevelOne::LevelOne(Saves &save) : AScene(SCENE_LEVEL1, save), _pos(sf::Vector2f(
     _sounds[WATER] = std::make_shared<SoundObject>("./assets/sound/scene1/water.ogg");
     _music = std::make_shared<MusicObject>("./assets/sound/scene1/military_theme.ogg");
     _music->setLoop(true);
+    _music->setVolume(0);
     _music->play();
     _sounds[FOREST]->setLoop(true);
     _sounds[FOREST]->play();
@@ -60,6 +61,8 @@ void LevelOne::fullRotate(sf::RectangleShape &elem, float ratio) {
 }
 
 IScene::Event LevelOne::update() {
+    if (_music->getVolume() < 50)
+        _music->setVolume(_music->getVolume() + 0.1);
     _uiObject[0]->update();
     if (_escape)
         return Event{EVENT_NONE, SCENE_INTRO};
@@ -74,6 +77,10 @@ IScene::Event LevelOne::update() {
         _velocity.x = 0;
     gravity();
     move();
+    if (_end && dynamic_cast<Fade &>(*_uiObject[0]).isOver()) {
+        _save.level1 = true;
+        return {EVENT_POP_SCENE, SCENE_INTRO};
+    }
     return {EVENT_NONE, SCENE_INTRO};
 }
 
@@ -128,6 +135,10 @@ void LevelOne::moveRight() {
     } else {
         sf::Vector2f pos2 = _gameObject[BACKGROUND]->getPosition();
         _gameObject[BACKGROUND]->setPosition(sf::Vector2f(pos2.x - 10, pos2.y));
+        if (pos2.x < -10000 && !_end) {
+            _end = true;
+            dynamic_cast<Fade &>(*_uiObject[0]).start(sf::Color::Black, 200, true);
+        }
     }
 }
 

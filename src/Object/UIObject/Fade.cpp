@@ -10,15 +10,16 @@ Fade::Fade()
 
 bool Fade::isOver() const
 {
-    return _actual >= _goal;
+    return _actual >= _goal - 1;
 }
 
 void Fade::start(sf::Color color, unsigned updates, bool in)
 {
-    _rect.setFillColor(color);
     _actual = 0;
     _goal = updates;
     _in = in;
+    color.a = _in ? 0 : 256;
+    _rect.setFillColor(color);
 }
 
 void Fade::update()

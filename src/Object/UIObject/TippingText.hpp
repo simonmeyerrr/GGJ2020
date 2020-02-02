@@ -18,17 +18,15 @@ public:
         WRITING,
         ENDED,
     };
-    TippingText(const std::string &, const sf::Font &, const sf::Vector2f &, const sf::Color & = sf::Color::Black, unsigned int = 30);
-    TippingText &operator=(TippingText const &);
+    TippingText(const sf::Font &font);
+    TippingText &operator=(TippingText const &) = delete;
 
     ~TippingText() override = default;
 
-    void setString(std::string const &) override;
     void update() override;
-    void start();
+    void start(const std::string &str);
     void clean();
     State getState() const;
-    void drawAll(sf::RenderWindow &window) const;
     void draw(sf::RenderWindow &w) const override;
 
 private:
