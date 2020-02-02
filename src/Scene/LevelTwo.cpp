@@ -298,28 +298,28 @@ void LevelTwo::takeKey(RoomInfo &room)
     _rooms.at(room.keyOpen.second).links.at(room.keyOpen.first).opened = true;
 }
 
-void LevelTwo::displayRoom(sf::RenderWindow &win, const RoomInfo &room)
+void LevelTwo::displayRoom(sf::RenderWindow &win, const RoomInfo &room, shaders_map &shaders)
 {
     sf::Text text(room.name, _font.get(), 30);
 
-    win.draw(_gameObject[room.type == TYPE_CLASSROOM ? 1 : 2]->getSprite());
+    win.draw(_gameObject[room.type == TYPE_CLASSROOM ? 1 : 2]->getSprite(), &shaders[AMBIENT_LIGHTS]);
     text.setFillColor(sf::Color::Black);
     for (const auto &door: room.links) {
         int nb = door.second.opened ? 4 : 3;
         _gameObject[nb]->setPosition(door.second.pos);
-        win.draw(_gameObject[nb]->getSprite());
+        win.draw(_gameObject[nb]->getSprite(), &shaders[AMBIENT_LIGHTS]);
         text.setString(_rooms.at(door.first).name);
         text.setPosition({door.second.pos.x + 50, door.second.pos.y - 50});
-        win.draw(text);
+        win.draw(text, &shaders[AMBIENT_LIGHTS]);
     }
     if (room.hasKey)
-        win.draw(_gameObject[5]->getSprite());
+        win.draw(_gameObject[5]->getSprite(), &shaders[AMBIENT_LIGHTS]);
 }
 
 void LevelTwo::display(sf::RenderWindow &win, shaders_map &shaders)
 {
-    displayRoom(win, _rooms.at(_actual));
-    win.draw(_gameObject[0]->getSprite());
+    displayRoom(win, _rooms.at(_actual), shaders);
+    win.draw(_gameObject[0]->getSprite(), &shaders[AMBIENT_LIGHTS]);
     _uiObject[0]->draw(win);
     if (_escape) {
         _uiObject[1]->draw(win);

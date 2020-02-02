@@ -63,7 +63,7 @@ private:
     bool hasDoor(RoomInfo &room);
     void takeDoor(RoomInfo &room);
     void takeKey(RoomInfo &room);
-    void displayRoom(sf::RenderWindow &, const RoomInfo &room);
+    void displayRoom(sf::RenderWindow &, const RoomInfo &room, shaders_map &);
 
     std::map<Room, RoomInfo> _rooms;
     Room _actual;

@@ -53,7 +53,7 @@ IScene::Event MainMenu::update()
 {
     for (int i = 0; i < 3; ++i) {
         int rand = std::rand();
-        if (rand % 60 == 0)
+        if (rand % 80 == 0)
             _lights[i] = !_lights[i];
     }
 
@@ -134,30 +134,30 @@ IScene::Event MainMenu::event(sf::RenderWindow &win, sf::Event &e)
 
 void MainMenu::display(sf::RenderWindow &win, shaders_map &shaders)
 {
-    shaders[TEST_SHADER].setUniform("light_number", 3);
+    shaders[AMBIENT_LIGHTS].setUniform("light_number", 3);
 
     std::vector<sf::Vector2f> locations;
     for (int i = 1; i < 4; ++i)
         locations.emplace_back(_gameObject[i]->getSprite().getPosition().x + _gameObject[i]->getSprite().getLocalBounds().width / 2, 740);
-    shaders[TEST_SHADER].setUniformArray("locations", locations.data(), locations.size());
+    shaders[AMBIENT_LIGHTS].setUniformArray("locations", locations.data(), locations.size());
 
     std::vector<sf::Glsl::Vec4> colors;
     for (int i = 0; i < 3; ++i)
         colors.emplace_back(sf::Glsl::Vec4(1.0, 0.6, 0.8, 1.0));
-    shaders[TEST_SHADER].setUniformArray("colors", colors.data(), colors.size());
+    shaders[AMBIENT_LIGHTS].setUniformArray("colors", colors.data(), colors.size());
 
     std::vector<float> powers;
     for (int i = 0; i < 3; ++i)
         powers.emplace_back(_lights[i] ? 250.0 : 220.0);
-    shaders[TEST_SHADER].setUniformArray("powers", powers.data(), powers.size());
+    shaders[AMBIENT_LIGHTS].setUniformArray("powers", powers.data(), powers.size());
 
     _uiObject[0]->draw(win);
-    win.draw(_gameObject[0]->getSprite(), &shaders[TEST_SHADER]);
-    win.draw(_gameObject[_save.level1 ? 5 : 1]->getSprite(), &shaders[TEST_SHADER]);
-    win.draw(_gameObject[_save.level2 ? 6 : 2]->getSprite(), &shaders[TEST_SHADER]);
-    win.draw(_gameObject[_save.level3 ? 7 : 3]->getSprite(), &shaders[TEST_SHADER]);
+    win.draw(_gameObject[0]->getSprite(), &shaders[AMBIENT_LIGHTS]);
+    win.draw(_gameObject[_save.level1 ? 5 : 1]->getSprite(), &shaders[AMBIENT_LIGHTS]);
+    win.draw(_gameObject[_save.level2 ? 6 : 2]->getSprite(), &shaders[AMBIENT_LIGHTS]);
+    win.draw(_gameObject[_save.level3 ? 7 : 3]->getSprite(), &shaders[AMBIENT_LIGHTS]);
     if (!_anim) {
-        win.draw(_gameObject[4]->getSprite(), &shaders[TEST_SHADER]);
+        win.draw(_gameObject[4]->getSprite(), &shaders[AMBIENT_LIGHTS]);
         _uiObject[0]->draw(win);
     }
     _uiObject[3]->draw(win);
