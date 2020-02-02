@@ -11,17 +11,26 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Color.hpp>
-#include <SFML/Graphics/RectangleShape.hpp>
-#include "../../Object/GameObject/IGameObject.hpp"
-#include "../../Object/UIObject/Sprite.hpp"
+
+struct Mask {
+    ssize_t const x, y;
+    sf::Uint8 *pix;
+};
+
+struct Obj {
+    sf::Sprite &&sprite;
+    std::size_t width = 0, height = 0;
+    ssize_t x = 0, y = 0;
+};
+
+Mask *createMask(sf::Texture const *, sf::Image const &i);
 
 
-sf::Uint8 *createMask(const sf::Texture &tex, const sf::Image &img);
-sf::Uint8 getPixel(const sf::Uint8 *mask, const sf::Texture &tex, std::size_t x,
-    std::size_t y);
-
-bool pixelPerfectTest(const IGameObject &, const IGameObject &,
-    sf::Uint8 AlphaLimit = 0);
+std::size_t collideDown(Mask *hum_m, Mask *map_m, const sf::Sprite &hum, const sf::Sprite &map,
+    std::size_t range
+);
+//bool pixelPerfectTest(const IGameObject &, const IGameObject &,
+//    sf::Uint8 AlphaLimit = 0);
 
 
 #endif /* GGJ2020_COLLISION_HPP */

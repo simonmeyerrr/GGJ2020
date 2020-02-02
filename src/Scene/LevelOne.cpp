@@ -6,15 +6,12 @@
 #include "../Utils/Collision/Collision.hpp"
 #include "../Object/GameObject/AnimatedGameObject.hpp"
 #include "../Object/GameObject/StaticGameObject.hpp"
-#include "../Object/GameObject/Objects/PlayerSchool.hpp"
+#include "../Object/GameObject/Objects/MilitaryCharacter.hpp"
 #include "../Object/UIObject/Fade.hpp"
 #include "../Object/UIObject/Text.hpp"
 #include "../Object/UIObject/Rect.hpp"
 
 LevelOne::LevelOne(Saves &save) : AScene(SCENE_LEVEL1, save), _pos(sf::Vector2f(200, 700)), _escape(false), _end(false) {
-    _bg.setFillColor(sf::Color::Green);
-    _bg.setSize(sf::Vector2f(2000, 700));
-    _bg.setPosition(sf::Vector2f(0, 0));
     _left = true;
     _angle = 0.0f;
     _isJumping = false;
@@ -31,8 +28,13 @@ LevelOne::LevelOne(Saves &save) : AScene(SCENE_LEVEL1, save), _pos(sf::Vector2f(
     _music->play();
     _sounds[FOREST]->setLoop(true);
     _sounds[FOREST]->play();
-    _gameObject[BACKGROUND] = std::make_shared<StaticGameObject>("./assets/textures/lvl1_map.png", sf::IntRect(0, 0, 16000, 900));
-    _gameObject[CHARACTER] = std::make_shared<PlayerSchool>();
+    _gameObject[SKY] = std::make_shared<StaticGameObject>("./assets/textures/5ciel_fond.png", sf::IntRect(0, 0, 1600, 900));
+    _gameObject[MONTAGNE] = std::make_shared<StaticGameObject>("./assets/textures/4montagne_fond.png", sf::IntRect(0, 0, 1600, 900));
+    _gameObject[FOREST2_B] = std::make_shared<StaticGameObject>("./assets/textures/3arbre_arriere_fond.png", sf::IntRect(0, 0, 1600, 900));
+    _gameObject[FOREST_B] = std::make_shared<StaticGameObject>("./assets/textures/2arbre_devant_fond.png", sf::IntRect(0, 0, 1600, 900));
+    _gameObject[SOL] = std::make_shared<StaticGameObject>("./assets/textures/1sol_fond.png", sf::IntRect(0, 0, 1600, 900));
+    _gameObject[PLATFORMS] = std::make_shared<StaticGameObject>("./assets/textures/lvl1_map.png", sf::IntRect(0, 0, 16000, 900));
+    _gameObject[CHARACTER] = std::make_shared<MilitaryCharacter>();
     _pos = {0, 0};
     _gameObject[CHARACTER]->setPosition(_pos);
     _uiObject[0] = std::make_shared<Fade>();
@@ -98,6 +100,7 @@ IScene::Event LevelOne::event(sf::RenderWindow &w, sf::Event &e) {
         } else if (!_walking && (e.key.code == sf::Keyboard::Right || e.key.code == sf::Keyboard::Left)) {
             _walking = true;
             _right = e.key.code == sf::Keyboard::Right;
+            dynamic_cast<AnimatedGameObject &>(*_gameObject[CHARACTER]).setCurrentAnimation(std::string("walk") + (_right ? "Right" : "Left"));
         }
         if (e.key.code == sf::Keyboard::Space && !_isJumping) {
             _isJumping = true;
@@ -105,14 +108,16 @@ IScene::Event LevelOne::event(sf::RenderWindow &w, sf::Event &e) {
         }
     }
     if (e.type == sf::Event::KeyReleased) {
-        if (_walking && ((e.key.code == sf::Keyboard::Right && _right) || (e.key.code == sf::Keyboard::Left && !_right)))
+        if (_walking && ((e.key.code == sf::Keyboard::Right && _right) || (e.key.code == sf::Keyboard::Left && !_right))) {
             _walking = false;
+            dynamic_cast<AnimatedGameObject &>(*_gameObject[CHARACTER]).setCurrentAnimation(std::string("idle") + (_right ? "Right" : "Left"));
+        }
+
     }
     return {EVENT_NONE, SCENE_INTRO};
 }
 
 void LevelOne::display(sf::RenderWindow &w, shaders_map  &shaders) {
-    w.draw(_bg);
     for (auto &elem : _gameObject) {
         w.draw(elem.second->getSprite());
     }
@@ -130,11 +135,12 @@ void LevelOne::resume() {
 void LevelOne::moveRight() {
 
     if ((int) _gameObject[CHARACTER]->getPosition().x < 1600 / 2 ||
-            _gameObject[BACKGROUND]->getPosition().x + _gameObject[BACKGROUND]->getSprite().getTextureRect().width <= 1600) {
+            _gameObject[PLATFORMS]->getPosition().x + _gameObject[PLATFORMS]->getSprite().getTextureRect().width <= 1600) {
         _velocity.x = 10;
     } else {
-        sf::Vector2f pos2 = _gameObject[BACKGROUND]->getPosition();
-        _gameObject[BACKGROUND]->setPosition(sf::Vector2f(pos2.x - 10, pos2.y));
+        _velocity.x = 0;
+        sf::Vector2f pos2 = _gameObject[PLATFORMS]->getPosition();
+        _gameObject[PLATFORMS]->setPosition(sf::Vector2f(pos2.x - 10, pos2.y));
         if (pos2.x < -10000 && !_end) {
             _end = true;
             dynamic_cast<Fade &>(*_uiObject[0]).start(sf::Color::Black, 200, true);
@@ -144,22 +150,22 @@ void LevelOne::moveRight() {
 
 void LevelOne::moveLeft()
 {
-    _velocity.x = -10;
-    if (_gameObject[BACKGROUND]->getPosition().x >= 0 ||
+    if (_gameObject[PLATFORMS]->getPosition().x >= 0 ||
         (int) _gameObject[CHARACTER]->getPosition().x >= 1600 / 2) {
         _velocity.x = -10;
     } else {
-        sf::Vector2f pos2 = _gameObject[BACKGROUND]->getPosition();
-        _gameObject[BACKGROUND]->setPosition(sf::Vector2f(pos2.x + 10, pos2.y));
+        _velocity.x = 0;
+        sf::Vector2f pos2 = _gameObject[PLATFORMS]->getPosition();
+        _gameObject[PLATFORMS]->setPosition(sf::Vector2f(pos2.x + 10, pos2.y));
     }
 }
 
 void LevelOne::gravity() {
-//    if (!pixelPerfectTest(*_gameObject[BACKGROUND], *_gameObject[CHARACTER])) {
+//    if (!pixelPerfectTest(*_gameObject[PLATFORMS], *_gameObject[CHARACTER])) {
 //        _pos.x += _velocity.x;
 //        _pos.y += _velocity.y;
 //    _velocity.y += 1;
-//    } else if (pixelPerfectTest(*_gameObject[BACKGROUND], *_gameObject[CHARACTER])) {
+//    } else if (pixelPerfectTest(*_gameObject[PLATFORMS], *_gameObject[CHARACTER])) {
 //        _velocity.y = 0;
 //        //_pos.y = 700;
 //        _isJumping = false;
@@ -170,7 +176,7 @@ void LevelOne::gravity() {
 void LevelOne::move()
 {
 //    if (_velocity.y > 0)
-//        _velocity.y = collideDown(_gameObject[CHARACTER]->getMask(),_gameObject[BACKGROUND]->getMask(), _gameObject[CHARACTER]->getSprite(), _gameObject[BACKGROUND]->getSprite(), _velocity.y);
+//        _velocity.y = collideDown(_gameObject[CHARACTER]->getMask(),_gameObject[PLATFORMS]->getMask(), _gameObject[CHARACTER]->getSprite(), _gameObject[PLATFORMS]->getSprite(), _velocity.y);
     _pos.y += _velocity.y;
     _pos.x += _velocity.x;
     _gameObject[CHARACTER]->setPosition(_pos);
