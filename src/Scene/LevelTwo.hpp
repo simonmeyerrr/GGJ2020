@@ -45,8 +45,13 @@ struct RoomInfo {
 
 class LevelTwo : public AScene {
 public:
+    enum {
+        DOOR,
+        KEYS,
+        LOCKED
+    };
     ~LevelTwo() override = default;
-    LevelTwo();
+    LevelTwo(Saves &save);
     LevelTwo(LevelTwo &) = delete;
     LevelTwo &operator=(const LevelTwo &) = delete;
 

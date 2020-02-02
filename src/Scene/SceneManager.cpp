@@ -7,7 +7,6 @@
 #include "SceneManager.hpp"
 #include "Intro.hpp"
 #include "MainMenu.hpp"
-#include "Settings.hpp"
 #include "LevelTwo.hpp"
 #include "LevelOne.hpp"
 
@@ -23,22 +22,19 @@ SceneManager::~SceneManager() {
     }
 }
 
-void SceneManager::push(IScene::TypeScene type) {
+void SceneManager::push(IScene::TypeScene type, IScene::Saves &save) {
     switch (type) {
         case IScene::SCENE_INTRO:
-            _scenes.push(new Intro());
+            _scenes.push(new Intro(save));
             break;
         case IScene::SCENE_MAIN_MENU:
-            _scenes.push(new MainMenu());
-            break;
-        case IScene::SCENE_SETTINGS:
-            _scenes.push(new Settings());
+            _scenes.push(new MainMenu(save));
             break;
         case IScene::SCENE_LEVEL1:
-            _scenes.push(new LevelOne());
+            _scenes.push(new LevelOne(save));
             break;
         case IScene::SCENE_LEVEL2:
-            _scenes.push(new LevelTwo());
+            _scenes.push(new LevelTwo(save));
             break;
         default:
             break;

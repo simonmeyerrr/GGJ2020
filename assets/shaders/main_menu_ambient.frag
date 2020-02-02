@@ -19,6 +19,5 @@ void main()
     float distance3 = length(third - gl_FragCoord.xy) + 150.0;
     float attenuation3 = 250.0 / distance3;
     vec4 color3 = vec4(attenuation3, attenuation3, attenuation3, 1) * vec4(1, 0.6, 0.8, 1);
-
     gl_FragColor = (color + color2 + color3) * pixel;
 }

@@ -9,7 +9,7 @@
 Core::Core()
     : _displayTimer(), _updateTimer(), _updateRest(0),
     _win(std::make_unique<sf::RenderWindow>(sf::VideoMode(1600, 900, 32), "GGJ2020")),
-    _sceneManager(std::make_unique<SceneManager>())
+    _sceneManager(std::make_unique<SceneManager>()), _save{false, false, false}, _sound("./assets/sound/scene1/forest_fx.ogg")
 {
 }
 
@@ -88,10 +88,13 @@ void Core::manageEvent(IScene::Event event)
             _win->close();
             break;
         case IScene::EVENT_POP_SCENE:
+            _win->setView(_win->getDefaultView());
             _sceneManager->pop();
             break;
         case IScene::EVENT_PUSH_SCENE:
-            _sceneManager->push(event.scene);
+            _sound.play();
+            _win->setView(_win->getDefaultView());
+            _sceneManager->push(event.scene, _save);
         default:
             break;
     }

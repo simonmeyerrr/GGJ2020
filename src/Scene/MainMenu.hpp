@@ -15,7 +15,7 @@ class MainMenu : public AScene {
 public:
     // Constructors
     ~MainMenu() override = default;
-    MainMenu();
+    MainMenu(Saves &save);
     MainMenu(MainMenu &) = delete;
     MainMenu &operator=(const MainMenu &) = delete;
 
@@ -33,6 +33,11 @@ private:
     int _x;
 
     Erosion _erosion;
+
+    bool _anim;
+    bool _in;
+    float _zoom;
+    IScene::TypeScene _scene;
 };
 
 #endif /*MAIN_MENU_HPP*/

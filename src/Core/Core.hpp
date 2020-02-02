@@ -14,10 +14,10 @@
     #include <SFML/Graphics/Shader.hpp>
     #include "../Utils/Exception/ShaderError.hpp"
     #include "../Utils/Shaders.hpp"
+#include "../Object/SoundObject/SoundObject.hpp"
 
 class Core {
 public:
-
     Core();
     Core(Core &) = delete;
     Core &operator=(Core &) = delete;
@@ -39,6 +39,8 @@ private:
     std::unique_ptr<SceneManager> _sceneManager;
 
     shaders_map _shaders;
+    IScene::Saves _save;
+    SoundObject _sound;
 };
 
 #endif /*CORE_HPP*/
