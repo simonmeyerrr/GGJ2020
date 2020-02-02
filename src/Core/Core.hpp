@@ -40,7 +40,6 @@ private:
 
     shaders_map _shaders;
     IScene::Saves _save;
-    SoundObject _sound;
 };
 
 #endif /*CORE_HPP*/

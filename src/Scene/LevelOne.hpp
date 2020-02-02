@@ -46,6 +46,7 @@ private:
     bool _right;
     bool _walking;
     sf::Vector2f _velocity;
+    bool _escape;
 };
 
 

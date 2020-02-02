@@ -4,12 +4,13 @@
 #include "../Object/UIObject/Rect.hpp"
 #include "../Object/GameObject/Objects/PlayerSchool.hpp"
 #include "../Object/UIObject/Fade.hpp"
+#include "../Object/GameObject/StaticGameObject.hpp"
 
 #define DOOR_HEIGHT 300
 #define DOOR_WIDTH 200
-#define PLAYER_HEIGHT 300
+#define PLAYER_HEIGHT 260
 #define PLAYER_WIDTH  300
-#define HEIGHT 700
+#define HEIGHT 790
 #define DIFF 50
 
 
@@ -19,173 +20,158 @@ LevelTwo::LevelTwo(Saves &save)
 {
     _rooms[CORIDOR_A] = RoomInfo{
             TYPE_CORIDOR,
-            "Coridor A",
+            "Couloir A",
             false,
             {NONE, NONE},
-            {0, 0},
             {
-                    {CLASS_8, RoomInfoLink{false, {200, HEIGHT - DOOR_HEIGHT}}},
-                    {CLASS_7, RoomInfoLink{false, {500, HEIGHT - DOOR_HEIGHT}}},
-                    {CLASS_5, RoomInfoLink{false, {800, HEIGHT - DOOR_HEIGHT}}},
-                    {CLASS_3, RoomInfoLink{true, {1100, HEIGHT - DOOR_HEIGHT}}},
-                    {CLASS_1, RoomInfoLink{false, {1400, HEIGHT - DOOR_HEIGHT}}}
+                    {CLASS_8, RoomInfoLink{false, {100, HEIGHT - DOOR_HEIGHT}}},
+                    {CLASS_7, RoomInfoLink{false, {400, HEIGHT - DOOR_HEIGHT}}},
+                    {CLASS_5, RoomInfoLink{false, {700, HEIGHT - DOOR_HEIGHT}}},
+                    {CLASS_3, RoomInfoLink{true, {1000, HEIGHT - DOOR_HEIGHT}}},
+                    {CLASS_1, RoomInfoLink{false, {1300, HEIGHT - DOOR_HEIGHT}}}
             }
     };
     _rooms[CORIDOR_B] = RoomInfo{
             TYPE_CORIDOR,
-            "Coridor B",
+            "Couloir B",
             false,
             {NONE, NONE},
-            {0, 0},
             {
-                    {CLASS_6, RoomInfoLink{false, {200, HEIGHT - DOOR_HEIGHT}}},
-                    {CLASS_7, RoomInfoLink{false, {500, HEIGHT - DOOR_HEIGHT}}},
-                    {CLASS_9, RoomInfoLink{false, {800, HEIGHT - DOOR_HEIGHT}}},
-                    {CLASS_10, RoomInfoLink{false, {1100, HEIGHT - DOOR_HEIGHT}}}
+                    {CLASS_6, RoomInfoLink{false, {160, HEIGHT - DOOR_HEIGHT}}},
+                    {CLASS_7, RoomInfoLink{false, {520, HEIGHT - DOOR_HEIGHT}}},
+                    {CLASS_9, RoomInfoLink{false, {880, HEIGHT - DOOR_HEIGHT}}},
+                    {CLASS_10, RoomInfoLink{false, {1240, HEIGHT - DOOR_HEIGHT}}}
             }
     };
     _rooms[CORIDOR_C] = RoomInfo{
             TYPE_CORIDOR,
-            "Coridor C",
+            "Couloir C",
             false,
             {NONE, NONE},
-            {0, 0},
             {
-                    {CLASS_6, RoomInfoLink{false, {200, HEIGHT - DOOR_HEIGHT}}},
-                    {CLASS_4, RoomInfoLink{false, {500, HEIGHT - DOOR_HEIGHT}}},
-                    {CLASS_2, RoomInfoLink{false, {800, HEIGHT - DOOR_HEIGHT}}},
-                    {CLASS_11, RoomInfoLink{false, {1100, HEIGHT - DOOR_HEIGHT}}},
-                    {EXIT, RoomInfoLink{false, {1400, HEIGHT - DOOR_HEIGHT}}}
+                    {CLASS_6, RoomInfoLink{false, {100, HEIGHT - DOOR_HEIGHT}}},
+                    {CLASS_4, RoomInfoLink{false, {400, HEIGHT - DOOR_HEIGHT}}},
+                    {CLASS_2, RoomInfoLink{false, {700, HEIGHT - DOOR_HEIGHT}}},
+                    {CLASS_11, RoomInfoLink{false, {1000, HEIGHT - DOOR_HEIGHT}}},
+                    {EXIT, RoomInfoLink{false, {1300, HEIGHT - DOOR_HEIGHT}}}
             }
     };
     _rooms[CLASS_1] = RoomInfo{
             TYPE_CLASSROOM,
-            "Classroom 1",
+            "Classe 1",
             true,
             {CLASS_5, CLASS_6},
-            {750, 500},
             {
-                {CORIDOR_A, RoomInfoLink{true, {200, HEIGHT - DOOR_HEIGHT}}},
-                {CLASS_2, RoomInfoLink{false, {1400, HEIGHT - DOOR_HEIGHT}}}
+                {CORIDOR_A, RoomInfoLink{true, {140, HEIGHT - DOOR_HEIGHT}}},
+                {CLASS_2, RoomInfoLink{false, {1260, HEIGHT - DOOR_HEIGHT}}}
             }
     };
     _rooms[CLASS_2] = RoomInfo{
             TYPE_CLASSROOM,
-            "Classroom 2",
+            "Classe 2",
             true,
             {CORIDOR_B, CLASS_10},
-            {750, 500},
             {
-                    {CLASS_1, RoomInfoLink{false, {200, HEIGHT - DOOR_HEIGHT}}},
-                    {CORIDOR_C, RoomInfoLink{true, {1400, HEIGHT - DOOR_HEIGHT}}}
+                    {CLASS_1, RoomInfoLink{false, {140, HEIGHT - DOOR_HEIGHT}}},
+                    {CORIDOR_C, RoomInfoLink{true, {1260, HEIGHT - DOOR_HEIGHT}}}
             }
     };
     _rooms[CLASS_3] = RoomInfo{
             TYPE_CLASSROOM,
-            "Classroom 3",
+            "Classe 3",
             true,
             {CORIDOR_A, CLASS_8},
-            {750, 500},
             {
-                    {CORIDOR_A, RoomInfoLink{true, {200, HEIGHT - DOOR_HEIGHT}}},
-                    {CLASS_4, RoomInfoLink{false, {1400, HEIGHT - DOOR_HEIGHT}}}
+                    {CORIDOR_A, RoomInfoLink{true, {140, HEIGHT - DOOR_HEIGHT}}},
+                    {CLASS_4, RoomInfoLink{false, {1260, HEIGHT - DOOR_HEIGHT}}}
             }
     };
     _rooms[CLASS_4] = RoomInfo{
             TYPE_CLASSROOM,
-            "Classroom 4",
+            "Classe 4",
             true,
             {CORIDOR_C, EXIT},
-            {750, 500},
             {
-                    {CLASS_3, RoomInfoLink{false, {200, HEIGHT - DOOR_HEIGHT}}},
-                    {CORIDOR_C, RoomInfoLink{true, {1400, HEIGHT - DOOR_HEIGHT}}}
+                    {CLASS_3, RoomInfoLink{false, {140, HEIGHT - DOOR_HEIGHT}}},
+                    {CORIDOR_C, RoomInfoLink{true, {1260, HEIGHT - DOOR_HEIGHT}}}
             }
     };
     _rooms[CLASS_5] = RoomInfo{
             TYPE_CLASSROOM,
-            "Classroom 5",
+            "Classe 5",
             true,
             {CLASS_7, CORIDOR_A},
-            {750, 500},
             {
-                    {CORIDOR_A, RoomInfoLink{true, {200, HEIGHT - DOOR_HEIGHT}}},
-                    {CLASS_6, RoomInfoLink{false, {1400, HEIGHT - DOOR_HEIGHT}}}
+                    {CORIDOR_A, RoomInfoLink{true, {140, HEIGHT - DOOR_HEIGHT}}},
+                    {CLASS_6, RoomInfoLink{false, {1260, HEIGHT - DOOR_HEIGHT}}}
             }
     };
     _rooms[CLASS_6] = RoomInfo{
             TYPE_CLASSROOM,
-            "Classroom 6",
+            "Classe 6",
             true,
             {CLASS_1, CLASS_2},
-            {750, 500},
             {
-                    {CLASS_5, RoomInfoLink{false, {200, HEIGHT - DOOR_HEIGHT}}},
-                    {CORIDOR_B, RoomInfoLink{true, {1000, HEIGHT - DOOR_HEIGHT}}},
-                    {CORIDOR_C, RoomInfoLink{true, {1400, HEIGHT - DOOR_HEIGHT}}}
+                    {CLASS_5, RoomInfoLink{false, {140, HEIGHT - DOOR_HEIGHT}}},
+                    {CORIDOR_B, RoomInfoLink{true, {1145, HEIGHT - DOOR_HEIGHT}}},
+                    {CORIDOR_C, RoomInfoLink{true, {1375, HEIGHT - DOOR_HEIGHT}}}
             }
     };
     _rooms[CLASS_7] = RoomInfo{
             TYPE_CLASSROOM,
-            "Classroom 7",
+            "Classe 7",
             true,
             {CORIDOR_A, CLASS_1},
-            {750, 500},
             {
-                    {CORIDOR_A, RoomInfoLink{true, {200, HEIGHT - DOOR_HEIGHT}}},
-                    {CORIDOR_B, RoomInfoLink{true, {1400, HEIGHT - DOOR_HEIGHT}}}
+                    {CORIDOR_A, RoomInfoLink{true, {140, HEIGHT - DOOR_HEIGHT}}},
+                    {CORIDOR_B, RoomInfoLink{true, {1260, HEIGHT - DOOR_HEIGHT}}}
             }
     };
     _rooms[CLASS_8] = RoomInfo{
             TYPE_CLASSROOM,
-            "Classroom 8",
+            "Classe 8",
             true,
             {CORIDOR_A, CLASS_5},
-            {750, 500},
             {
-                    {CORIDOR_A, RoomInfoLink{true, {200, HEIGHT - DOOR_HEIGHT}}},
-                    {CLASS_9, RoomInfoLink{false, {1400, HEIGHT - DOOR_HEIGHT}}}
+                    {CORIDOR_A, RoomInfoLink{true, {140, HEIGHT - DOOR_HEIGHT}}},
+                    {CLASS_9, RoomInfoLink{false, {1260, HEIGHT - DOOR_HEIGHT}}}
             }
     };
     _rooms[CLASS_9] = RoomInfo{
             TYPE_CLASSROOM,
-            "Classroom 9",
+            "Classe 9",
             true,
             {CORIDOR_C, CLASS_11},
-            {750, 500},
             {
-                    {CLASS_8, RoomInfoLink{false, {200, HEIGHT - DOOR_HEIGHT}}},
-                    {CORIDOR_B, RoomInfoLink{true, {1400, HEIGHT - DOOR_HEIGHT}}}
+                    {CLASS_8, RoomInfoLink{false, {140, HEIGHT - DOOR_HEIGHT}}},
+                    {CORIDOR_B, RoomInfoLink{true, {1260, HEIGHT - DOOR_HEIGHT}}}
             }
     };
     _rooms[CLASS_10] = RoomInfo{
             TYPE_CLASSROOM,
-            "Classroom 10",
+            "Classe 10",
             true,
             {CLASS_8, CLASS_9},
-            {750, 500},
             {
-                    {CORIDOR_B, RoomInfoLink{true, {200, HEIGHT - DOOR_HEIGHT}}}
+                    {CORIDOR_B, RoomInfoLink{true, {140, HEIGHT - DOOR_HEIGHT}}}
             }
     };
     _rooms[CLASS_11] = RoomInfo{
             TYPE_CLASSROOM,
-            "Classroom 11",
+            "Classe 11",
             true,
             {CLASS_3, CLASS_4},
-            {750, 500},
             {
-                    {CORIDOR_C, RoomInfoLink{true, {200, HEIGHT - DOOR_HEIGHT}}}
+                    {CORIDOR_C, RoomInfoLink{true, {140, HEIGHT - DOOR_HEIGHT}}}
             }
     };
     _rooms[EXIT] = RoomInfo{
             TYPE_CLASSROOM,
-            "Exit",
+            "Sortie",
             false,
             {NONE, NONE},
-            {750, 500},
             {
-                    {CORIDOR_C, RoomInfoLink{true, {200, HEIGHT - DOOR_HEIGHT}}}
+                    {CORIDOR_C, RoomInfoLink{true, {140, HEIGHT - DOOR_HEIGHT}}}
             }
     };
     _uiObject[0] = std::make_shared<Text>("", _font.get(), sf::Vector2f{600, 800}, sf::Color::Black);
@@ -194,6 +180,12 @@ LevelTwo::LevelTwo(Saves &save)
     _uiObject[3] = std::make_shared<Fade>();
     _gameObject[0] = std::make_shared<PlayerSchool>();
     _gameObject[0]->setPosition({static_cast<float>(_x), HEIGHT - PLAYER_HEIGHT});
+    _gameObject[1] = std::make_shared<StaticGameObject>("./assets/textures/classroom.png", sf::IntRect{0, 0, 1600, 900});
+    _gameObject[2] = std::make_shared<StaticGameObject>("./assets/textures/classroom.png", sf::IntRect{0, 0, 1600, 900});
+    _gameObject[3] = std::make_shared<StaticGameObject>("./assets/textures/door_open.png", sf::IntRect{0, 0, 200, 300});
+    _gameObject[4] = std::make_shared<StaticGameObject>("./assets/textures/door_close.png", sf::IntRect{0, 0, 200, 300});
+    _gameObject[5] = std::make_shared<StaticGameObject>("./assets/textures/key.png", sf::IntRect{0, 0, 50, 50});
+    _gameObject[5]->setPosition({775, 600});
     _sounds[DOOR] = std::make_shared<SoundObject>("./assets/sound/scene2/door_open.ogg");
     _sounds[KEYS] = std::make_shared<SoundObject>("./assets/sound/scene2/keys_pickup.ogg");
     _sounds[LOCKED] = std::make_shared<SoundObject>("./assets/sound/scene2/locked_door.ogg");
@@ -306,39 +298,28 @@ void LevelTwo::takeKey(RoomInfo &room)
     _rooms.at(room.keyOpen.second).links.at(room.keyOpen.first).opened = true;
 }
 
-void LevelTwo::displayRect(sf::RenderWindow &win, const sf::Color &color, const sf::Vector2f &pos, const sf::Vector2f &size)
-{
-    sf::RectangleShape rect;
-
-    rect.setFillColor(color);
-    rect.setSize(size);
-    rect.setPosition(pos);
-    win.draw(rect);
-}
-
 void LevelTwo::displayRoom(sf::RenderWindow &win, const RoomInfo &room)
 {
     sf::Text text(room.name, _font.get(), 30);
 
+    win.draw(_gameObject[room.type == TYPE_CLASSROOM ? 1 : 2]->getSprite());
     text.setFillColor(sf::Color::Black);
-    displayRect(win, sf::Color::White, {0, 0}, {1600, 900});
-    win.draw(text);
     for (const auto &door: room.links) {
-        displayRect(win, door.second.opened ? sf::Color::Blue : sf::Color::Red, door.second.pos, {DOOR_WIDTH, DOOR_HEIGHT});
+        int nb = door.second.opened ? 4 : 3;
+        _gameObject[nb]->setPosition(door.second.pos);
+        win.draw(_gameObject[nb]->getSprite());
         text.setString(_rooms.at(door.first).name);
-        text.setPosition(door.second.pos);
+        text.setPosition({door.second.pos.x + 50, door.second.pos.y - 50});
         win.draw(text);
     }
-    if (room.hasKey) {
-        displayRect(win, sf::Color::Magenta, room.keyPos, {50, 50});
-    }
+    if (room.hasKey)
+        win.draw(_gameObject[5]->getSprite());
 }
 
 void LevelTwo::display(sf::RenderWindow &win, shaders_map &shaders)
 {
     displayRoom(win, _rooms.at(_actual));
-    for (const auto &object: _gameObject)
-        win.draw(object.second->getSprite());
+    win.draw(_gameObject[0]->getSprite());
     _uiObject[0]->draw(win);
     if (_escape) {
         _uiObject[1]->draw(win);

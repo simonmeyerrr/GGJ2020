@@ -39,7 +39,6 @@ struct RoomInfo {
     std::string name;
     bool hasKey;
     std::pair<Room, Room> keyOpen;
-    sf::Vector2f keyPos;
     std::map<Room, RoomInfoLink> links;
 };
 
@@ -64,7 +63,6 @@ private:
     bool hasDoor(RoomInfo &room);
     void takeDoor(RoomInfo &room);
     void takeKey(RoomInfo &room);
-    void displayRect(sf::RenderWindow &win, const sf::Color &, const sf::Vector2f &pos, const sf::Vector2f &size);
     void displayRoom(sf::RenderWindow &, const RoomInfo &room);
 
     std::map<Room, RoomInfo> _rooms;

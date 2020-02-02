@@ -7,8 +7,11 @@
 #include "../Object/GameObject/AnimatedGameObject.hpp"
 #include "../Object/GameObject/StaticGameObject.hpp"
 #include "../Object/GameObject/Objects/PlayerSchool.hpp"
+#include "../Object/UIObject/Fade.hpp"
+#include "../Object/UIObject/Text.hpp"
+#include "../Object/UIObject/Rect.hpp"
 
-LevelOne::LevelOne(Saves &save) : AScene(SCENE_LEVEL1, save), _pos(sf::Vector2f(200, 700)) {
+LevelOne::LevelOne(Saves &save) : AScene(SCENE_LEVEL1, save), _pos(sf::Vector2f(200, 700)), _escape(false) {
     _bg.setFillColor(sf::Color::Green);
     _bg.setSize(sf::Vector2f(2000, 700));
     _bg.setPosition(sf::Vector2f(0, 0));
@@ -19,7 +22,6 @@ LevelOne::LevelOne(Saves &save) : AScene(SCENE_LEVEL1, save), _pos(sf::Vector2f(
     _velocity = {0, 0};
     _walking = false;
     _sounds[FOREST] = std::make_shared<SoundObject>("./assets/sound/scene1/forest_fx.ogg");
-    std::cout << "fail" << std::endl;
     _sounds[JUMP_END] = std::make_shared<SoundObject>("./assets/sound/scene1/landing_forest.ogg");
     _sounds[STEPS] = std::make_shared<SoundObject>("./assets/sound/scene1/steps_woods.ogg");
     _sounds[WATER] = std::make_shared<SoundObject>("./assets/sound/scene1/water.ogg");
@@ -33,6 +35,10 @@ LevelOne::LevelOne(Saves &save) : AScene(SCENE_LEVEL1, save), _pos(sf::Vector2f(
     _gameObject[CHARACTER] = std::make_shared<PlayerSchool>();
     _pos = {0, 0};
     _gameObject[CHARACTER]->setPosition(_pos);
+    _uiObject[0] = std::make_shared<Fade>();
+    _uiObject[1] = std::make_shared<Rect>(sf::Color{0, 0, 0, 125});
+    _uiObject[2] = std::make_shared<Text>("Appuyez sur Entrer pour quitter le jeu, sinon appuyez sur Echape", _font.get(), sf::Vector2f{550, 400}, sf::Color::White);
+    dynamic_cast<Fade &>(*_uiObject[0]).start(sf::Color::Black, 200, false);
 }
 
 void LevelOne::rotateBlock(sf::RectangleShape &elem, float ratio, float maxAngle) {
@@ -56,6 +62,11 @@ void LevelOne::fullRotate(sf::RectangleShape &elem, float ratio) {
 
 IScene::Event LevelOne::update() {
 
+    _uiObject[0]->update();
+    if (_escape)
+        return Event{EVENT_NONE, SCENE_INTRO};
+    for (const auto &object: _gameObject)
+        object.second->update();
     if (_walking) {
         if (_right)
             moveRight();
@@ -69,8 +80,17 @@ IScene::Event LevelOne::update() {
 }
 
 IScene::Event LevelOne::event(sf::RenderWindow &w, sf::Event &e) {
+    if (_escape) {
+        if (e.type == sf::Event::KeyPressed && _escape && e.key.code == sf::Keyboard::Enter)
+            return Event{EVENT_POP_SCENE, SCENE_INTRO};
+        else if (e.type == sf::Event::KeyPressed && _escape && e.key.code == sf::Keyboard::Escape)
+            _escape = false;
+        return Event{EVENT_NONE, SCENE_INTRO};
+    }
     if (e.type == sf::Event::KeyPressed) {
-        if (!_walking && (e.key.code == sf::Keyboard::Right ||
+        if (e.key.code == sf::Keyboard::Escape) {
+            _escape = !_escape;
+        } else if (!_walking && (e.key.code == sf::Keyboard::Right ||
         e.key.code == sf::Keyboard::Left)) {
             _walking = true;
             _right = e.key.code == sf::Keyboard::Right;
@@ -92,6 +112,11 @@ void LevelOne::display(sf::RenderWindow &w, shaders_map  &shaders) {
     for (auto &elem : _gameObject) {
         w.draw(elem.second->getSprite());
     }
+    if (_escape) {
+        _uiObject[1]->draw(w);
+        _uiObject[2]->draw(w);
+    }
+    _uiObject[0]->draw(w);
 }
 
 void LevelOne::resume() {
