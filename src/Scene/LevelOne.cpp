@@ -28,10 +28,10 @@ LevelOne::LevelOne() : AScene(SCENE_LEVEL1), _pos(sf::Vector2f(200, 700)) {
     _walking = false;
     _sounds[FOREST] = std::make_shared<SoundObject>("./assets/sound/scene1/forest_fx.ogg");
     std::cout << "fail" << std::endl;
-    _sounds[JUMP_END] = std::make_shared<SoundObject>("./assets/sound/scene1/landing_forest.wav");
-    _sounds[STEPS] = std::make_shared<SoundObject>("./assets/sound/scene1/steps_woods.wav");
-    _sounds[WATER] = std::make_shared<SoundObject>("./assets/sound/scene1/water.wav");
-    _music = std::make_shared<MusicObject>("./assets/sound/scene1/military_theme.wav");
+    _sounds[JUMP_END] = std::make_shared<SoundObject>("./assets/sound/scene1/landing_forest.ogg");
+    _sounds[STEPS] = std::make_shared<SoundObject>("./assets/sound/scene1/steps_woods.ogg");
+    _sounds[WATER] = std::make_shared<SoundObject>("./assets/sound/scene1/water.ogg");
+    _music = std::make_shared<MusicObject>("./assets/sound/scene1/military_theme.ogg");
     _music->setLoop(true);
     _music->play();
     _sounds[FOREST]->setLoop(true);
