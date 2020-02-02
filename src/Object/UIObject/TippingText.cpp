@@ -7,29 +7,12 @@
 
 #include "TippingText.hpp"
 
-TippingText::TippingText(const std::string &str, const sf::Font &font,
-const sf::Vector2f &pos, const sf::Color &color, unsigned int size)
-: Text("", font, pos, color, size), _str(str), _nbLetters(0), _state(CLEAN)
+TippingText::TippingText(const sf::Font &font)
+: Text("", font, {420, 690}, sf::Color::Black, 60), _str(""), _nbLetters(0), _state(CLEAN)
 {
-    _t.loadFromFile("./assets/textures/bubbleChat.png");
+    _t.loadFromFile("./assets/textures/bulle.png");
     _s.setTexture(_t);
-    _s.setTextureRect(sf::IntRect(0, 0, 800, 200));
     _s.setPosition(400, 680);
-    _text->setPosition(420, 690);
-}
-
-TippingText &TippingText::operator=(TippingText const &text)
-{
-    _text = text._text;
-    _str = text._str;
-    _nbLetters = text._nbLetters;
-    _state = text._state;
-    return *this;
-}
-
-void TippingText::setString(std::string const &str)
-{
-    _str = str;
 }
 
 void TippingText::update()
@@ -37,22 +20,16 @@ void TippingText::update()
     if (_state != WRITING)
         return;
    std::string str = _str.substr(0, _nbLetters);
-    _text->setString(str);
+   _text->setString(str);
    ++_nbLetters;
    if (_nbLetters > _str.length())
        _state = ENDED;
 }
 
-void TippingText::start()
+void TippingText::start(const std::string &str)
 {
-//    if (_s.getTextureRect().left < 11 * 800) {
-//        std::cout << "test" << std::endl;
-//        sf::IntRect rect = _s.getTextureRect();
-//        rect.left += 800;
-//        _s.setTextureRect(rect);
-//    } else {
-//        _state = WRITING;
-//    }
+    clean();
+    _str = str;
     _state = WRITING;
 }
 
@@ -68,13 +45,9 @@ void TippingText::clean()
     _nbLetters = 0;
 }
 
-void TippingText::drawAll(sf::RenderWindow &w) const {
+void TippingText::draw(sf::RenderWindow &w) const {
     if (_state == WRITING || _state == ENDED) {
         w.draw(_s);
-        draw(w);
+        w.draw(*_text);
     }
-}
-
-void TippingText::draw(sf::RenderWindow &w) const {
-    w.draw(*_text);
 }
