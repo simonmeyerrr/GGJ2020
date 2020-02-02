@@ -35,6 +35,9 @@ MainMenu::MainMenu(Saves &save)
     _gameObject[7]->setPosition({3000, 150});
     dynamic_cast<AnimatedGameObject &>(*_gameObject[4]).setCurrentAnimation("idleRight");
     _erosion.setProgress(30);
+    std::srand(std::time(nullptr));
+    for (int i = 0; i < 3; ++i)
+        _lights[i] = true;
 }
 
 int MainMenu::inFrontOf() const
@@ -48,6 +51,12 @@ int MainMenu::inFrontOf() const
 
 IScene::Event MainMenu::update()
 {
+    for (int i = 0; i < 3; ++i) {
+        int rand = std::rand();
+        if (rand % 60 == 0)
+            _lights[i] = !_lights[i];
+    }
+
     _uiObject[3]->update();
     if (_anim) {
         _zoom += _in ? -0.01 : 0.01;
@@ -125,14 +134,19 @@ IScene::Event MainMenu::event(sf::RenderWindow &win, sf::Event &e)
 
 void MainMenu::display(sf::RenderWindow &win, shaders_map &shaders)
 {
-    sf::Vector2f firstCenter = sf::Vector2f(_gameObject[1]->getSprite().getPosition().x + _gameObject[1]->getSprite().getLocalBounds().width / 2, 700);
-    sf::Vector2f secondCenter = sf::Vector2f(_gameObject[2]->getSprite().getPosition().x + _gameObject[2]->getSprite().getLocalBounds().width / 2, 700);
-    sf::Vector2f thirdCenter = sf::Vector2f(_gameObject[3]->getSprite().getPosition().x + _gameObject[3]->getSprite().getLocalBounds().width / 2, 700);
+    sf::Vector2f firstCenter = sf::Vector2f(_gameObject[1]->getSprite().getPosition().x + _gameObject[1]->getSprite().getLocalBounds().width / 2, 740);
+    sf::Vector2f secondCenter = sf::Vector2f(_gameObject[2]->getSprite().getPosition().x + _gameObject[2]->getSprite().getLocalBounds().width / 2, 740);
+    sf::Vector2f thirdCenter = sf::Vector2f(_gameObject[3]->getSprite().getPosition().x + _gameObject[3]->getSprite().getLocalBounds().width / 2, 740);
 
     shaders[TEST_SHADER].setUniform("first", firstCenter);
     shaders[TEST_SHADER].setUniform("second", secondCenter);
     shaders[TEST_SHADER].setUniform("third", thirdCenter);
-    
+
+    shaders[TEST_SHADER].setUniform("firstBool", _lights[0]);
+    shaders[TEST_SHADER].setUniform("secondBool", _lights[1]);
+    shaders[TEST_SHADER].setUniform("thirdBool", _lights[2]);
+
+
     _uiObject[0]->draw(win);
     win.draw(_gameObject[0]->getSprite(), &shaders[TEST_SHADER]);
     win.draw(_gameObject[_save.level1 ? 5 : 1]->getSprite(), &shaders[TEST_SHADER]);
