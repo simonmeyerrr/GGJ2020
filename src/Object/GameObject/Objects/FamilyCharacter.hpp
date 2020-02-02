@@ -27,6 +27,7 @@ public:
     void addQuest(std::string const &);
     void askQuest(size_t idx);
     void draw(sf::RenderWindow &w);
+    void successQuest();
 
 private:
     bool _isTalking;

@@ -25,6 +25,7 @@ FamilyCharacter::FamilyCharacter(std::string const &fileName, size_t size, sf::F
     _pos = pos;
     _basePos = pos;
     _right = true;
+    _isFound = true;
     _isTalking = false;
     _quests.reserve(size);
     _font = font;
@@ -65,7 +66,13 @@ void FamilyCharacter::setPosition(sf::Vector2f f) {
 }
 
 void FamilyCharacter::askQuest(size_t idx) {
-    _tipping.start(_quests[idx]);
+
+    if (_isFound) {
+        _tipping.start(_quests[idx]);
+        _isFound = false;
+    } else {
+        _tipping.start("Reviens me voir plus tard quand tu auras\nretrouve l'objet !");
+    }
 }
 
 void FamilyCharacter::draw(sf::RenderWindow &w) {
@@ -74,4 +81,9 @@ void FamilyCharacter::draw(sf::RenderWindow &w) {
 
 void FamilyCharacter::updateBubble() {
     _tipping.update();
+}
+
+void FamilyCharacter::successQuest() {
+    _isFound = true;
+    _tipping.start("Felicitations tu as reussi à trouver cet objet!");
 }

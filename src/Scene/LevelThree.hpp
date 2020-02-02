@@ -7,6 +7,9 @@
 
 
 #include "AScene.hpp"
+#include "../Object/GameObject/StaticGameObject.hpp"
+
+#define NB_OBJECT 6
 
 class LevelThree : public AScene {
 public:
@@ -16,6 +19,19 @@ public:
         BROTHER,
         CHARACTER
     };
+
+    enum ObjectType {
+        JOURNAL,
+        GLASSES,
+        HAT,
+        CLOCK,
+        CAR,
+        HORSE,
+        VINYLE,
+        PIPE,
+        NONE
+    };
+
     LevelThree(Saves &save);
     LevelThree(LevelThree &) = delete;
     ~LevelThree() override = default;
@@ -31,11 +47,16 @@ private:
     bool _walking;
     bool _right;
     sf::Vector2f _pos;
-    int _motherQuest;
-    int _fatherQuest;
-    int _brotherQuest;
     std::map<Type, int> _quests;
+    std::map<int, int> _objMother;
+    std::map<int, int> _objFather;
+    std::map<int, int> _objBrother;
+    std::map<ObjectType, std::shared_ptr<StaticGameObject>> _objects;
     bool _talking;
+    bool _isTalking;
+    bool _take;
+    bool _hasTaken;
+    ObjectType _hand;
 };
 
 
