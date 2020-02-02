@@ -10,7 +10,6 @@
 #include "../Object/UIObject/Fade.hpp"
 #include "../Object/UIObject/Text.hpp"
 #include "../Object/UIObject/Rect.hpp"
-#include "../Object/GameObject/Objects/PlayerSoldat.hpp"
 
 LevelOne::LevelOne(Saves &save) : AScene(SCENE_LEVEL1, save), _pos(sf::Vector2f(200, 700)), _escape(false), _end(false) {
     _left = true;

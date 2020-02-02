@@ -52,8 +52,6 @@ SET(SOURCES
         src/Object/GameObject/Objects/PlayerOld.hpp
         src/Object/GameObject/Objects/PlayerSchool.cpp
         src/Object/GameObject/Objects/PlayerSchool.hpp
-        src/Object/GameObject/Objects/PlayerSoldat.cpp
-        src/Object/GameObject/Objects/PlayerSoldat.hpp
         src/Object/UIObject/IUIObject.hpp
         src/Object/SoundObject/MusicObject.cpp
         src/Object/SoundObject/MusicObject.hpp
