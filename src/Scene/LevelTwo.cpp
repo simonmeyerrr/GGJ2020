@@ -268,12 +268,16 @@ bool LevelTwo::hasDoor(RoomInfo &room)
                 dynamic_cast<Text &>(*_uiObject[0]).setString("Fleche du haut pour entrer dans cette salle");
                 return true;
             } else {
-                dynamic_cast<Text &>(*_uiObject[0]).setString("Cette porte est fermee");
+                dynamic_cast<Text &>(*_uiObject[0]).setString("");
                 return true;
             }
         }
     }
-    dynamic_cast<Text &>(*_uiObject[0]).setString("");
+    if (!room.hasKey || _x > 750 || _x < 550) {
+        dynamic_cast<Text &>(*_uiObject[0]).setString("");
+    } else {
+        dynamic_cast<Text &>(*_uiObject[0]).setString("Fleche du bas pour prendre la cle");
+    }
     return false;
 }
 
@@ -297,11 +301,12 @@ void LevelTwo::takeDoor(RoomInfo &room)
 
 void LevelTwo::takeKey(RoomInfo &room)
 {
-    if (!room.hasKey) {
-        std::cout << "no key in your room" << std::endl;
+    if (!room.hasKey || _x > 750 || _x < 550) {
         return;
     }
+    _walking = false;
     room.hasKey = false;
+    dynamic_cast<AnimatedGameObject &>(*_gameObject[0]).setCurrentAnimation(std::string("idle") + (_right ? "Right" : "Left"));
     _sounds[KEYS]->play();
     _rooms.at(room.keyOpen.first).links.at(room.keyOpen.second).opened = true;
     _rooms.at(room.keyOpen.second).links.at(room.keyOpen.first).opened = true;

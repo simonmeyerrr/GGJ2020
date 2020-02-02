@@ -15,10 +15,11 @@ bool Fade::isOver() const
 
 void Fade::start(sf::Color color, unsigned updates, bool in)
 {
-    _rect.setFillColor(color);
     _actual = 0;
     _goal = updates;
     _in = in;
+    color.a = _in ? 0 : 256;
+    _rect.setFillColor(color);
 }
 
 void Fade::update()
