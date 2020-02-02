@@ -10,7 +10,7 @@ Fade::Fade()
 
 bool Fade::isOver() const
 {
-    return _actual >= _goal;
+    return _actual >= _goal - 1;
 }
 
 void Fade::start(sf::Color color, unsigned updates, bool in)
