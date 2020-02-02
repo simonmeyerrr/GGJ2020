@@ -21,7 +21,9 @@ void TippingText::update()
         return;
    std::string str = _str.substr(0, _nbLetters);
    _text->setString(str);
-   ++_nbLetters;
+    ++_nbLetters;
+   while (_str[_nbLetters] == ' ')
+       ++_nbLetters;
    if (_nbLetters > _str.length())
        _state = ENDED;
 }

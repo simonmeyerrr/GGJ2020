@@ -167,7 +167,7 @@ LevelTwo::LevelTwo(Saves &save)
             }
     };
     _rooms[EXIT] = RoomInfo{
-            TYPE_CLASSROOM,
+            TYPE_EXIT,
             "Sortie",
             false,
             {NONE, NONE},
@@ -188,6 +188,7 @@ LevelTwo::LevelTwo(Saves &save)
     _gameObject[4] = std::make_shared<StaticGameObject>("./assets/textures/door_close.png", sf::IntRect{0, 0, 200, 300});
     _gameObject[5] = std::make_shared<StaticGameObject>("./assets/textures/key.png", sf::IntRect{0, 0, 50, 50});
     _gameObject[5]->setPosition({775, 600});
+    _gameObject[6] = std::make_shared<StaticGameObject>("./assets/textures/exit.png", sf::IntRect{0, 0, 1600, 900});
     _sounds[DOOR] = std::make_shared<SoundObject>("./assets/sound/scene2/door_open.ogg");
     _sounds[KEYS] = std::make_shared<SoundObject>("./assets/sound/scene2/keys_pickup.ogg");
     _sounds[LOCKED] = std::make_shared<SoundObject>("./assets/sound/scene2/locked_door.ogg");
@@ -217,7 +218,7 @@ IScene::Event LevelTwo::update()
         _gameObject[0]->setPosition({static_cast<float>(_x),  HEIGHT - PLAYER_HEIGHT});
         hasDoor(_rooms.at(_actual));
     }
-    if (_actual == EXIT) {
+    if (_actual == EXIT && _x > 1000) {
         _save.level2 = true;
         return {EVENT_POP_SCENE, SCENE_INTRO};
     }
@@ -251,7 +252,7 @@ IScene::Event LevelTwo::event(sf::RenderWindow &win, sf::Event &e)
             takeKey(_rooms.at(_actual));
         }
     }
-    if (e.type == sf::Event::KeyReleased) {
+    if (e.type == sf::Event::KeyReleased && _actual != EXIT) {
         if (_walking && ((e.key.code == sf::Keyboard::Right && _right) || (e.key.code == sf::Keyboard::Left && !_right))) {
             _walking = false;
             dynamic_cast<AnimatedGameObject &>(*_gameObject[0]).setCurrentAnimation(std::string("idle") + (_right ? "Right" : "Left"));
@@ -268,12 +269,16 @@ bool LevelTwo::hasDoor(RoomInfo &room)
                 dynamic_cast<Text &>(*_uiObject[0]).setString("Fleche du haut pour entrer dans cette salle");
                 return true;
             } else {
-                dynamic_cast<Text &>(*_uiObject[0]).setString("                       Cette porte est fermee");
+                dynamic_cast<Text &>(*_uiObject[0]).setString("");
                 return true;
             }
         }
     }
-    dynamic_cast<Text &>(*_uiObject[0]).setString("");
+    if (!room.hasKey || _x > 750 || _x < 550) {
+        dynamic_cast<Text &>(*_uiObject[0]).setString("");
+    } else {
+        dynamic_cast<Text &>(*_uiObject[0]).setString("Fleche du bas pour prendre la cle");
+    }
     return false;
 }
 
@@ -284,9 +289,15 @@ void LevelTwo::takeDoor(RoomInfo &room)
             if (door.second.opened) {
                 _sounds[DOOR]->play();
                 _rooms.at(door.first).links.at(_actual).opened = true;
-                _x = _rooms.at(door.first).links.at(_actual).pos.x - 10;
+                _x = _rooms.at(door.first).links.at(_actual).pos.x - 30;
                 _gameObject[0]->setPosition({static_cast<float>(_x),  HEIGHT - PLAYER_HEIGHT});
                 _actual = door.first;
+                if (_actual == EXIT) {
+                    _walking = true;
+                    _right = true;
+                    dynamic_cast<AnimatedGameObject &>(*_gameObject[0]).setCurrentAnimation(std::string("walk") +  "Right");
+                    dynamic_cast<Fade &>(*_uiObject[3]).start(sf::Color::Black, 500, true);
+                }
             } else {
                 _sounds[LOCKED]->play();
             }
@@ -297,11 +308,12 @@ void LevelTwo::takeDoor(RoomInfo &room)
 
 void LevelTwo::takeKey(RoomInfo &room)
 {
-    if (!room.hasKey) {
-        std::cout << "no key in your room" << std::endl;
+    if (!room.hasKey || _x > 750 || _x < 550) {
         return;
     }
+    _walking = false;
     room.hasKey = false;
+    dynamic_cast<AnimatedGameObject &>(*_gameObject[0]).setCurrentAnimation(std::string("idle") + (_right ? "Right" : "Left"));
     _sounds[KEYS]->play();
     _rooms.at(room.keyOpen.first).links.at(room.keyOpen.second).opened = true;
     _rooms.at(room.keyOpen.second).links.at(room.keyOpen.first).opened = true;
@@ -312,7 +324,7 @@ void LevelTwo::displayRoom(sf::RenderWindow &win, const RoomInfo &room, shaders_
 {
     sf::Text text(room.name, _font.get(), 30);
 
-    win.draw(_gameObject[room.type == TYPE_CLASSROOM ? 1 : 2]->getSprite(), &shaders[AMBIENT_LIGHTS]);
+    win.draw(_gameObject[room.type == TYPE_CLASSROOM ? 1 : room.type == TYPE_CORIDOR ? 2 : 6]->getSprite(), &shaders[AMBIENT_LIGHTS]);
     text.setFillColor(sf::Color::White);
     for (const auto &door: room.links) {
         int nb = door.second.opened ? 4 : 3;
