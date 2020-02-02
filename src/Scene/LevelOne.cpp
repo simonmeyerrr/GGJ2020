@@ -144,35 +144,25 @@ void LevelOne::moveLeft()
 }
 
 void LevelOne::gravity() {
-    if (!pixelPerfectTest(*_gameObject[BACKGROUND], *_gameObject[CHARACTER])) {
-        _pos.x += _velocity.x;
-        _pos.y += _velocity.y;
-        _velocity.y += 1;
-    } else if (pixelPerfectTest(*_gameObject[BACKGROUND], *_gameObject[CHARACTER])) {
-        _velocity.y = 0;
-        //_pos.y = 700;
-        _isJumping = false;
-    }
-    _pos.y += _velocity.y;
-    _pos.x += _velocity.x;
-    _gameObject[CHARACTER]->setPosition(_pos);
+//    if (!pixelPerfectTest(*_gameObject[BACKGROUND], *_gameObject[CHARACTER])) {
+//        _pos.x += _velocity.x;
+//        _pos.y += _velocity.y;
+//    _velocity.y += 1;
+//    } else if (pixelPerfectTest(*_gameObject[BACKGROUND], *_gameObject[CHARACTER])) {
+//        _velocity.y = 0;
+//        //_pos.y = 700;
+//        _isJumping = false;
+//    }
+
 }
 
 void LevelOne::move()
 {
-    sf::Vector2f temp_velocity = _velocity;
-
-    std::cout << "velocity.x: " << _velocity.x << std::endl << "velocity.y: " << _velocity.y << std::endl << std::endl;
-
-    if (_velocity.y > 0) {
-        if ((pixelPerfectTest(*_gameObject[CHARACTER], *_gameObject[BACKGROUND])) && _isJumping)
-            _isJumping = false;
-        while (pixelPerfectTest(*_gameObject[CHARACTER], *_gameObject[BACKGROUND]) && temp_velocity.y > 0) {
-            sf::Vector2f temp_pos = {_pos.x, _pos.y + temp_velocity.y};
-            _gameObject[CHARACTER]->setPosition(temp_pos);
-            temp_velocity.y -= 0.5;
-        }
-    }
+//    if (_velocity.y > 0)
+//        _velocity.y = collideDown(_gameObject[CHARACTER]->getMask(),_gameObject[BACKGROUND]->getMask(), _gameObject[CHARACTER]->getSprite(), _gameObject[BACKGROUND]->getSprite(), _velocity.y);
+    _pos.y += _velocity.y;
+    _pos.x += _velocity.x;
+    _gameObject[CHARACTER]->setPosition(_pos);
 }
 
 void LevelOne::updateParallax() {
