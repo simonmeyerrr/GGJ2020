@@ -74,6 +74,7 @@ private:
     bool _up;
     bool _down;
     int _actualRoom;
+    int _backRoom;
     ObjectType _hand;
 };
 

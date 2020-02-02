@@ -34,12 +34,11 @@ IScene::Event LevelThree::update() {
             if (CHARPOS.x <= elem.second->getPosition().x
             && CHARPOS.x + _gameObject[CHARACTER]->getSprite().getTextureRect().width >= elem.second->getPosition().x) {
                 _hand = elem.first;
-                toDelete = elem.first;
                 break;
             }
         }
         if (_hand != NONE) {
-            _objects.erase(toDelete);
+            _objects[_hand]->setPosition({-200, -200});
             _hasTaken = true;
         }
         _take = false;
@@ -52,6 +51,10 @@ IScene::Event LevelThree::update() {
         _gameObject[CHARACTER]->setPosition(_pos);
     }
     if (_up) {
+        if (CHARPOS.x + 150 >= 1322 && CHARPOS.x + 150 <= 1322 + 200 && _actualRoom > GRENIER) {
+            _actualRoom = _backRoom;
+            // todo: setpos
+        }
         if (CHARPOS.x + 150 >= _upstairs[_actualRoom].x && CHARPOS.x + 150 <= _upstairs[_actualRoom].x
         + (float)(_actualRoom == ETAGE3 ? 137 : 302) && _actualRoom < GRENIER) {
             _actualRoom += 1;
@@ -59,8 +62,9 @@ IScene::Event LevelThree::update() {
         } else {
             for (auto &elem : _doors[_actualRoom]) {
                 if (CHARPOS.x + 150 >= elem.second.x && CHARPOS.x + 150 <= elem.second.x + 200) {
+                    _backRoom = _actualRoom;
                     _actualRoom = elem.first;
-
+                    //todo: setpos
                     break;
                 }
             }
@@ -143,6 +147,9 @@ IScene::Event LevelThree::event(sf::RenderWindow &w, sf::Event &e) {
             }
             _isTalking = false;
         }
+        if (e.key.code == sf::Keyboard::Escape) {
+            return {EVENT_POP_SCENE, SCENE_INTRO};
+        }
     }
     if (e.type == sf::Event::KeyReleased) {
         if (_walking && ((e.key.code == sf::Keyboard::Right && _right) || (e.key.code == sf::Keyboard::Left && !_right))) {
@@ -184,13 +191,20 @@ void LevelThree::display(sf::RenderWindow &w, shaders_map &shaders) {
         powers.emplace_back(400.0);
     shaders[AMBIENT_LIGHTS].setUniformArray("powers", powers.data(), powers.size());
 
-    for (auto &item : _gameObject) {
-        w.draw(item.second->getSprite(), &shaders[AMBIENT_LIGHTS]);
+//    for (auto &item : _gameObject) {
+//        w.draw(item.second->getSprite(), &shaders[AMBIENT_LIGHTS]);
+//    }
+
+    w.draw(_gameObject[BACKGROUND]->getSprite(), &shaders[AMBIENT_LIGHTS]);
+//    for (auto &item : _objects) {
+//        w.draw(item.second->getSprite());
+//    }
+    if (_actualRoom == ETAGE1) {
+        w.draw(_gameObject[MOTHER]->getSprite(), &shaders[AMBIENT_LIGHTS]);
+        if (_hand != JOURNAL || !_quests[MOTHER])
+            w.draw(_objects[JOURNAL]->getSprite(), &shaders[AMBIENT_LIGHTS]);
     }
-    for (auto &item : _objects) {
-        w.draw(item.second->getSprite());
-    }
-    w.draw(_gameObject[CHARACTER]->getSprite());
+        w.draw(_gameObject[CHARACTER]->getSprite(), &shaders[AMBIENT_LIGHTS]);
     if (_isTalking) {
         dynamic_cast<FamilyCharacter *>(_gameObject[MOTHER].get())->draw(w);
         dynamic_cast<FamilyCharacter *>(_gameObject[FATHER].get())->draw(w);
@@ -203,8 +217,8 @@ void LevelThree::resume() {
 }
 
 LevelThree::LevelThree(IScene::Saves &save) : AScene(SCENE_LEVEL3, save) {
-    _gameObject[MOTHER] = std::make_shared<FamilyCharacter>("./assets/textures/brother.png", 3, _font.get(), sf::Vector2f{0, 200});
-    dynamic_cast<FamilyCharacter *>(_gameObject[MOTHER].get())->addQuest("Bonjour mon petit coeur,tu peux aller\nme chercher mon journal s'il te plait?");
+    _gameObject[MOTHER] = std::make_shared<FamilyCharacter>("./assets/textures/daronne.png", 3, _font.get(), sf::Vector2f{300, 840 - 300});
+    dynamic_cast<FamilyCharacter *>(_gameObject[MOTHER].get())->addQuest("Bonjour mon petit coeur, tu peux aller\nme chercher mon journal s'il te plait?");
     dynamic_cast<FamilyCharacter *>(_gameObject[MOTHER].get())->addQuest("quest2");
     dynamic_cast<FamilyCharacter *>(_gameObject[MOTHER].get())->addQuest("quest3");
     _gameObject[FATHER] = std::make_shared<FamilyCharacter>("./assets/textures/brother.png", 3, _font.get(), sf::Vector2f{600, 200});
@@ -262,7 +276,7 @@ LevelThree::LevelThree(IScene::Saves &save) : AScene(SCENE_LEVEL3, save) {
     _doors[ETAGE1];
     _doors[ETAGE3][ETAGE31] = sf::Vector2f{504, 0};
     _doors[ETAGE3][ETAGE32] = sf::Vector2f{908, 0};
-    _doors[ETAGE2][ETAGE11] = sf::Vector2f{381, 0};
+    _doors[ETAGE2][ETAGE21] = sf::Vector2f{381, 0};
     _doors[ETAGE2][ETAGE22] = sf::Vector2f{717, 0};
     _doors[ETAGE2][ETAGE23] = sf::Vector2f{1152, 0};
     _doors[ETAGE1][ETAGE11] = sf::Vector2f{481, 0};
