@@ -297,7 +297,13 @@ void LevelTwo::takeDoor(RoomInfo &room)
                 _gameObject[0]->setPosition({static_cast<float>(_x),  HEIGHT - PLAYER_HEIGHT});
                 _actual = door.first;
                 if (_rooms.at(_actual).type == TYPE_CORIDOR) {
-                    std::string phrases[] = {"Nullos", "Meurt", "Creve"};
+                    std::string phrases[] = {
+                        "Tu sers à rien !",
+                        "T'es insignifiant ...",
+                        "T'apporteras jamais rien à la société.",
+                        "T'es adopté, pauvre con !",
+                        "T'es moche, tu pues, tu sens la morue !"
+                    };
                     dynamic_cast<TippingText &>(*_uiObject[4]).start(phrases[std::rand() % 3]);
                 }
                 if (_actual == EXIT) {
