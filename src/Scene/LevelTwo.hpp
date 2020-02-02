@@ -47,7 +47,9 @@ public:
     enum {
         DOOR,
         KEYS,
-        LOCKED
+        LOCKED,
+        DRING,
+        SUCCEED
     };
     ~LevelTwo() override = default;
     LevelTwo(Saves &save);

@@ -10,6 +10,7 @@
 #include "../Object/UIObject/Fade.hpp"
 #include "../Object/UIObject/Text.hpp"
 #include "../Object/UIObject/Rect.hpp"
+#include "../Object/GameObject/Objects/PlayerSoldat.hpp"
 
 LevelOne::LevelOne(Saves &save) : AScene(SCENE_LEVEL1, save), _pos(sf::Vector2f(200, 700)), _escape(false), _end(false) {
     _left = true;
@@ -30,8 +31,8 @@ LevelOne::LevelOne(Saves &save) : AScene(SCENE_LEVEL1, save), _pos(sf::Vector2f(
     _sounds[FOREST]->play();
     _gameObject[SKY] = std::make_shared<StaticGameObject>("./assets/textures/5ciel_fond.png", sf::IntRect(0, 0, 1600, 900));
     _gameObject[MONTAGNE] = std::make_shared<StaticGameObject>("./assets/textures/4montagne_fond.png", sf::IntRect(0, 0, 1600, 900));
-    _gameObject[FOREST2_B] = std::make_shared<StaticGameObject>("./assets/textures/3arbre_arriere_fond.png", sf::IntRect(0, 0, 1600, 900));
     _gameObject[FOREST_B] = std::make_shared<StaticGameObject>("./assets/textures/2arbre_devant_fond.png", sf::IntRect(0, 0, 1600, 900));
+    _gameObject[FOREST2_B] = std::make_shared<StaticGameObject>("./assets/textures/3arbre_arriere_fond.png", sf::IntRect(0, 0, 1600, 900));
     _gameObject[SOL] = std::make_shared<StaticGameObject>("./assets/textures/1sol_fond.png", sf::IntRect(0, 0, 1600, 900));
     _gameObject[PLATFORMS] = std::make_shared<StaticGameObject>("./assets/textures/lvl1_map.png", sf::IntRect(0, 0, 16000, 900));
     _gameObject[CHARACTER] = std::make_shared<MilitaryCharacter>();

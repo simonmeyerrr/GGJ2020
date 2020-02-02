@@ -1,7 +1,13 @@
-#include "PlayerSchool.hpp"
+/*
+**
+** GLOBAL GAME JAM
+**
+*/
 
-PlayerSchool::PlayerSchool()
-        : AnimatedGameObject("assets/textures/player_school.png")
+#include "PlayerKid.hpp"
+
+PlayerKid::PlayerKid()
+        : AnimatedGameObject("assets/textures/kidAnim.png")
 {
     Frames idleRight;
     Frames idleLeft;
@@ -15,7 +21,7 @@ PlayerSchool::PlayerSchool()
     }
     addFrames("idleRight", idleRight, 0.03f);
     addFrames("idleLeft", idleLeft, 0.03f);
-    addFrames("walkRight", walkRight, 0.015f);
-    addFrames("walkLeft", walkLeft, 0.015f);
-    setCurrentAnimation("walkRight");
+    addFrames("walkRight", walkRight, 0.035f);
+    addFrames("walkLeft", walkLeft, 0.035f);
+    setCurrentAnimation("idleRight");
 }

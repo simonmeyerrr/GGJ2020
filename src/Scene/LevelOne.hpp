@@ -12,8 +12,8 @@ class LevelOne : public AScene {
     enum Type {
         SKY = 0,
         MONTAGNE = 1,
-        FOREST2_B = 2,
-        FOREST_B = 3,
+        FOREST_B = 2,
+        FOREST2_B = 3,
         SOL = 4,
         PLATFORMS = 5,
         CHARACTER = 6

@@ -11,6 +11,7 @@ Core::Core()
     _win(std::make_unique<sf::RenderWindow>(sf::VideoMode(1600, 900, 32), "GGJ2020")),
     _sceneManager(std::make_unique<SceneManager>()), _save{false, false, false}
 {
+    _win->clear(sf::Color::Black);
 }
 
 void Core::initShaders()
@@ -28,7 +29,7 @@ void Core::initShaders()
 void Core::start()
 {
     initShaders();
-    manageEvent(IScene::Event{IScene::EVENT_PUSH_SCENE, IScene::SCENE_MAIN_MENU});
+    manageEvent(IScene::Event{IScene::EVENT_PUSH_SCENE, IScene::SCENE_INTRO});
 
     _displayTimer.restart();
     _updateTimer.restart();

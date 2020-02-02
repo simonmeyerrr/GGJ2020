@@ -40,6 +40,7 @@ MainMenu::MainMenu(Saves &save)
     std::srand(std::time(nullptr));
     for (int i = 0; i < 3; ++i)
         _lights[i] = true;
+    dynamic_cast<Fade &>(*(_uiObject[3])).start(sf::Color::Black, 200, false);
 }
 
 int MainMenu::inFrontOf() const
@@ -152,7 +153,7 @@ void MainMenu::display(sf::RenderWindow &win, shaders_map &shaders)
 
     std::vector<float> powers;
     for (int i = 0; i < 3; ++i)
-        powers.emplace_back(_lights[i] ? 250.0 : 220.0);
+        powers.emplace_back((_lights[i] ? 250.0 : 220.0) * _zoom * _zoom * _zoom * _zoom * _zoom * _zoom);
     shaders[AMBIENT_LIGHTS].setUniformArray("powers", powers.data(), powers.size());
 
     _uiObject[0]->draw(win);
