@@ -155,9 +155,37 @@ IScene::Event LevelThree::event(sf::RenderWindow &w, sf::Event &e) {
     }
     return {EVENT_NONE, SCENE_INTRO};}
 
-void LevelThree::display(sf::RenderWindow &w, shaders_map &s) {
+void LevelThree::display(sf::RenderWindow &w, shaders_map &shaders) {
+    std::vector<sf::Vector2f> locations;
+    std::vector<sf::Glsl::Vec4> colors;
+    std::vector<float> powers;
+
+    shaders[AMBIENT_LIGHTS].setUniform("light_number", 1);
+
+    if (_actualRoom == 0)
+        locations.emplace_back(sf::Vector2f(795, 588));
+    else if (_actualRoom == 1)
+        locations.emplace_back(sf::Vector2f(1459, 445));
+    else if (_actualRoom == 2)
+        locations.emplace_back(sf::Vector2f(150, 462));
+    else if (_actualRoom == 3)
+        locations.emplace_back(sf::Vector2f(1446, 465));
+    else if (_actualRoom == 4)
+        locations.emplace_back(sf::Vector2f(798, 606));
+    else
+        locations.emplace_back(sf::Vector2f(0, 0));
+    shaders[AMBIENT_LIGHTS].setUniformArray("locations", locations.data(), locations.size());
+
+    for (int i = 0; i < 1; ++i)
+        colors.emplace_back(sf::Glsl::Vec4(1.0, 0.6, 0.4, 1.0));
+    shaders[AMBIENT_LIGHTS].setUniformArray("colors", colors.data(), colors.size());
+
+    for (int i = 0; i < 1; ++i)
+        powers.emplace_back(400.0);
+    shaders[AMBIENT_LIGHTS].setUniformArray("powers", powers.data(), powers.size());
+
     for (auto &item : _gameObject) {
-        w.draw(item.second->getSprite());
+        w.draw(item.second->getSprite(), &shaders[AMBIENT_LIGHTS]);
     }
     for (auto &item : _objects) {
         w.draw(item.second->getSprite());

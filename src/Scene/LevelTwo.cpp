@@ -298,13 +298,13 @@ void LevelTwo::takeDoor(RoomInfo &room)
                 _actual = door.first;
                 if (_rooms.at(_actual).type == TYPE_CORIDOR) {
                     std::string phrases[] = {
-                        "Tu sers à rien !",
+                        "Tu sers a rien !",
                         "T'es insignifiant ...",
-                        "T'apporteras jamais rien à la société.",
-                        "T'es adopté, pauvre con !",
-                        "T'es moche, tu pues, tu sens la morue !"
+                        "T'apporteras jamais rien a la societe.",
+                        "T'es adopte, pauvre con !",
+                        "Donne moi ton gouter !"
                     };
-                    dynamic_cast<TippingText &>(*_uiObject[4]).start(phrases[std::rand() % 3]);
+                    dynamic_cast<TippingText &>(*_uiObject[4]).start(phrases[std::rand() % 5]);
                 }
                 if (_actual == EXIT) {
                     _sounds[SUCCEED]->play();
