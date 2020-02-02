@@ -108,7 +108,10 @@ SET(SOURCES
         src/Utils/Shaders.hpp
         src/Utils/Collision/Collision.cpp
         src/Utils/Collision/Collision.hpp
-        src/Scene/LevelThree.cpp src/Scene/LevelThree.hpp)
+        src/Scene/LevelThree.cpp
+        src/Scene/LevelThree.hpp
+        src/Object/GameObject/Objects/PlayerKid.cpp
+        src/Object/GameObject/Objects/PlayerKid.hpp)
 
 # Binary
 add_executable(ggj ${SOURCES})
