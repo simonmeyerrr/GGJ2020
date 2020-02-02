@@ -14,6 +14,7 @@
     #include <SFML/Graphics/Shader.hpp>
     #include "../Utils/Exception/ShaderError.hpp"
     #include "../Utils/Shaders.hpp"
+#include "../Object/SoundObject/SoundObject.hpp"
 
 class Core {
 public:
@@ -39,6 +40,7 @@ private:
 
     shaders_map _shaders;
     IScene::Saves _save;
+    SoundObject _sound;
 };
 
 #endif /*CORE_HPP*/
