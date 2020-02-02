@@ -47,9 +47,9 @@ collisionDirection_t pixelPerfectTest(const IGameObject &Object1, const IGameObj
         // Loop through our pixels
 
         for (int i = intersection.left;
-            (float)i < intersection.left + intersection.width; ++i) {
+            (float)i < intersection.left + intersection.width; i += 2) {
             for (int j = intersection.top;
-                (float)j < intersection.top + intersection.height; ++j) {
+                (float)j < intersection.top + intersection.height; j += 2) {
 
                 sf::Vector2f o1v = Object1.getSprite().getInverseTransform().transformPoint(
                     (float)i, (float)j);
@@ -73,11 +73,11 @@ collisionDirection_t pixelPerfectTest(const IGameObject &Object1, const IGameObj
                         float angle = atan2(det, dot);
                         if (angle < M_PI / 4 && angle > -M_PI / 4)
                             collision.down = true;
-                        else if (angle > M_PI / 4 && angle < (M_PI * 3) / 4)
+                        if (angle > M_PI / 4 && angle < (M_PI * 3) / 4)
                             collision.left = true;
-                        else if (angle < (-3 * M_PI) / 4 || angle > (M_PI * 3) / 4)
+                        if (angle < (-3 * M_PI) / 4 || angle > (M_PI * 3) / 4)
                             collision.up = true;
-                        else if (angle > (-3 * M_PI) / 4 && angle < -M_PI / 4)
+                        if (angle > (-3 * M_PI) / 4 && angle < -M_PI / 4)
                             collision.right = true;
                     }
                 }
