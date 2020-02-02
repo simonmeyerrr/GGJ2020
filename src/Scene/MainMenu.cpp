@@ -97,8 +97,16 @@ IScene::Event MainMenu::event(sf::RenderWindow &win, sf::Event &e)
 
 void MainMenu::display(sf::RenderWindow &win, shaders_map &shaders)
 {
-    for (const auto &object: _gameObject)
-        win.draw(object.second->getSprite());
+    shaders[TEST_SHADER].setUniform("first", sf::Glsl::Vec2());
+    shaders[TEST_SHADER].setUniform("second", sf::Glsl::Vec2());
+    shaders[TEST_SHADER].setUniform("third", sf::Glsl::Vec2());
+
+    win.draw(_gameObject[0]->getSprite(), &shaders[TEST_SHADER]);
+    win.draw(_gameObject[1]->getSprite(), &shaders[TEST_SHADER]);
+    win.draw(_gameObject[2]->getSprite(), &shaders[TEST_SHADER]);
+    win.draw(_gameObject[3]->getSprite(), &shaders[TEST_SHADER]);
+    win.draw(_gameObject[4]->getSprite(), &shaders[TEST_SHADER]);
+
     _uiObject[0]->draw(win);
     if (_escape) {
         _uiObject[1]->draw(win);
