@@ -6,7 +6,7 @@
 #include "../Utils/Collision/Collision.hpp"
 #include "../Object/GameObject/AnimatedGameObject.hpp"
 #include "../Object/GameObject/StaticGameObject.hpp"
-#include "../Object/GameObject/Objects/PlayerOld.hpp"
+#include "../Object/GameObject/Objects/PlayerSchool.hpp"
 
 LevelOne::LevelOne() : AScene(SCENE_LEVEL1), _pos(sf::Vector2f(200, 700)) {
     _rect.setFillColor(sf::Color::Red);
@@ -24,11 +24,11 @@ LevelOne::LevelOne() : AScene(SCENE_LEVEL1), _pos(sf::Vector2f(200, 700)) {
     _angle = 0.0f;
     _isJumping = false;
     _right = false;
-    _velocity = {0, 1};
+    _velocity = {0, 0};
     _walking = false;
 //    _gameObject[BACKGROUND] = std::make_shared<AnimatedGameObject>("./assets/textures/lvl1_map.png");
     _gameObject[BACKGROUND] = std::make_shared<StaticGameObject>("./assets/textures/lvl1_map.png", sf::IntRect(0, 0, 16000, 900));
-    _gameObject[CHARACTER] = std::make_shared<PlayerOld>();
+    _gameObject[CHARACTER] = std::make_shared<PlayerSchool>();
     _pos = {0, 0};
     _gameObject[CHARACTER]->setPosition(_pos);
 }
@@ -55,8 +55,7 @@ void LevelOne::fullRotate(sf::RectangleShape &elem, float ratio) {
 IScene::Event LevelOne::update() {
 //    rotateBlock(_rect, 2.0f, 30.0f);
 //    fullRotate(_rect, -3.0f);
-    if (_walking) {    _velocity = {0, 0};
-
+    if (_walking) {
         if (_right)
             moveRight();
         else
@@ -75,7 +74,7 @@ IScene::Event LevelOne::event(sf::RenderWindow &w, sf::Event &e) {
         }
         if (e.key.code == sf::Keyboard::Space && !_isJumping) {
             _isJumping = true;
-            _velocity.y += -50;
+            _velocity.y -= 20;
         }
     }
     if (e.type == sf::Event::KeyReleased) {
@@ -99,44 +98,45 @@ void LevelOne::resume() {
 }
 
 void LevelOne::moveRight() {
-//    if (!pixelPerfectTest(*_gameObject[BACKGROUND].get(), *_gameObject[CHARACTER].get())) {
-//        if ((int) _gameObject[CHARACTER]->getPosition().x < 1600 / 2 ||
-//                _gameObject[BACKGROUND]->getPosition().x + _gameObject[BACKGROUND]->getSprite().getTextureRect().width <= 1600) {
-//            _pos.x += 10;
-//            _gameObject[CHARACTER]->setPosition(_pos);
-//        } else {
-////        for (auto &object : _objectCritic) {
-////            sf::Vector2f pos = object->getPosition();
-////            object->setPosition(pos.x - 10, pos.y);
-////        }
-//            sf::Vector2f pos = _back.getPosition();
-//            sf::Vector2f pos2 = _gameObject[BACKGROUND]->getPosition();
-//            _back.setPosition(pos.x - 10, pos.y);
-//            _gameObject[BACKGROUND]->setPosition(sf::Vector2f(pos2.x - 10, pos2.y));
-//        }
-////    }
+
+    collisionDirection_t collision = pixelPerfectTest(*_gameObject[CHARACTER], *_gameObject[BACKGROUND]);
+
+    if (collision.right)
+        return;
+    if ((int) _gameObject[CHARACTER]->getPosition().x < 1600 / 2 ||
+            _gameObject[BACKGROUND]->getPosition().x + _gameObject[BACKGROUND]->getSprite().getTextureRect().width <= 1600) {
+        _pos.x += 10;
+    } else {
+//    for (auto &object : _objectCritic) {
+//        sf::Vector2f pos = object->getPosition();
+//        object->setPosition(pos.x - 10, pos.y);
+//    }
+        sf::Vector2f pos = _back.getPosition();
+        sf::Vector2f pos2 = _gameObject[BACKGROUND]->getPosition();
+        _back.setPosition(pos.x - 10, pos.y);
+        _gameObject[BACKGROUND]->setPosition(sf::Vector2f(pos2.x - 10, pos2.y));
+    }
 }
 
 void LevelOne::moveLeft()
 {
-//    collisionDirection_t collision = pixelPerfectTest(*_gameObject[CHARACTER], *_gameObject[BACKGROUND]);
-//
-//    if (collision.left)
-//        if (_gameObject[BACKGROUND]->getPosition().x >= 0 ||
-//            (int) _gameObject[CHARACTER]->getPosition().x >= 1600 / 2) {
-//            _pos.x -= 10;
-//            _gameObject[CHARACTER]->setPosition(_pos);
-//        } else {
-////        for (auto &object : _objectCritic) {
-////            sf::Vector2f pos = object->getPosition();
-////            object->setPosition(pos.x - 10, pos.y);
-////        }
-//            sf::Vector2f pos = _back.getPosition();
-//            sf::Vector2f pos2 = _gameObject[BACKGROUND]->getPosition();
-//            _back.setPosition(pos.x + 10, pos.y);
-//            _gameObject[BACKGROUND]->setPosition(sf::Vector2f(pos2.x + 10, pos2.y));
+    collisionDirection_t collision = pixelPerfectTest(*_gameObject[CHARACTER], *_gameObject[BACKGROUND]);
+
+    if (collision.left)
+        return;
+    if (_gameObject[BACKGROUND]->getPosition().x >= 0 ||
+        (int) _gameObject[CHARACTER]->getPosition().x >= 1600 / 2) {
+        _pos.x -= 10;
+    } else {
+//        for (auto &object : _objectCritic) {
+//            sf::Vector2f pos = object->getPosition();
+//            object->setPosition(pos.x - 10, pos.y);
 //        }
-//    }
+        sf::Vector2f pos = _back.getPosition();
+        sf::Vector2f pos2 = _gameObject[BACKGROUND]->getPosition();
+        _back.setPosition(pos.x + 10, pos.y);
+        _gameObject[BACKGROUND]->setPosition(sf::Vector2f(pos2.x + 10, pos2.y));
+    }
 }
 
 void LevelOne::gravity() {
@@ -144,10 +144,14 @@ void LevelOne::gravity() {
 
     std::cout << "collision:\nup: " << collision.up << std::endl << "down: " << collision.down << std::endl << "left: " << collision.left << std::endl << "right: " << collision.right << std::endl;
     if (collision.down) {
-        if (_isJumping)
-            _isJumping = false;
-    } else
-        _pos.y += _velocity.y;
+        if (_velocity.y > 0) {
+            _velocity.y = 0;
+            if (_isJumping)
+                _isJumping = false;
+        }
+    } else {
+        _velocity.y += 1;
+    }
     //    if (!pixelPerfectTest(*_gameObject[BACKGROUND], *_gameObject[CHARACTER])) {
 //        _pos.x += _velocity.x;
 //        _pos.y += _velocity.y;
@@ -157,6 +161,8 @@ void LevelOne::gravity() {
 //        //_pos.y = 700;
 //        _isJumping = false;
 //    }
+    //        _pos.x += _velocity.x;
+    _pos.y += _velocity.y;
     _pos.x += _velocity.x;
     _gameObject[CHARACTER]->setPosition(_pos);
 }
