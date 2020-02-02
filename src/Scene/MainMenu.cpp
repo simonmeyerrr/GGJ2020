@@ -134,18 +134,22 @@ IScene::Event MainMenu::event(sf::RenderWindow &win, sf::Event &e)
 
 void MainMenu::display(sf::RenderWindow &win, shaders_map &shaders)
 {
-    sf::Vector2f firstCenter = sf::Vector2f(_gameObject[1]->getSprite().getPosition().x + _gameObject[1]->getSprite().getLocalBounds().width / 2, 740);
-    sf::Vector2f secondCenter = sf::Vector2f(_gameObject[2]->getSprite().getPosition().x + _gameObject[2]->getSprite().getLocalBounds().width / 2, 740);
-    sf::Vector2f thirdCenter = sf::Vector2f(_gameObject[3]->getSprite().getPosition().x + _gameObject[3]->getSprite().getLocalBounds().width / 2, 740);
+    shaders[TEST_SHADER].setUniform("light_number", 3);
 
-    shaders[TEST_SHADER].setUniform("first", firstCenter);
-    shaders[TEST_SHADER].setUniform("second", secondCenter);
-    shaders[TEST_SHADER].setUniform("third", thirdCenter);
+    std::vector<sf::Vector2f> locations;
+    for (int i = 1; i < 4; ++i)
+        locations.emplace_back(_gameObject[i]->getSprite().getPosition().x + _gameObject[i]->getSprite().getLocalBounds().width / 2, 740);
+    shaders[TEST_SHADER].setUniformArray("locations", locations.data(), locations.size());
 
-    shaders[TEST_SHADER].setUniform("firstBool", _lights[0]);
-    shaders[TEST_SHADER].setUniform("secondBool", _lights[1]);
-    shaders[TEST_SHADER].setUniform("thirdBool", _lights[2]);
+    std::vector<sf::Glsl::Vec4> colors;
+    for (int i = 0; i < 3; ++i)
+        colors.emplace_back(sf::Glsl::Vec4(1.0, 0.6, 0.8, 1.0));
+    shaders[TEST_SHADER].setUniformArray("colors", colors.data(), colors.size());
 
+    std::vector<float> powers;
+    for (int i = 0; i < 3; ++i)
+        powers.emplace_back(_lights[i] ? 250.0 : 220.0);
+    shaders[TEST_SHADER].setUniformArray("powers", powers.data(), powers.size());
 
     _uiObject[0]->draw(win);
     win.draw(_gameObject[0]->getSprite(), &shaders[TEST_SHADER]);

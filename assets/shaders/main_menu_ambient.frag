@@ -1,34 +1,21 @@
 uniform sampler2D texture;
 
-uniform vec2 first;
-uniform vec2 second;
-uniform vec2 third;
+uniform vec2 locations[64];
+uniform vec4 colors[64];
+uniform float powers[64];
 
-uniform bool firstBool;
-uniform bool secondBool;
-uniform bool thirdBool;
+uniform int light_number;
 
 void main()
 {
     vec4 pixel = texture2D(texture, gl_TexCoord[0].xy);
+    vec4 finalLighting = vec4(0.0, 0.0, 0.0, 1.0);
 
-    float distance = length(first - gl_FragCoord.xy) + 150.0;
-    float attenuation = 250.0 / distance;
-    if (firstBool)
-        attenuation /= 1.1;
-    vec4 color = vec4(attenuation, attenuation, attenuation, 1) * vec4(1, 0.6, 0.8, 1);
+    for (int i = 0; i < light_number; ++i) {
+        float distance = length(locations[i] - gl_FragCoord.xy) + (powers[i] / 1.6);
+        float attenuation = powers[i] / distance;
+        finalLighting += vec4(attenuation, attenuation, attenuation, 1) * colors[i];
+    }
 
-    float distance2 = length(second - gl_FragCoord.xy) + 150.0;
-    float attenuation2 = 250.0 / distance2;
-    if (secondBool)
-        attenuation2 /= 1.1;
-    vec4 color2 = vec4(attenuation2, attenuation2, attenuation2, 1) * vec4(1, 0.6, 0.8, 1);
-
-    float distance3 = length(third - gl_FragCoord.xy) + 150.0;
-    float attenuation3 = 250.0 / distance3;
-    if (thirdBool)
-        attenuation3 /= 1.1;
-    vec4 color3 = vec4(attenuation3, attenuation3, attenuation3, 1) * vec4(1, 0.6, 0.8, 1);
-
-    gl_FragColor = (color + color2 + color3) * pixel;
+    gl_FragColor = finalLighting * pixel;
 }
