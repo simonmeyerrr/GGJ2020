@@ -11,6 +11,8 @@
     #include "../Object/UIObject/IUIObject.hpp"
     #include "../Utils/FontLoader.hpp"
     #include "../Object/GameObject/IGameObject.hpp"
+#include "../Object/SoundObject/SoundObject.hpp"
+#include "../Object/SoundObject/MusicObject.hpp"
 
 
 class AScene : public IScene {
@@ -35,6 +37,9 @@ protected:
     std::map<int, std::shared_ptr<IUIObject>> _uiObject;
 
     bool _shaderType;
+
+    std::map<int, std::shared_ptr<SoundObject>> _sounds;
+    std::shared_ptr<MusicObject> _music;
 };
 
 #endif /*ASCENE_HPP*/

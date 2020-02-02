@@ -55,8 +55,8 @@ void LevelOne::fullRotate(sf::RectangleShape &elem, float ratio) {
 IScene::Event LevelOne::update() {
 //    rotateBlock(_rect, 2.0f, 30.0f);
 //    fullRotate(_rect, -3.0f);
-    if (_walking) {    _velocity = {0, 0};
-
+    if (_walking) {
+        _velocity = {0, 0};
         if (_right)
             moveRight();
         else

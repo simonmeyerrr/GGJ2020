@@ -99,8 +99,7 @@ SET(SOURCES
         src/Utils/Erosion.cpp
         src/Utils/Erosion.hpp
         src/Object/UIObject/TippingText.cpp
-        src/Object/UIObject/TippingText.hpp
-        )
+        src/Object/UIObject/TippingText.hpp src/Object/GameObject/Objects/MilitaryCharacter.cpp src/Object/GameObject/Objects/MilitaryCharacter.hpp src/Object/GameObject/Objects/FamilyCharacter.cpp src/Object/GameObject/Objects/FamilyCharacter.hpp)
 
 # Binary
 add_executable(ggj ${SOURCES})
