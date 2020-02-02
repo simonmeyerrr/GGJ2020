@@ -192,11 +192,15 @@ LevelTwo::LevelTwo(Saves &save)
     _sounds[DOOR] = std::make_shared<SoundObject>("./assets/sound/scene2/door_open.ogg");
     _sounds[KEYS] = std::make_shared<SoundObject>("./assets/sound/scene2/keys_pickup.ogg");
     _sounds[LOCKED] = std::make_shared<SoundObject>("./assets/sound/scene2/locked_door.ogg");
+    _sounds[DRING] = std::make_shared<SoundObject>("./assets/sound/scene2/dring.ogg");
+    _sounds[DRING]->setVolume(40);
+    _sounds[SUCCEED] = std::make_shared<SoundObject>("./assets/sound/common/success.ogg");
     _music = std::make_shared<MusicObject>("./assets/sound/scene2/stress_theme.ogg");
     _music->setLoop(true);
     _music->play();
     dynamic_cast<AnimatedGameObject &>(*_gameObject[0]).setCurrentAnimation("idleRight");
     hasDoor(_rooms.at(_actual));
+    _sounds[DRING]->play();
     dynamic_cast<Fade &>(*_uiObject[3]).start(sf::Color::Black, 200, false);
 }
 
@@ -292,7 +296,12 @@ void LevelTwo::takeDoor(RoomInfo &room)
                 _x = _rooms.at(door.first).links.at(_actual).pos.x - 30;
                 _gameObject[0]->setPosition({static_cast<float>(_x),  HEIGHT - PLAYER_HEIGHT});
                 _actual = door.first;
+                if (_rooms.at(_actual).type == TYPE_CORIDOR) {
+                    std::string phrases[] = {"Nullos", "Meurt", "Creve"};
+                    dynamic_cast<TippingText &>(*_uiObject[4]).start(phrases[std::rand() % 3]);
+                }
                 if (_actual == EXIT) {
+                    _sounds[SUCCEED]->play();
                     _walking = true;
                     _right = true;
                     dynamic_cast<AnimatedGameObject &>(*_gameObject[0]).setCurrentAnimation(std::string("walk") +  "Right");

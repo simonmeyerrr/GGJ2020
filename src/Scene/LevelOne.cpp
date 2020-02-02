@@ -10,8 +10,9 @@
 #include "../Object/UIObject/Fade.hpp"
 #include "../Object/UIObject/Text.hpp"
 #include "../Object/UIObject/Rect.hpp"
+#include "../Object/GameObject/Objects/PlayerSoldat.hpp"
 
-LevelOne::LevelOne(Saves &save) : AScene(SCENE_LEVEL1, save), _pos(sf::Vector2f(200, 700)), _escape(false) {
+LevelOne::LevelOne(Saves &save) : AScene(SCENE_LEVEL1, save), _pos(sf::Vector2f(200, 700)), _escape(false), _end(false) {
     _bg.setFillColor(sf::Color::Green);
     _bg.setSize(sf::Vector2f(2000, 700));
     _bg.setPosition(sf::Vector2f(0, 0));
@@ -32,7 +33,7 @@ LevelOne::LevelOne(Saves &save) : AScene(SCENE_LEVEL1, save), _pos(sf::Vector2f(
     _sounds[FOREST]->setLoop(true);
     _sounds[FOREST]->play();
     _gameObject[BACKGROUND] = std::make_shared<StaticGameObject>("./assets/textures/lvl1_map.png", sf::IntRect(0, 0, 16000, 900));
-    _gameObject[CHARACTER] = std::make_shared<PlayerSchool>();
+    _gameObject[CHARACTER] = std::make_shared<PlayerSoldat>();
     _pos = {0, 0};
     _gameObject[CHARACTER]->setPosition(_pos);
     _uiObject[0] = std::make_shared<Fade>();
@@ -77,6 +78,10 @@ IScene::Event LevelOne::update() {
         _velocity.x = 0;
     gravity();
     move();
+    if (_end && dynamic_cast<Fade &>(*_uiObject[0]).isOver()) {
+        _save.level1 = true;
+        return {EVENT_POP_SCENE, SCENE_INTRO};
+    }
     return {EVENT_NONE, SCENE_INTRO};
 }
 
@@ -131,6 +136,10 @@ void LevelOne::moveRight() {
     } else {
         sf::Vector2f pos2 = _gameObject[BACKGROUND]->getPosition();
         _gameObject[BACKGROUND]->setPosition(sf::Vector2f(pos2.x - 10, pos2.y));
+        if (pos2.x < -10000 && !_end) {
+            _end = true;
+            dynamic_cast<Fade &>(*_uiObject[0]).start(sf::Color::Black, 200, true);
+        }
     }
 }
 
@@ -164,8 +173,6 @@ void LevelOne::gravity() {
 void LevelOne::move()
 {
     sf::Vector2f temp_velocity = _velocity;
-
-    std::cout << "velocity.x: " << _velocity.x << std::endl << "velocity.y: " << _velocity.y << std::endl << std::endl;
 
     if (_velocity.y > 0) {
         if ((pixelPerfectTest(*_gameObject[CHARACTER], *_gameObject[BACKGROUND])) && _isJumping)

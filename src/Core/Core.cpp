@@ -11,6 +11,7 @@ Core::Core()
     _win(std::make_unique<sf::RenderWindow>(sf::VideoMode(1600, 900, 32), "GGJ2020")),
     _sceneManager(std::make_unique<SceneManager>()), _save{false, false, false}
 {
+    _win->clear(sf::Color::Black);
 }
 
 void Core::initShaders()
