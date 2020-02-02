@@ -152,7 +152,7 @@ void MainMenu::display(sf::RenderWindow &win, shaders_map &shaders)
 
     std::vector<float> powers;
     for (int i = 0; i < 3; ++i)
-        powers.emplace_back(_lights[i] ? 250.0 : 220.0);
+        powers.emplace_back((_lights[i] ? 250.0 : 220.0) * _zoom * _zoom * _zoom * _zoom * _zoom * _zoom);
     shaders[AMBIENT_LIGHTS].setUniformArray("powers", powers.data(), powers.size());
 
     _uiObject[0]->draw(win);

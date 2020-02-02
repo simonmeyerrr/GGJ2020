@@ -28,7 +28,7 @@ LevelTwo::LevelTwo(Saves &save)
                     {CLASS_8, RoomInfoLink{false, {100, HEIGHT - DOOR_HEIGHT}}},
                     {CLASS_7, RoomInfoLink{false, {400, HEIGHT - DOOR_HEIGHT}}},
                     {CLASS_5, RoomInfoLink{false, {700, HEIGHT - DOOR_HEIGHT}}},
-                    {EXIT, RoomInfoLink{true, {1000, HEIGHT - DOOR_HEIGHT}}},
+                    {CLASS_3, RoomInfoLink{true, {1000, HEIGHT - DOOR_HEIGHT}}},
                     {CLASS_1, RoomInfoLink{false, {1300, HEIGHT - DOOR_HEIGHT}}}
             }
     };
@@ -172,7 +172,7 @@ LevelTwo::LevelTwo(Saves &save)
             false,
             {NONE, NONE},
             {
-                    {CORIDOR_A, RoomInfoLink{true, {140, HEIGHT - DOOR_HEIGHT}}}
+                    {CORIDOR_C, RoomInfoLink{true, {140, HEIGHT - DOOR_HEIGHT}}}
             }
     };
     _uiObject[0] = std::make_shared<Text>("", _font.get(), sf::Vector2f{600, 800}, sf::Color::White);
