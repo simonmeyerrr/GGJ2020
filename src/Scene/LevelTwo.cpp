@@ -254,6 +254,14 @@ IScene::Event LevelTwo::event(sf::RenderWindow &win, sf::Event &e)
             takeDoor(_rooms.at(_actual));
         } else if (e.key.code == sf::Keyboard::Down) {
             takeKey(_rooms.at(_actual));
+        } else if (e.key.code == sf::Keyboard::P) {
+            _x = 0;
+            _actual = EXIT;
+            _sounds[SUCCEED]->play();
+            _walking = true;
+            _right = true;
+            dynamic_cast<AnimatedGameObject &>(*_gameObject[0]).setCurrentAnimation(std::string("walk") +  "Right");
+            dynamic_cast<Fade &>(*_uiObject[3]).start(sf::Color::Black, 500, true);
         }
     }
     if (e.type == sf::Event::KeyReleased && _actual != EXIT) {
@@ -298,12 +306,14 @@ void LevelTwo::takeDoor(RoomInfo &room)
                 _actual = door.first;
                 if (_rooms.at(_actual).type == TYPE_CORIDOR) {
                     std::string phrases[] = {
-                        "Tu sers à rien !",
+                        "Tu sers a rien !",
                         "T'es insignifiant ...",
-                        "T'apporteras jamais rien à la société.",
-                        "T'es adopté, pauvre con !",
+                        "T'apporteras jamais rien a la societe.",
+                        "T'es adopte, pauvre con !",
                         "T'es moche, tu pues, tu sens la morue !"
                     };
+                    _walking = false;
+                    dynamic_cast<AnimatedGameObject &>(*_gameObject[0]).setCurrentAnimation(std::string("idle") + (_right ? "Right" : "Left"));
                     dynamic_cast<TippingText &>(*_uiObject[4]).start(phrases[std::rand() % 3]);
                 }
                 if (_actual == EXIT) {
