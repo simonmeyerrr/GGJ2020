@@ -287,10 +287,7 @@ void LevelTwo::displayRect(sf::RenderWindow &win, const sf::Color &color, const 
     rect.setFillColor(color);
     rect.setSize(size);
     rect.setPosition(pos);
-    if (shader)
-        win.draw(rect, shader);
-    else
-        win.draw(rect);
+    win.draw(rect);
 }
 
 void LevelTwo::displayRoom(sf::RenderWindow &win, const RoomInfo &room)
