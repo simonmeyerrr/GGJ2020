@@ -105,11 +105,11 @@ IScene::Event MainMenu::event(sf::RenderWindow &win, sf::Event &e)
             dynamic_cast<AnimatedGameObject &>(*_gameObject[4]).setCurrentAnimation(std::string("walk") + (_right ? "Right" : "Left"));
         } else if (e.key.code == sf::Keyboard::Up) {
             auto front = inFrontOf();
-            if (front == 1 || front == 2) {
+            if (front) {
                 _anim = true;
                 _in = true;
                 _zoom = 1.0;
-                _scene = front == 1 ? SCENE_LEVEL1 : SCENE_LEVEL2;
+                _scene = front == 1 ? SCENE_LEVEL1 : front == 2 ? SCENE_LEVEL2 : SCENE_LEVEL3;
                 dynamic_cast<Fade &>(*_uiObject[3]).start(sf::Color::Black, 75, true);
             }
         }
