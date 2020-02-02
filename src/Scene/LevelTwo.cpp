@@ -181,7 +181,7 @@ LevelTwo::LevelTwo(Saves &save)
     _gameObject[0] = std::make_shared<PlayerSchool>();
     _gameObject[0]->setPosition({static_cast<float>(_x), HEIGHT - PLAYER_HEIGHT});
     _gameObject[1] = std::make_shared<StaticGameObject>("./assets/textures/classroom.png", sf::IntRect{0, 0, 1600, 900});
-    _gameObject[2] = std::make_shared<StaticGameObject>("./assets/textures/classroom.png", sf::IntRect{0, 0, 1600, 900});
+    _gameObject[2] = std::make_shared<StaticGameObject>("./assets/textures/coridor.png", sf::IntRect{0, 0, 1600, 900});
     _gameObject[3] = std::make_shared<StaticGameObject>("./assets/textures/door_open.png", sf::IntRect{0, 0, 200, 300});
     _gameObject[4] = std::make_shared<StaticGameObject>("./assets/textures/door_close.png", sf::IntRect{0, 0, 200, 300});
     _gameObject[5] = std::make_shared<StaticGameObject>("./assets/textures/key.png", sf::IntRect{0, 0, 50, 50});
