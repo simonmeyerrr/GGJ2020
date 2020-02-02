@@ -28,7 +28,7 @@ LevelTwo::LevelTwo(Saves &save)
                     {CLASS_8, RoomInfoLink{false, {100, HEIGHT - DOOR_HEIGHT}}},
                     {CLASS_7, RoomInfoLink{false, {400, HEIGHT - DOOR_HEIGHT}}},
                     {CLASS_5, RoomInfoLink{false, {700, HEIGHT - DOOR_HEIGHT}}},
-                    {CLASS_3, RoomInfoLink{true, {1000, HEIGHT - DOOR_HEIGHT}}},
+                    {EXIT, RoomInfoLink{true, {1000, HEIGHT - DOOR_HEIGHT}}},
                     {CLASS_1, RoomInfoLink{false, {1300, HEIGHT - DOOR_HEIGHT}}}
             }
     };
@@ -172,7 +172,7 @@ LevelTwo::LevelTwo(Saves &save)
             false,
             {NONE, NONE},
             {
-                    {CORIDOR_C, RoomInfoLink{true, {140, HEIGHT - DOOR_HEIGHT}}}
+                    {CORIDOR_A, RoomInfoLink{true, {140, HEIGHT - DOOR_HEIGHT}}}
             }
     };
     _uiObject[0] = std::make_shared<Text>("", _font.get(), sf::Vector2f{600, 800}, sf::Color::White);
@@ -192,11 +192,15 @@ LevelTwo::LevelTwo(Saves &save)
     _sounds[DOOR] = std::make_shared<SoundObject>("./assets/sound/scene2/door_open.ogg");
     _sounds[KEYS] = std::make_shared<SoundObject>("./assets/sound/scene2/keys_pickup.ogg");
     _sounds[LOCKED] = std::make_shared<SoundObject>("./assets/sound/scene2/locked_door.ogg");
+    _sounds[DRING] = std::make_shared<SoundObject>("./assets/sound/scene2/dring.ogg");
+    _sounds[DRING]->setVolume(40);
+    _sounds[SUCCEED] = std::make_shared<SoundObject>("./assets/sound/common/success.ogg");
     _music = std::make_shared<MusicObject>("./assets/sound/scene2/stress_theme.ogg");
     _music->setLoop(true);
     _music->play();
     dynamic_cast<AnimatedGameObject &>(*_gameObject[0]).setCurrentAnimation("idleRight");
     hasDoor(_rooms.at(_actual));
+    _sounds[DRING]->play();
     dynamic_cast<Fade &>(*_uiObject[3]).start(sf::Color::Black, 200, false);
 }
 
@@ -212,9 +216,9 @@ IScene::Event LevelTwo::update()
         return Event{EVENT_NONE, SCENE_INTRO};
     if (_walking) {
         if (!_right && _x > -DIFF)
-            _x -= 3;
+            _x -= 5;
         else if (_right && _x < 1600 - PLAYER_WIDTH + DIFF)
-            _x += 3;
+            _x += 5;
         _gameObject[0]->setPosition({static_cast<float>(_x),  HEIGHT - PLAYER_HEIGHT});
         hasDoor(_rooms.at(_actual));
     }
@@ -297,6 +301,7 @@ void LevelTwo::takeDoor(RoomInfo &room)
                     dynamic_cast<TippingText &>(*_uiObject[4]).start(phrases[std::rand() % 3]);
                 }
                 if (_actual == EXIT) {
+                    _sounds[SUCCEED]->play();
                     _walking = true;
                     _right = true;
                     dynamic_cast<AnimatedGameObject &>(*_gameObject[0]).setCurrentAnimation(std::string("walk") +  "Right");
@@ -361,20 +366,28 @@ void LevelTwo::display(sf::RenderWindow &win, shaders_map &shaders)
         for (int i = 0; i < 1; ++i)
             powers.emplace_back(600.0);
         shaders[AMBIENT_LIGHTS].setUniformArray("powers", powers.data(), powers.size());
-    } else if (_rooms.at(_actual).type == RoomType::TYPE_CORIDOR) {
+    } else {
         shaders[AMBIENT_LIGHTS].setUniform("light_number", 5);
 
-        for (int i = 0; i < 5; ++i)
-            locations.emplace_back(sf::Vector2f(400 * i, 900));
+        for (int i = 0; i < 5; ++i) {
+            if (_rooms.at(_actual).type == RoomType::TYPE_CORIDOR)
+                locations.emplace_back(sf::Vector2f(400 * i, 900));
+            else
+                locations.emplace_back(sf::Vector2f(400 * i, 1200));
+        }
         shaders[AMBIENT_LIGHTS].setUniformArray("locations", locations.data(), locations.size());
 
         for (int i = 0; i < 5; ++i)
             colors.emplace_back(sf::Glsl::Vec4(1.0, 1.0, 1.0, 1.0));
         shaders[AMBIENT_LIGHTS].setUniformArray("colors", colors.data(), colors.size());
 
-        for (int i = 0; i < 5; ++i)
-            powers.emplace_back(150.0);
-        shaders[AMBIENT_LIGHTS].setUniformArray("powers", powers.data(), powers.size());
+        for (int i = 0; i < 5; ++i) {
+            if (_rooms.at(_actual).type == RoomType::TYPE_CORIDOR)
+                powers.emplace_back(150.0);
+            else
+                powers.emplace_back(200.0);
+            shaders[AMBIENT_LIGHTS].setUniformArray("powers", powers.data(), powers.size());
+        }
     }
 
     displayRoom(win, _rooms.at(_actual), shaders);

@@ -15,7 +15,7 @@ PlayerSchool::PlayerSchool()
     }
     addFrames("idleRight", idleRight, 0.03f);
     addFrames("idleLeft", idleLeft, 0.03f);
-    addFrames("walkRight", walkRight, 0.035f);
-    addFrames("walkLeft", walkLeft, 0.035f);
+    addFrames("walkRight", walkRight, 0.015f);
+    addFrames("walkLeft", walkLeft, 0.015f);
     setCurrentAnimation("walkRight");
 }
