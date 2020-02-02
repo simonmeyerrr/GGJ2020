@@ -9,6 +9,7 @@
 
     #include <SFML/Graphics.hpp>
     #include "../Utils/Using.hpp"
+    #include "../Utils/Shaders.hpp"
 
 class IScene {
 public:
@@ -36,7 +37,7 @@ public:
     virtual TypeScene getType() const = 0;
     virtual Event update() = 0;
     virtual Event event(sf::RenderWindow &, sf::Event &) = 0;
-    virtual void display(sf::RenderWindow &, sf::Shader *) = 0;
+    virtual void display(sf::RenderWindow &, shaders_map &) = 0;
     virtual void resume() = 0;
 };
 

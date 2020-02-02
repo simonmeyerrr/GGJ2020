@@ -85,7 +85,7 @@ IScene::Event LevelOne::event(sf::RenderWindow &w, sf::Event &e) {
     return {EVENT_NONE, SCENE_INTRO};
 }
 
-void LevelOne::display(sf::RenderWindow &w, sf::Shader *shader) {
+void LevelOne::display(sf::RenderWindow &w, shaders_map  &shaders) {
     w.draw(_bg);
     w.draw(_rect);
     w.draw(_back);

@@ -100,7 +100,7 @@ SET(SOURCES
         src/Utils/Erosion.hpp
         src/Object/UIObject/TippingText.cpp
         src/Object/UIObject/TippingText.hpp
-        )
+        src/Utils/Shaders.hpp)
 
 # Binary
 add_executable(ggj ${SOURCES})

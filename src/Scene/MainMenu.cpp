@@ -95,7 +95,7 @@ IScene::Event MainMenu::event(sf::RenderWindow &win, sf::Event &e)
     return Event{EVENT_NONE, SCENE_INTRO};
 }
 
-void MainMenu::display(sf::RenderWindow &win, sf::Shader *shader)
+void MainMenu::display(sf::RenderWindow &win, shaders_map &shaders)
 {
     for (const auto &object: _gameObject)
         win.draw(object.second->getSprite());

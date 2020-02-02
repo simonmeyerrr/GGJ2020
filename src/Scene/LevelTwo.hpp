@@ -52,15 +52,15 @@ public:
 
     Event update() override;
     Event event(sf::RenderWindow &, sf::Event &) override;
-    void display(sf::RenderWindow &, sf::Shader *) override;
+    void display(sf::RenderWindow &, shaders_map &) override;
     void resume() override;
 
 private:
     bool hasDoor(RoomInfo &room);
     void takeDoor(RoomInfo &room);
     void takeKey(RoomInfo &room);
-    void displayRect(sf::RenderWindow &win, const sf::Color &, const sf::Vector2f &pos, const sf::Vector2f &size, sf::Shader *shader);
-    void displayRoom(sf::RenderWindow &, const RoomInfo &room, sf::Shader *shader);
+    void displayRect(sf::RenderWindow &win, const sf::Color &, const sf::Vector2f &pos, const sf::Vector2f &size);
+    void displayRoom(sf::RenderWindow &, const RoomInfo &room);
 
     std::map<Room, RoomInfo> _rooms;
     Room _actual;
