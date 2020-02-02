@@ -66,8 +66,6 @@ SET(SOURCES
         src/Scene/Intro.hpp
         src/Scene/MainMenu.cpp
         src/Scene/MainMenu.hpp
-        src/Scene/Settings.cpp
-        src/Scene/Settings.hpp
         src/Utils/Using.hpp
         src/Utils/FontLoader.hpp
         src/Utils/Collision/Collision.cpp

@@ -13,7 +13,7 @@
 class Intro : public AScene {
 public:
     ~Intro() override = default;
-    Intro();
+    Intro(Saves &save);
     Intro(Intro &) = delete;
     Intro &operator=(const Intro &) = delete;
 

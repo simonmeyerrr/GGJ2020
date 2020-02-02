@@ -17,7 +17,7 @@ class AScene : public IScene {
 public:
 
     // Constructors
-    AScene(IScene::TypeScene);
+    AScene(IScene::TypeScene, Saves &save);
     AScene(AScene &) = delete;
     virtual ~AScene() override = default;
     AScene &operator=(const AScene &) = delete;
@@ -28,6 +28,7 @@ public:
 protected:
     // Variable
     TypeScene _type;
+    Saves &_save;
     FontLoader _font;
 
     std::map<int, std::shared_ptr<IGameObject>> _gameObject;

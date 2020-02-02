@@ -30,7 +30,6 @@ public:
     const std::map<IScene::TypeScene, ShaderType> _sceneShaders = {
         { IScene::TypeScene::SCENE_INTRO, NONE },
         { IScene::TypeScene::SCENE_MAIN_MENU, NONE },
-        { IScene::TypeScene::SCENE_SETTINGS, NONE },
         { IScene::TypeScene::SCENE_LEVEL2, NONE },
         { IScene::TypeScene::SCENE_LEVEL1, NONE }
     };
@@ -57,6 +56,7 @@ private:
 
     std::map<ShaderType, sf::Shader> _shaders;
     ShaderType _currentShader;
+    IScene::Saves _save;
 };
 
 #endif /*CORE_HPP*/

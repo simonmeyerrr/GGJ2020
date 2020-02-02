@@ -14,7 +14,7 @@ class LevelOne : public AScene {
         CHARACTER
     };
 public:
-    LevelOne();
+    LevelOne(Saves &save);
     LevelOne(LevelOne &) = delete;
     ~LevelOne() override = default;
     LevelOne &operator=(const LevelOne &) = delete;

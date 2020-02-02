@@ -8,7 +8,7 @@
 #include "../Object/GameObject/StaticGameObject.hpp"
 #include "../Object/GameObject/Objects/PlayerOld.hpp"
 
-LevelOne::LevelOne() : AScene(SCENE_LEVEL1), _pos(sf::Vector2f(200, 700)) {
+LevelOne::LevelOne(Saves &save) : AScene(SCENE_LEVEL1, save), _pos(sf::Vector2f(200, 700)) {
     _rect.setFillColor(sf::Color::Red);
     _rect.setSize(sf::Vector2f(100, 100));
     _rect.setPosition(sf::Vector2f(200, 700));

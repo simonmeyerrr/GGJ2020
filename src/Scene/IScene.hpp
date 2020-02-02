@@ -16,7 +16,6 @@ public:
     enum TypeScene {
         SCENE_INTRO,
         SCENE_MAIN_MENU,
-        SCENE_SETTINGS,
         SCENE_LEVEL1,
         SCENE_LEVEL2
     };
@@ -31,6 +30,12 @@ public:
     struct Event {
         TypeEvent event;
         TypeScene scene;
+    };
+
+    struct Saves {
+        bool level1;
+        bool level2;
+        bool level3;
     };
 
     virtual TypeScene getType() const = 0;
