@@ -10,11 +10,13 @@
 
 class LevelOne : public AScene {
     enum Type {
-        BACKGROUND,
-        CHARACTER,
-        SKY_P,
-        FOREST_P,
-        FOREST2_P
+        SKY = 0,
+        MONTAGNE = 1,
+        FOREST_B = 2,
+        FOREST2_B = 3,
+        SOL = 4,
+        PLATFORMS = 5,
+        CHARACTER = 6
     };
     enum Sounds {
         FOREST,
@@ -42,7 +44,6 @@ private:
     void gravity();
     void move();
 
-    sf::RectangleShape _bg;
     sf::Vector2f _pos;
     bool _left;
     float _angle;

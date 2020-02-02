@@ -16,6 +16,9 @@ Intro::Intro(Saves &save)
     _gameObject[1] = std::make_shared<StaticGameObject>("./assets/textures/intro2.png", sf::IntRect{0, 0, 1600, 900});
     _gameObject[2] = std::make_shared<StaticGameObject>("./assets/textures/intro3.png", sf::IntRect{0, 0, 1600, 900});
     _uiObject[0] = std::make_shared<Fade>();
+    _sounds[0] = std::make_shared<SoundObject>("./assets/sound/common/main_theme.ogg");
+    _sounds[0]->setLoop(true);
+    _sounds[0]->play();
     dynamic_cast<Fade &>(*(_uiObject[0])).start(sf::Color::Black, 100, false);
 }
 
@@ -23,8 +26,10 @@ IScene::Event Intro::update()
 {
     _uiObject[0]->update();
     ++_updates;
-    if (_updates >= 900)
+    if (_updates >= 900) {
+        _sounds[0]->stop();
         return Event{EVENT_PUSH_SCENE, SCENE_MAIN_MENU};
+    }
     if (_updates == 280 || _updates == 580 || _updates == 860)
         dynamic_cast<Fade &>(*(_uiObject[0])).start(sf::Color::Black, 40, true);
     if (_updates == 300 || _updates == 600 || _updates == 900)

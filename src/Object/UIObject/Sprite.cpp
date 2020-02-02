@@ -6,15 +6,13 @@
 #include ".././../Utils/Collision/Collision.hpp"
 
 Sprite::Sprite(const std::string &filename, const sf::IntRect &rect, const sf::Vector2f &pos)
-    : _texture(std::make_shared<sf::Texture>()), _sprite(std::make_shared<sf::Sprite>()), _mask(
-    nullptr)
+    : _texture(std::make_shared<sf::Texture>()), _sprite(std::make_shared<sf::Sprite>())
 {
     _texture.get()->loadFromFile(filename);
     _sprite.get()->setTexture(*_texture);
     _sprite.get()->setPosition(pos);
     sf::Image image;
     image.loadFromFile(filename);
-    _mask = std::make_shared<sf::Uint8 *>(createMask(*_texture, image));
     _sprite->setTextureRect(rect);
 }
 
@@ -37,7 +35,6 @@ sf::FloatRect Sprite::getGlobalBounds() const {
 Sprite &Sprite::operator=(Sprite const &sprite) {
     _sprite = sprite._sprite;
     _texture = sprite._texture;
-    _mask = sprite._mask;
     return *this;
 }
 
@@ -61,9 +58,4 @@ sf::Texture Sprite::getTexture() const
 sf::Sprite Sprite::getSprite() const
 {
     return *_sprite;
-}
-
-sf::Uint8 *Sprite::getMask() const
-{
-    return *_mask;
 }

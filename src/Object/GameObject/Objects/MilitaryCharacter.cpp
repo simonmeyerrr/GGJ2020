@@ -7,7 +7,7 @@
 #include "MilitaryCharacter.hpp"
 
 MilitaryCharacter::MilitaryCharacter()
-: AnimatedGameObject("assets/textures/militaryCharacter.png")
+: AnimatedGameObject("assets/textures/player_soldat.png")
 {
     Frames idleRight;
     Frames idleLeft;
