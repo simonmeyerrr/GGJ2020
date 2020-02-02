@@ -9,6 +9,7 @@
 #include "MainMenu.hpp"
 #include "LevelTwo.hpp"
 #include "LevelOne.hpp"
+#include "LevelThree.hpp"
 
 SceneManager::SceneManager()
     : _scenes()
@@ -35,6 +36,9 @@ void SceneManager::push(IScene::TypeScene type, IScene::Saves &save) {
             break;
         case IScene::SCENE_LEVEL2:
             _scenes.push(new LevelTwo(save));
+            break;
+        case IScene::SCENE_LEVEL3:
+            _scenes.push(new LevelThree(save));
             break;
         default:
             break;

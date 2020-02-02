@@ -37,7 +37,7 @@ void TippingText::update()
     if (_state != WRITING)
         return;
    std::string str = _str.substr(0, _nbLetters);
-   _text->setString(str);
+    _text->setString(str);
    ++_nbLetters;
    if (_nbLetters > _str.length())
        _state = ENDED;
@@ -45,13 +45,15 @@ void TippingText::update()
 
 void TippingText::start()
 {
-    if (_s.getTextureRect().left < 11 * 800) {
-        sf::IntRect rect = _s.getTextureRect();
-        rect.left += 800;
-        _s.setTextureRect(rect);
-    } else {
-        _state = WRITING;
-    }
+//    if (_s.getTextureRect().left < 11 * 800) {
+//        std::cout << "test" << std::endl;
+//        sf::IntRect rect = _s.getTextureRect();
+//        rect.left += 800;
+//        _s.setTextureRect(rect);
+//    } else {
+//        _state = WRITING;
+//    }
+    _state = WRITING;
 }
 
 TippingText::State TippingText::getState() const

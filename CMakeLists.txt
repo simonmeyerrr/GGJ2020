@@ -103,7 +103,7 @@ SET(SOURCES
         src/Object/GameObject/Objects/MilitaryCharacter.hpp
         src/Object/GameObject/Objects/FamilyCharacter.cpp
         src/Object/GameObject/Objects/FamilyCharacter.hpp
-        src/Utils/Shaders.hpp)
+        src/Utils/Shaders.hpp src/Scene/LevelThree.cpp src/Scene/LevelThree.hpp)
 
 # Binary
 add_executable(ggj ${SOURCES})

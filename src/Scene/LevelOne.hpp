@@ -11,7 +11,10 @@
 class LevelOne : public AScene {
     enum Type {
         BACKGROUND,
-        CHARACTER
+        CHARACTER,
+        SKY_P,
+        FOREST_P,
+        FOREST2_P
     };
     enum Sounds {
         FOREST,
@@ -31,6 +34,7 @@ public:
     void resume() override;
 
 private:
+    void updateParallax();
     void rotateBlock(sf::RectangleShape &elem, float ratio, float maxAngle);
     void fullRotate(sf::RectangleShape &elem, float ratio);
     void moveRight();

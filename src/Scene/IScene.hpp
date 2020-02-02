@@ -18,7 +18,8 @@ public:
         SCENE_INTRO,
         SCENE_MAIN_MENU,
         SCENE_LEVEL1,
-        SCENE_LEVEL2
+        SCENE_LEVEL2,
+        SCENE_LEVEL3
     };
 
     enum TypeEvent {
