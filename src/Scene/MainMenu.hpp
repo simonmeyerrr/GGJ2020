@@ -38,6 +38,8 @@ private:
     bool _in;
     float _zoom;
     IScene::TypeScene _scene;
+
+    bool _lights[3];
 };
 
 #endif /*MAIN_MENU_HPP*/
