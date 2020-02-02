@@ -5,6 +5,7 @@
 #include "../Object/GameObject/Objects/PlayerSchool.hpp"
 #include "../Object/UIObject/Fade.hpp"
 #include "../Object/GameObject/StaticGameObject.hpp"
+#include "../Object/UIObject/TippingText.hpp"
 
 #define DOOR_HEIGHT 300
 #define DOOR_WIDTH 200
@@ -178,6 +179,7 @@ LevelTwo::LevelTwo(Saves &save)
     _uiObject[1] = std::make_shared<Rect>(sf::Color{0, 0, 0, 125});
     _uiObject[2] = std::make_shared<Text>("Appuyez sur Entrer pour quitter le jeu, sinon appuyez sur Echape", _font.get(), sf::Vector2f{550, 400}, sf::Color::White);
     _uiObject[3] = std::make_shared<Fade>();
+    _uiObject[4] = std::make_shared<TippingText>(_font.get());
     _gameObject[0] = std::make_shared<PlayerSchool>();
     _gameObject[0]->setPosition({static_cast<float>(_x), HEIGHT - PLAYER_HEIGHT});
     _gameObject[1] = std::make_shared<StaticGameObject>("./assets/textures/classroom.png", sf::IntRect{0, 0, 1600, 900});
@@ -204,6 +206,9 @@ IScene::Event LevelTwo::update()
         return Event{EVENT_NONE, SCENE_INTRO};
     for (const auto &object: _gameObject)
         object.second->update();
+    _uiObject[4]->update();
+    if (dynamic_cast<TippingText &>(*_uiObject[4]).getState() != TippingText::CLEAN)
+        return Event{EVENT_NONE, SCENE_INTRO};
     if (_walking) {
         if (!_right && _x > -DIFF)
             _x -= 3;
@@ -226,6 +231,11 @@ IScene::Event LevelTwo::event(sf::RenderWindow &win, sf::Event &e)
             return Event{EVENT_POP_SCENE, SCENE_INTRO};
         else if (e.type == sf::Event::KeyPressed && _escape && e.key.code == sf::Keyboard::Escape)
             _escape = false;
+        return Event{EVENT_NONE, SCENE_INTRO};
+    }
+    if (dynamic_cast<TippingText &>(*_uiObject[4]).getState() != TippingText::CLEAN) {
+        if (dynamic_cast<TippingText &>(*_uiObject[4]).getState() == TippingText::ENDED && e.type == sf::Event::KeyPressed)
+            dynamic_cast<TippingText &>(*_uiObject[4]).clean();
         return Event{EVENT_NONE, SCENE_INTRO};
     }
     if (e.type == sf::Event::KeyPressed) {
@@ -293,9 +303,9 @@ void LevelTwo::takeKey(RoomInfo &room)
     }
     room.hasKey = false;
     _sounds[KEYS]->play();
-    std::cout << "take key, open between " << _rooms.at(room.keyOpen.first).name << " and " << _rooms.at(room.keyOpen.second).name << std::endl;
     _rooms.at(room.keyOpen.first).links.at(room.keyOpen.second).opened = true;
     _rooms.at(room.keyOpen.second).links.at(room.keyOpen.first).opened = true;
+    dynamic_cast<TippingText &>(*_uiObject[4]).start("               Ces cles ouvrent la porte entre\n                         " + _rooms.at(room.keyOpen.first).name + " et " + _rooms.at(room.keyOpen.second).name);
 }
 
 void LevelTwo::displayRoom(sf::RenderWindow &win, const RoomInfo &room)
@@ -321,6 +331,7 @@ void LevelTwo::display(sf::RenderWindow &win, shaders_map &shaders)
     displayRoom(win, _rooms.at(_actual));
     win.draw(_gameObject[0]->getSprite());
     _uiObject[0]->draw(win);
+    _uiObject[4]->draw(win);
     if (_escape) {
         _uiObject[1]->draw(win);
         _uiObject[2]->draw(win);

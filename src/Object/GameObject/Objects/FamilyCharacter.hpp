@@ -33,11 +33,10 @@ private:
     sf::Vector2f _pos;
     sf::Vector2f _basePos;
     bool _right;
-    std::vector<std::shared_ptr<TippingText>> _quests;
-    std::shared_ptr<TippingText> _notFound;
-    std::shared_ptr<TippingText> _successFull;
+    std::vector<std::string> _quests;
     bool _isFound;
     sf::Font _font;
+    TippingText _tipping;
 };
 
 
