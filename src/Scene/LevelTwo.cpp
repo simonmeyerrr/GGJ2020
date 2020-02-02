@@ -292,6 +292,10 @@ void LevelTwo::takeDoor(RoomInfo &room)
                 _x = _rooms.at(door.first).links.at(_actual).pos.x - 30;
                 _gameObject[0]->setPosition({static_cast<float>(_x),  HEIGHT - PLAYER_HEIGHT});
                 _actual = door.first;
+                if (_rooms.at(_actual).type == TYPE_CORIDOR) {
+                    std::string phrases[] = {"Nullos", "Meurt", "Creve"};
+                    dynamic_cast<TippingText &>(*_uiObject[4]).start(phrases[std::rand() % 3]);
+                }
                 if (_actual == EXIT) {
                     _walking = true;
                     _right = true;

@@ -10,6 +10,7 @@
 #include "../Object/UIObject/Fade.hpp"
 #include "../Object/UIObject/Text.hpp"
 #include "../Object/UIObject/Rect.hpp"
+#include "../Object/GameObject/Objects/PlayerSoldat.hpp"
 
 LevelOne::LevelOne(Saves &save) : AScene(SCENE_LEVEL1, save), _pos(sf::Vector2f(200, 700)), _escape(false), _end(false) {
     _bg.setFillColor(sf::Color::Green);
@@ -32,7 +33,7 @@ LevelOne::LevelOne(Saves &save) : AScene(SCENE_LEVEL1, save), _pos(sf::Vector2f(
     _sounds[FOREST]->setLoop(true);
     _sounds[FOREST]->play();
     _gameObject[BACKGROUND] = std::make_shared<StaticGameObject>("./assets/textures/lvl1_map.png", sf::IntRect(0, 0, 16000, 900));
-    _gameObject[CHARACTER] = std::make_shared<PlayerSchool>();
+    _gameObject[CHARACTER] = std::make_shared<PlayerSoldat>();
     _pos = {0, 0};
     _gameObject[CHARACTER]->setPosition(_pos);
     _uiObject[0] = std::make_shared<Fade>();
@@ -172,8 +173,6 @@ void LevelOne::gravity() {
 void LevelOne::move()
 {
     sf::Vector2f temp_velocity = _velocity;
-
-    std::cout << "velocity.x: " << _velocity.x << std::endl << "velocity.y: " << _velocity.y << std::endl << std::endl;
 
     if (_velocity.y > 0) {
         if ((pixelPerfectTest(*_gameObject[CHARACTER], *_gameObject[BACKGROUND])) && _isJumping)
