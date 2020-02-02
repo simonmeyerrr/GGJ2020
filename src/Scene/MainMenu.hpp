@@ -15,13 +15,13 @@ class MainMenu : public AScene {
 public:
     // Constructors
     ~MainMenu() override = default;
-    MainMenu();
+    MainMenu(Saves &save);
     MainMenu(MainMenu &) = delete;
     MainMenu &operator=(const MainMenu &) = delete;
 
     Event update() override;
     Event event(sf::RenderWindow &, sf::Event &) override;
-    void display(sf::RenderWindow &, sf::Shader *) override;
+    void display(sf::RenderWindow &, shaders_map &) override;
     void resume() override;
 
 private:
@@ -33,6 +33,11 @@ private:
     int _x;
 
     Erosion _erosion;
+
+    bool _anim;
+    bool _in;
+    float _zoom;
+    IScene::TypeScene _scene;
 };
 
 #endif /*MAIN_MENU_HPP*/

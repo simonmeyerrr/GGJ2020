@@ -13,15 +13,21 @@ class LevelOne : public AScene {
         BACKGROUND,
         CHARACTER
     };
+    enum Sounds {
+        FOREST,
+        JUMP_END,
+        STEPS,
+        WATER
+    };
 public:
-    LevelOne();
+    LevelOne(Saves &save);
     LevelOne(LevelOne &) = delete;
     ~LevelOne() override = default;
     LevelOne &operator=(const LevelOne &) = delete;
 
     Event update() override;
     Event event(sf::RenderWindow &, sf::Event &) override;
-    void display(sf::RenderWindow &,  sf::Shader *) override;
+    void display(sf::RenderWindow &,  shaders_map &) override;
     void resume() override;
 
 private:

@@ -10,8 +10,8 @@
 #include "../Object/UIObject/Sprite.hpp"
 #include "../Object/UIObject/Button.hpp"
 
-Intro::Intro()
-    : AScene(SCENE_INTRO), _text("Play", _font.get(), sf::Vector2f(0, 0)), _updates(0)
+Intro::Intro(Saves &save)
+    : AScene(SCENE_INTRO, save), _text("Play", _font.get(), sf::Vector2f(0, 0)), _updates(0)
 {
     _uiObject[1] = std::make_shared<Text>(std::string("INTRO"), _font.get(), sf::Vector2f(700, 50));
     _uiObject[2] = std::make_shared<Text>(std::string("0"), _font.get(), sf::Vector2f(700, 200));
@@ -44,7 +44,7 @@ IScene::Event Intro::event(sf::RenderWindow &win, sf::Event &event)
     return Event{EVENT_NONE, SCENE_INTRO};
 }
 
-void Intro::display(sf::RenderWindow &win, sf::Shader *)
+void Intro::display(sf::RenderWindow &win, shaders_map &)
 {
     for (const auto &object: _uiObject)
         object.second->draw(win);

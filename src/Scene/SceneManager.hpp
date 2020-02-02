@@ -17,7 +17,7 @@ public:
     SceneManager(SceneManager &) = delete;
     SceneManager &operator=(SceneManager &) = delete;
 
-    void push(IScene::TypeScene type);
+    void push(IScene::TypeScene type, IScene::Saves &);
     void pop();
     IScene *get();
     bool isEmpty() const;

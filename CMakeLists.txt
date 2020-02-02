@@ -66,8 +66,6 @@ SET(SOURCES
         src/Scene/Intro.hpp
         src/Scene/MainMenu.cpp
         src/Scene/MainMenu.hpp
-        src/Scene/Settings.cpp
-        src/Scene/Settings.hpp
         src/Utils/Using.hpp
         src/Utils/FontLoader.hpp
         src/Utils/Collision/Collision.cpp
@@ -100,7 +98,12 @@ SET(SOURCES
         src/Utils/Erosion.hpp
         src/Object/UIObject/TippingText.cpp
         src/Object/UIObject/TippingText.hpp
-        )
+        src/Object/UIObject/TippingText.hpp
+        src/Object/GameObject/Objects/MilitaryCharacter.cpp
+        src/Object/GameObject/Objects/MilitaryCharacter.hpp
+        src/Object/GameObject/Objects/FamilyCharacter.cpp
+        src/Object/GameObject/Objects/FamilyCharacter.hpp
+        src/Utils/Shaders.hpp)
 
 # Binary
 add_executable(ggj ${SOURCES})

@@ -13,28 +13,11 @@
     #include <map>
     #include <SFML/Graphics/Shader.hpp>
     #include "../Utils/Exception/ShaderError.hpp"
-
-    #define SHADERS_SIZE 1
+    #include "../Utils/Shaders.hpp"
+#include "../Object/SoundObject/SoundObject.hpp"
 
 class Core {
 public:
-    enum ShaderType {
-        NONE = -1,
-        TEST_SHADER = 0
-    };
-
-    const std::string SHADERS[SHADERS_SIZE] = {
-        "test_shader"
-    };
-
-    const std::map<IScene::TypeScene, ShaderType> _sceneShaders = {
-        { IScene::TypeScene::SCENE_INTRO, NONE },
-        { IScene::TypeScene::SCENE_MAIN_MENU, NONE },
-        { IScene::TypeScene::SCENE_SETTINGS, NONE },
-        { IScene::TypeScene::SCENE_LEVEL2, NONE },
-        { IScene::TypeScene::SCENE_LEVEL1, NONE }
-    };
-
     Core();
     Core(Core &) = delete;
     Core &operator=(Core &) = delete;
@@ -55,8 +38,9 @@ private:
     std::unique_ptr<sf::RenderWindow> _win;
     std::unique_ptr<SceneManager> _sceneManager;
 
-    std::map<ShaderType, sf::Shader> _shaders;
-    ShaderType _currentShader;
+    shaders_map _shaders;
+    IScene::Saves _save;
+    SoundObject _sound;
 };
 
 #endif /*CORE_HPP*/

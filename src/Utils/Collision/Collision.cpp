@@ -29,12 +29,10 @@ sf::Uint8 *createMask(const sf::Texture &tex, const sf::Image &img)
     return mask;
 }
 
-collisionDirection_t pixelPerfectTest(const IGameObject &Object1, const IGameObject &Object2,
+bool pixelPerfectTest(const IGameObject &Object1, const IGameObject &Object2,
     sf::Uint8 AlphaLimit
 )
 {
-    collisionDirection_t collision = {false, false, false, false};
-
     sf::FloatRect intersection;
     if (Object1.getSprite().getGlobalBounds().intersects(Object2.getSprite().getGlobalBounds(),
         intersection)) {
@@ -67,22 +65,11 @@ collisionDirection_t pixelPerfectTest(const IGameObject &Object1, const IGameObj
                         getPixel(mask2, Object2.getTexture(),
                             (int)(o2v.x) + O2SubRect.left,
                             (int)(o2v.y) + O2SubRect.top) > AlphaLimit) {
-
-                        float dot = o1v.x * o2v.x + o1v.y * o2v.y;
-                        float det = o1v.x * o2v.y - o1v.y * o2v.x;
-                        float angle = atan2(det, dot);
-                        if (angle < M_PI / 4 && angle > -M_PI / 4)
-                            collision.down = true;
-                        if (angle > M_PI / 4 && angle < (M_PI * 3) / 4)
-                            collision.left = true;
-                        if (angle < (-3 * M_PI) / 4 || angle > (M_PI * 3) / 4)
-                            collision.up = true;
-                        if (angle > (-3 * M_PI) / 4 && angle < -M_PI / 4)
-                            collision.right = true;
+                        return true;
                     }
                 }
             }
         }
     }
-    return collision;
+    return false;
 }

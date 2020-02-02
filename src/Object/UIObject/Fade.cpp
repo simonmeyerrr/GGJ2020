@@ -3,6 +3,7 @@
 Fade::Fade()
     : _actual(0), _goal(0), _in(false), _rect()
 {
+    _rect.setFillColor(sf::Color::Transparent);
     _rect.setPosition(0, 0);
     _rect.setSize({1600, 900});
 }
@@ -22,7 +23,7 @@ void Fade::start(sf::Color color, unsigned updates, bool in)
 
 void Fade::update()
 {
-    if (_actual >= _goal)
+    if (_actual >= _goal - 1)
         return;
 
     auto color = _rect.getFillColor();

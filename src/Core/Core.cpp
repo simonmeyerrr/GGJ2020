@@ -9,7 +9,7 @@
 Core::Core()
     : _displayTimer(), _updateTimer(), _updateRest(0),
     _win(std::make_unique<sf::RenderWindow>(sf::VideoMode(1600, 900, 32), "GGJ2020")),
-    _sceneManager(std::make_unique<SceneManager>()), _currentShader(NONE)
+    _sceneManager(std::make_unique<SceneManager>()), _save{false, false, false}, _sound("./assets/sound/scene1/forest_fx.ogg")
 {
 }
 
@@ -17,10 +17,10 @@ void Core::initShaders()
 {
     for (int i = 0; i < SHADERS_SIZE; ++i) {
         if (!_shaders[static_cast<ShaderType>(i)].loadFromFile(
-            "assets/shaders/" + SHADERS[i] + ".vert",
-            "assets/shaders/" + SHADERS[i] + ".frag")
+            "assets/shaders/" + shaderPaths[i] + ".vert",
+            "assets/shaders/" + shaderPaths[i] + ".frag")
             ) {
-            throw ShaderError("Unable to load shader " + SHADERS[i]);
+            throw ShaderError("Unable to load shader " + shaderPaths[i]);
         }
     }
 }
@@ -75,7 +75,7 @@ void Core::display()
         _displayTimer.restart();
         if (_win->isOpen() && !_sceneManager->isEmpty()) {
             _win->clear(sf::Color::Black);
-            _sceneManager->get()->display(*_win, _currentShader != NONE ? &_shaders[_currentShader] : nullptr);
+            _sceneManager->get()->display(*_win, _shaders);
             _win->display();
         }
     }
@@ -88,12 +88,13 @@ void Core::manageEvent(IScene::Event event)
             _win->close();
             break;
         case IScene::EVENT_POP_SCENE:
+            _win->setView(_win->getDefaultView());
             _sceneManager->pop();
-            _currentShader = _sceneShaders.at(_sceneManager->get()->getType());
             break;
         case IScene::EVENT_PUSH_SCENE:
-            _sceneManager->push(event.scene);
-            _currentShader = _sceneShaders.at(event.scene);
+            _sound.play();
+            _win->setView(_win->getDefaultView());
+            _sceneManager->push(event.scene, _save);
         default:
             break;
     }

@@ -11,13 +11,15 @@
     #include "../Object/UIObject/IUIObject.hpp"
     #include "../Utils/FontLoader.hpp"
     #include "../Object/GameObject/IGameObject.hpp"
+#include "../Object/SoundObject/SoundObject.hpp"
+#include "../Object/SoundObject/MusicObject.hpp"
 
 
 class AScene : public IScene {
 public:
 
     // Constructors
-    AScene(IScene::TypeScene);
+    AScene(IScene::TypeScene, Saves &save);
     AScene(AScene &) = delete;
     virtual ~AScene() override = default;
     AScene &operator=(const AScene &) = delete;
@@ -28,6 +30,7 @@ public:
 protected:
     // Variable
     TypeScene _type;
+    Saves &_save;
     FontLoader _font;
 
     std::map<int, std::shared_ptr<IGameObject>> _gameObject;
@@ -35,6 +38,9 @@ protected:
     std::map<int, std::shared_ptr<IUIObject>> _uiObject;
 
     bool _shaderType;
+
+    std::map<int, std::shared_ptr<SoundObject>> _sounds;
+    std::shared_ptr<MusicObject> _music;
 };
 
 #endif /*ASCENE_HPP*/

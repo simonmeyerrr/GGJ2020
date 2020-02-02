@@ -13,13 +13,13 @@
 class Intro : public AScene {
 public:
     ~Intro() override = default;
-    Intro();
+    Intro(Saves &save);
     Intro(Intro &) = delete;
     Intro &operator=(const Intro &) = delete;
 
     Event update() override;
     Event event(sf::RenderWindow &, sf::Event &) override;
-    void display(sf::RenderWindow &, sf::Shader *) override;
+    void display(sf::RenderWindow &, shaders_map &) override;
     void resume() override;
 
 private:
