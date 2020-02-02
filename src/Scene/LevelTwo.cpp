@@ -194,6 +194,12 @@ LevelTwo::LevelTwo(Saves &save)
     _uiObject[3] = std::make_shared<Fade>();
     _gameObject[0] = std::make_shared<PlayerSchool>();
     _gameObject[0]->setPosition({static_cast<float>(_x), HEIGHT - PLAYER_HEIGHT});
+    _sounds[DOOR] = std::make_shared<SoundObject>("./assets/sound/scene2/door_open.ogg");
+    _sounds[DOOR] = std::make_shared<SoundObject>("./assets/sound/scene2/keys_pickup.ogg");
+    _sounds[DOOR] = std::make_shared<SoundObject>("./assets/sound/scene2/locked_door.ogg");
+    _music = std::make_shared<MusicObject>("./assets/sound/scene2/stress_theme.ogg");
+    _music->setLoop(true);
+    _music->play();
     dynamic_cast<AnimatedGameObject &>(*_gameObject[0]).setCurrentAnimation("idleRight");
     hasDoor(_rooms.at(_actual));
     dynamic_cast<Fade &>(*_uiObject[3]).start(sf::Color::Black, 200, false);
@@ -274,10 +280,13 @@ void LevelTwo::takeDoor(RoomInfo &room)
     for (auto &door: room.links) {
         if (door.second.pos.x <= _x + DIFF + 50 && door.second.pos.x + DOOR_WIDTH >= _x + PLAYER_WIDTH - DIFF - 50) {
             if (door.second.opened) {
+                _sounds[DOOR]->play();
                 _rooms.at(door.first).links.at(_actual).opened = true;
                 _x = _rooms.at(door.first).links.at(_actual).pos.x - 10;
                 _gameObject[0]->setPosition({static_cast<float>(_x),  HEIGHT - PLAYER_HEIGHT});
                 _actual = door.first;
+            } else {
+                _sounds[LOCKED]->play();
             }
             return;
         }
@@ -291,6 +300,7 @@ void LevelTwo::takeKey(RoomInfo &room)
         return;
     }
     room.hasKey = false;
+    _sounds[KEYS]->play();
     std::cout << "take key, open between " << _rooms.at(room.keyOpen.first).name << " and " << _rooms.at(room.keyOpen.second).name << std::endl;
     _rooms.at(room.keyOpen.first).links.at(room.keyOpen.second).opened = true;
     _rooms.at(room.keyOpen.second).links.at(room.keyOpen.first).opened = true;
