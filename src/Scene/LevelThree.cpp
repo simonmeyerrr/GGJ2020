@@ -53,16 +53,17 @@ IScene::Event LevelThree::update() {
     }
     if (_up) {
         if (CHARPOS.x + 150 >= _upstairs[_actualRoom].x && CHARPOS.x + 150 <= _upstairs[_actualRoom].x
-        + (float)(_actualRoom == ETAGE3 ? 137 : 302) && _actualRoom != GRENIER) {
+        + (float)(_actualRoom == ETAGE3 ? 137 : 302) && _actualRoom < GRENIER) {
             _actualRoom += 1;
             _gameObject[BACKGROUND]->setPosition({0, _gameObject[BACKGROUND]->getPosition().y + 900});
         } else {
-//            for (auto &elem : _doors[_actualRoom]) {
-//                if (CHARPOS.x + 150 >= elem.x && CHARPOS.x + 150 <= elem.x + 200) {
-//                    _actualRoom =
-//                    break;
-//                }
-//            }
+            for (auto &elem : _doors[_actualRoom]) {
+                if (CHARPOS.x + 150 >= elem.second.x && CHARPOS.x + 150 <= elem.second.x + 200) {
+                    _actualRoom = elem.first;
+
+                    break;
+                }
+            }
         }
         _up = false;
     } else if (_down) {
