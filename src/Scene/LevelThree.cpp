@@ -16,7 +16,7 @@
 #define CHARPOS _gameObject[CHARACTER]->getPosition()
 
 IScene::Event LevelThree::update() {
-    if (_quests[MOTHER] == 3 && _quests[FATHER] == 3 && _quests[BROTHER] == 2) {
+    if (_quests[MOTHER] == 1/* && _quests[FATHER] == 3 && _quests[BROTHER] == 2*/) {
         _save.level3 = true;
         return {EVENT_POP_SCENE, SCENE_INTRO};
     }
@@ -51,9 +51,13 @@ IScene::Event LevelThree::update() {
         _gameObject[CHARACTER]->setPosition(_pos);
     }
     if (_up) {
-        if (CHARPOS.x + 150 >= 1322 && CHARPOS.x + 150 <= 1322 + 200 && _actualRoom > GRENIER) {
+        if (CHARPOS.x + 150 >= 1322 && CHARPOS.x + 150 <= 1322 + 200 && _actualRoom > GRENIER && _goRoom) {
+            _goRoom = false;
             _actualRoom = _backRoom;
             // todo: setpos
+            _pos = _BackPos;
+            _gameObject[CHARACTER]->setPosition(_pos);
+            _gameObject[BACKGROUND]->setPosition(_RoomPos[_actualRoom]);
         }
         if (CHARPOS.x + 150 >= _upstairs[_actualRoom].x && CHARPOS.x + 150 <= _upstairs[_actualRoom].x
         + (float)(_actualRoom == ETAGE3 ? 137 : 302) && _actualRoom < GRENIER) {
@@ -61,10 +65,18 @@ IScene::Event LevelThree::update() {
             _gameObject[BACKGROUND]->setPosition({0, _gameObject[BACKGROUND]->getPosition().y + 900});
         } else {
             for (auto &elem : _doors[_actualRoom]) {
-                if (CHARPOS.x + 150 >= elem.second.x && CHARPOS.x + 150 <= elem.second.x + 200) {
+                if (CHARPOS.x + 150 >= elem.second.x && CHARPOS.x + 150 <= elem.second.x + 200 && _goRoom) {
+                    _goRoom = false;
                     _backRoom = _actualRoom;
                     _actualRoom = elem.first;
                     //todo: setpos
+                    std::cout << _actualRoom << std::endl;
+                    _gameObject[BACKGROUND]->setPosition(_RoomPos[_actualRoom]);
+                    _BackPos = _pos;
+                    _pos.x = 1322;
+                    _gameObject[CHARACTER]->setPosition(_pos);
+                    std::cout << _gameObject[BACKGROUND]->getPosition().x << std::endl;
+                    std::cout << _gameObject[BACKGROUND]->getPosition().y << std::endl;
                     break;
                 }
             }
@@ -74,7 +86,7 @@ IScene::Event LevelThree::update() {
         if (CHARPOS.x + 150 >= _downstairs[_actualRoom].x && CHARPOS.x + 150 <= _downstairs[_actualRoom].x
         + (float)(_actualRoom == GRENIER ? 137 : 302) && _actualRoom != CAVE) {
             _actualRoom -= 1;
-            _gameObject[BACKGROUND]->setPosition({0, _gameObject[BACKGROUND]->getPosition().y - 900});
+            _gameObject[BACKGROUND]->setPosition(_RoomPos[_actualRoom]);
         }
         _down = false;
     }
@@ -133,6 +145,7 @@ IScene::Event LevelThree::event(sf::RenderWindow &w, sf::Event &e) {
             dynamic_cast<AnimatedGameObject &>(*_gameObject[CHARACTER]).setCurrentAnimation(std::string("walk") + (_right ? "Right" : "Left"));
         }
         if (e.key.code == sf::Keyboard::Up) {
+            _goRoom = true;
             _up = true;
         }
         if (e.key.code == sf::Keyboard::Down) {
@@ -152,6 +165,7 @@ IScene::Event LevelThree::event(sf::RenderWindow &w, sf::Event &e) {
         }
     }
     if (e.type == sf::Event::KeyReleased) {
+        _goRoom = false;
         if (_walking && ((e.key.code == sf::Keyboard::Right && _right) || (e.key.code == sf::Keyboard::Left && !_right))) {
             _walking = false;
             _up = false;
@@ -180,7 +194,7 @@ void LevelThree::display(sf::RenderWindow &w, shaders_map &shaders) {
     else if (_actualRoom == 4)
         locations.emplace_back(sf::Vector2f(798, 606));
     else
-        locations.emplace_back(sf::Vector2f(0, 0));
+        locations.emplace_back(sf::Vector2f(910, 630));
     shaders[AMBIENT_LIGHTS].setUniformArray("locations", locations.data(), locations.size());
 
     for (int i = 0; i < 1; ++i)
@@ -269,7 +283,7 @@ LevelThree::LevelThree(IScene::Saves &save) : AScene(SCENE_LEVEL3, save) {
     _upstairs[ETAGE1] = sf::Vector2f{0, 830};
     _downstairs[ETAGE1] = sf::Vector2f{1299, 824};
     _upstairs[CAVE] = sf::Vector2f{1299, 830};
-    _gameObject[BACKGROUND] = std::make_shared<StaticGameObject>("./assets/textures/home.png", sf::Rect{0, 0, 1600, 4500});
+    _gameObject[BACKGROUND] = std::make_shared<StaticGameObject>("./assets/textures/home.png", sf::Rect{0, 0, 1600, 10800});
     _gameObject[BACKGROUND]->setPosition({0, -2700});
     _doors[ETAGE3];
     _doors[ETAGE2];
@@ -281,4 +295,17 @@ LevelThree::LevelThree(IScene::Saves &save) : AScene(SCENE_LEVEL3, save) {
     _doors[ETAGE2][ETAGE23] = sf::Vector2f{1152, 0};
     _doors[ETAGE1][ETAGE11] = sf::Vector2f{481, 0};
     _doors[ETAGE1][ETAGE12] = sf::Vector2f{982, 0};
+    _RoomPos[GRENIER] = sf::Vector2f{0, 0};
+    _RoomPos[ETAGE3] = sf::Vector2f{0, -900};
+    _RoomPos[ETAGE2] = sf::Vector2f{0, -1800};
+    _RoomPos[ETAGE1] = sf::Vector2f{0, -2700};
+    _RoomPos[CAVE] = sf::Vector2f{0, -3600};
+    _RoomPos[ETAGE11] = sf::Vector2f{0, -4500};
+    _RoomPos[ETAGE12] = sf::Vector2f{0, -5400};
+    _RoomPos[ETAGE21] = sf::Vector2f{0, -6300};
+    _RoomPos[ETAGE22] = sf::Vector2f{0, -7200};
+    _RoomPos[ETAGE23] = sf::Vector2f{0, -8100};
+    _RoomPos[ETAGE31] = sf::Vector2f{0, -9000};
+    _RoomPos[ETAGE32] = sf::Vector2f{0, -9900};
+    _goRoom = false;
 }

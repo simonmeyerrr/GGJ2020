@@ -59,6 +59,7 @@ private:
     bool _walking;
     bool _right;
     sf::Vector2f _pos;
+    sf::Vector2f _BackPos;
     std::map<Type, int> _quests;
     std::map<int, int> _objMother;
     std::map<int, int> _objFather;
@@ -67,6 +68,7 @@ private:
     std::map<int, sf::Vector2f> _upstairs;
     std::map<int, sf::Vector2f> _downstairs;
     std::map<int, std::map<int, sf::Vector2f>> _doors;
+    std::map<int, sf::Vector2f> _RoomPos;
     bool _talking;
     bool _isTalking;
     bool _take;
@@ -76,6 +78,7 @@ private:
     int _actualRoom;
     int _backRoom;
     ObjectType _hand;
+    bool _goRoom;
 };
 
 
