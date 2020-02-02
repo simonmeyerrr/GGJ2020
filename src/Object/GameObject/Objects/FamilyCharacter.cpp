@@ -85,5 +85,5 @@ void FamilyCharacter::updateBubble() {
 
 void FamilyCharacter::successQuest() {
     _isFound = true;
-    _tipping.start("Felicitations tu as reussi à trouver cet objet!");
+    _tipping.start("Merci beaucoup pour avoir retrouve\n cet objet!");
 }
