@@ -8,7 +8,7 @@
     #define MAIN_MENU_HPP
 
     #include "AScene.hpp"
-    #include "../Object/GameObject/Objects/Character.hpp"
+    #include "../Object/GameObject/Objects/PlayerOld.hpp"
 
 class MainMenu : public AScene {
 public:

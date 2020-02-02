@@ -16,13 +16,14 @@ MainMenu::MainMenu()
     _uiObject[1] = std::make_shared<Rect>(sf::Color{0, 0, 0, 125});
     _uiObject[2] = std::make_shared<Text>("Appuyez sur Entrer pour quitter le jeu, sinon appuyez sur Echape", _font.get(), sf::Vector2f{550, 400}, sf::Color::White);
     _gameObject[0] = std::make_shared<StaticGameObject>("./assets/textures/main_menu.png", sf::IntRect{0, 0, 8800, 900});
-    _gameObject[1] = std::make_shared<StaticGameObject>("./assets/textures/tableau_militaire.png", sf::IntRect{0, 0, 330, 450});
-    _gameObject[2] = std::make_shared<StaticGameObject>("./assets/textures/tableau_rentree.png", sf::IntRect{0, 0, 330, 450});
+    _gameObject[1] = std::make_shared<StaticGameObject>("./assets/textures/tableau_soldat_flou.png", sf::IntRect{0, 0, 330, 450});
+    _gameObject[2] = std::make_shared<StaticGameObject>("./assets/textures/tableau_ecole_flou.png", sf::IntRect{0, 0, 330, 450});
     _gameObject[3] = std::make_shared<StaticGameObject>("./assets/textures/tableau_maison.png", sf::IntRect{0, 0, 330, 450});
-    _gameObject[4] = std::make_shared<Character>();
-    _gameObject[1]->setPosition({2000, 200});
-    _gameObject[2]->setPosition({4000, 200});
-    _gameObject[3]->setPosition({6000, 200});
+    _gameObject[4] = std::make_shared<PlayerOld>();
+    _gameObject[0]->setPosition({-1500, 0});
+    _gameObject[1]->setPosition({1000, 200});
+    _gameObject[2]->setPosition({2000, 200});
+    _gameObject[3]->setPosition({3000, 200});
     _gameObject[4]->setPosition({500, 250});
     dynamic_cast<AnimatedGameObject &>(*_gameObject[4]).setCurrentAnimation("idleRight");
 }
@@ -30,7 +31,7 @@ MainMenu::MainMenu()
 int MainMenu::inFrontOf() const
 {
     for (int i = 1; i <= 3; ++i) {
-        if (_x > (-2000 * i) + 575 && _x < (-2000 * i) + 775)
+        if (_x > (-1000 * i) + 575 && _x < (-1000 * i) + 775)
             return i;
     }
     return 0;
@@ -43,12 +44,12 @@ IScene::Event MainMenu::update()
     if (_walking) {
         if (_right && _x > -8800 + 1600)
             _x -= 3;
-        else if (!_right && _x < 0)
+        else if (!_right && _x < 500)
             _x += 3;
-        _gameObject[0]->setPosition({static_cast<float>(_x), 0});
-        _gameObject[1]->setPosition({static_cast<float>(_x + 2000), 200});
-        _gameObject[2]->setPosition({static_cast<float>(_x + 4000), 200});
-        _gameObject[3]->setPosition({static_cast<float>(_x + 6000), 200});
+        _gameObject[0]->setPosition({static_cast<float>(_x - 1500), 0});
+        _gameObject[1]->setPosition({static_cast<float>(_x + 1000), 200});
+        _gameObject[2]->setPosition({static_cast<float>(_x + 2000), 200});
+        _gameObject[3]->setPosition({static_cast<float>(_x + 3000), 200});
         auto front = inFrontOf();
         if (front)
             dynamic_cast<Text &>(*_uiObject[0]).setString("Fleche du haut pour entrer dans le souvenir");

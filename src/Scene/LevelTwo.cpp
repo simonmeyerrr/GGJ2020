@@ -1,14 +1,20 @@
 #include "LevelTwo.hpp"
+#include "../Object/GameObject/Objects/PlayerOld.hpp"
+#include "../Object/UIObject/Text.hpp"
+#include "../Object/UIObject/Rect.hpp"
+#include "../Object/GameObject/Objects/PlayerSchool.hpp"
 
-#define DOOR_HEIGHT 200
-#define DOOR_WIDTH 140
-#define PLAYER_HEIGHT 180
-#define PLAYER_WIDTH  60
+#define DOOR_HEIGHT 300
+#define DOOR_WIDTH 200
+#define PLAYER_HEIGHT 300
+#define PLAYER_WIDTH  300
 #define HEIGHT 700
+#define DIFF 50
+
 
 
 LevelTwo::LevelTwo()
-    : AScene(SCENE_LEVEL2), _rooms(), _pos(20, HEIGHT - PLAYER_HEIGHT), _actual(CORIDOR_A)
+    : AScene(SCENE_LEVEL2), _rooms(), _actual(CORIDOR_A), _right(true), _walking(false), _escape(false), _x(-DIFF)
 {
     _rooms[CORIDOR_A] = RoomInfo{
             TYPE_CORIDOR,
@@ -181,47 +187,85 @@ LevelTwo::LevelTwo()
                     {CORIDOR_C, RoomInfoLink{true, {200, HEIGHT - DOOR_HEIGHT}}}
             }
     };
+    _uiObject[0] = std::make_shared<Text>("", _font.get(), sf::Vector2f{600, 800}, sf::Color::Black);
+    _uiObject[1] = std::make_shared<Rect>(sf::Color{0, 0, 0, 125});
+    _uiObject[2] = std::make_shared<Text>("Appuyez sur Entrer pour quitter le jeu, sinon appuyez sur Echape", _font.get(), sf::Vector2f{550, 400}, sf::Color::White);
+    _gameObject[0] = std::make_shared<PlayerSchool>();
+    _gameObject[0]->setPosition({static_cast<float>(_x), HEIGHT - PLAYER_HEIGHT});
+    hasDoor(_rooms.at(_actual));
 }
 
 IScene::Event LevelTwo::update()
 {
+    for (const auto &object: _gameObject)
+        object.second->update();
+    if (_walking) {
+        if (!_right && _x > -DIFF)
+            _x -= 3;
+        else if (_right && _x < 1600 - PLAYER_WIDTH + DIFF)
+            _x += 3;
+        _gameObject[0]->setPosition({static_cast<float>(_x),  HEIGHT - PLAYER_HEIGHT});
+        hasDoor(_rooms.at(_actual));
+    }
     return {EVENT_NONE, SCENE_INTRO};
 }
 
 IScene::Event LevelTwo::event(sf::RenderWindow &win, sf::Event &e)
 {
     if (e.type == sf::Event::KeyPressed) {
-        if (e.key.code == sf::Keyboard::Right && _pos.x < 1500)
-            _pos.x += 10;
-        else if (e.key.code == sf::Keyboard::Left && _pos.x > 0)
-            _pos.x -= 10;
-        else if (e.key.code == sf::Keyboard::Down)
-            takeKey(_rooms.at(_actual));
-        else if (e.key.code == sf::Keyboard::Up)
+        if (e.key.code == sf::Keyboard::Escape) {
+            _escape = !_escape;
+        } else if (_escape && e.key.code == sf::Keyboard::Enter) {
+            return Event{EVENT_POP_SCENE, SCENE_INTRO};
+        } else if (!_walking && (e.key.code == sf::Keyboard::Right || e.key.code == sf::Keyboard::Left)) {
+            _walking = true;
+            _right = e.key.code == sf::Keyboard::Right;
+            dynamic_cast<AnimatedGameObject &>(*_gameObject[0]).setCurrentAnimation(std::string("walk") + (_right ? "Right" : "Left"));
+        } else if (e.key.code == sf::Keyboard::Up) {
             takeDoor(_rooms.at(_actual));
+        } else if (e.key.code == sf::Keyboard::Down) {
+            takeKey(_rooms.at(_actual));
+        }
     }
-    if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Escape)
-        return Event{EVENT_POP_SCENE, SCENE_INTRO};
-    return {EVENT_NONE, SCENE_INTRO};
+    if (e.type == sf::Event::KeyReleased) {
+        if (_walking && ((e.key.code == sf::Keyboard::Right && _right) || (e.key.code == sf::Keyboard::Left && !_right))) {
+            _walking = false;
+            dynamic_cast<AnimatedGameObject &>(*_gameObject[0]).setCurrentAnimation(std::string("idle") + (_right ? "Right" : "Left"));
+        }
+    }
+    return Event{EVENT_NONE, SCENE_INTRO};
+}
+
+bool LevelTwo::hasDoor(RoomInfo &room)
+{
+    for (auto &door: room.links) {
+        if (door.second.pos.x <= _x + DIFF + 20 && door.second.pos.x + DOOR_WIDTH >= _x + PLAYER_WIDTH - DIFF - 20) {
+            if (door.second.opened) {
+                dynamic_cast<Text &>(*_uiObject[0]).setString("Fleche du haut pour entrer dans cette salle");
+                return true;
+            } else {
+                dynamic_cast<Text &>(*_uiObject[0]).setString("Cette porte est fermee");
+                return true;
+            }
+        }
+    }
+    dynamic_cast<Text &>(*_uiObject[0]).setString("");
+    return false;
 }
 
 void LevelTwo::takeDoor(RoomInfo &room)
 {
     for (auto &door: room.links) {
-        if (door.second.pos.x <= _pos.x && door.second.pos.x + DOOR_WIDTH >= _pos.x + PLAYER_WIDTH) {
-            std::cout << "door found" << std::endl;
+        if (door.second.pos.x <= _x + DIFF * 2 && door.second.pos.x + DOOR_WIDTH >= _x + PLAYER_WIDTH - DIFF * 2) {
             if (door.second.opened) {
-                std::cout << "go in door" << std::endl;
                 _rooms.at(door.first).links.at(_actual).opened = true;
-                _pos.x = _rooms.at(door.first).links.at(_actual).pos.x + 10;
+                _x = _rooms.at(door.first).links.at(_actual).pos.x + 10;
+                _gameObject[0]->setPosition({static_cast<float>(_x),  HEIGHT - PLAYER_HEIGHT});
                 _actual = door.first;
-            } else {
-                std::cout << "door closed" << std::endl;
             }
             return;
         }
     }
-    std::cout << "no door in front of you" << std::endl;
 }
 
 void LevelTwo::takeKey(RoomInfo &room)
@@ -265,7 +309,6 @@ void LevelTwo::displayRoom(sf::RenderWindow &win, const RoomInfo &room, sf::Shad
     if (room.hasKey) {
         displayRect(win, sf::Color::Magenta, room.keyPos, {50, 50}, shader);
     }
-    displayRect(win, sf::Color::Green, _pos, {PLAYER_WIDTH, PLAYER_HEIGHT}, shader);
 }
 
 void LevelTwo::display(sf::RenderWindow &win, sf::Shader *shader)
@@ -289,6 +332,13 @@ void LevelTwo::display(sf::RenderWindow &win, sf::Shader *shader)
     }
 
     displayRoom(win, _rooms.at(_actual), shader);
+    for (const auto &object: _gameObject)
+        win.draw(object.second->getSprite());
+    _uiObject[0]->draw(win);
+    if (_escape) {
+        _uiObject[1]->draw(win);
+        _uiObject[2]->draw(win);
+    }
 }
 
 void LevelTwo::resume()
