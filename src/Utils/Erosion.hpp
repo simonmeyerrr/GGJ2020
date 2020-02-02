@@ -15,15 +15,13 @@ public:
     ~Erosion() = default;
     Erosion &operator=(Erosion &) = delete;
 
-    void putPixel(unsigned int, unsigned int, sf::Color);
     void setProgress(unsigned int);
-    void clearBuffer();
     void update();
     void redraw();
     void display(sf::RenderWindow &);
 
 private:
-    sf::Uint8 _pixels[1600 * 900 * 4];
+    sf::Image _image;
     sf::Texture _texture;
     sf::Sprite _sprite;
 

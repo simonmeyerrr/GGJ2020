@@ -9,6 +9,7 @@
 
     #include "AScene.hpp"
     #include "../Object/GameObject/Objects/Character.hpp"
+    #include "../Utils/Erosion.hpp"
 
 class MainMenu : public AScene {
 public:
@@ -30,6 +31,8 @@ private:
     bool _walking;
     bool _escape;
     int _x;
+
+    Erosion _erosion;
 };
 
 #endif /*MAIN_MENU_HPP*/
