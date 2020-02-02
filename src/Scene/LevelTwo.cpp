@@ -175,7 +175,7 @@ LevelTwo::LevelTwo(Saves &save)
                     {CORIDOR_C, RoomInfoLink{true, {140, HEIGHT - DOOR_HEIGHT}}}
             }
     };
-    _uiObject[0] = std::make_shared<Text>("", _font.get(), sf::Vector2f{600, 800}, sf::Color::Black);
+    _uiObject[0] = std::make_shared<Text>("", _font.get(), sf::Vector2f{600, 800}, sf::Color::White);
     _uiObject[1] = std::make_shared<Rect>(sf::Color{0, 0, 0, 125});
     _uiObject[2] = std::make_shared<Text>("Appuyez sur Entrer pour quitter le jeu, sinon appuyez sur Echape", _font.get(), sf::Vector2f{550, 400}, sf::Color::White);
     _uiObject[3] = std::make_shared<Fade>();
@@ -268,7 +268,7 @@ bool LevelTwo::hasDoor(RoomInfo &room)
                 dynamic_cast<Text &>(*_uiObject[0]).setString("Fleche du haut pour entrer dans cette salle");
                 return true;
             } else {
-                dynamic_cast<Text &>(*_uiObject[0]).setString("Cette porte est fermee");
+                dynamic_cast<Text &>(*_uiObject[0]).setString("                       Cette porte est fermee");
                 return true;
             }
         }
@@ -313,7 +313,7 @@ void LevelTwo::displayRoom(sf::RenderWindow &win, const RoomInfo &room, shaders_
     sf::Text text(room.name, _font.get(), 30);
 
     win.draw(_gameObject[room.type == TYPE_CLASSROOM ? 1 : 2]->getSprite(), &shaders[AMBIENT_LIGHTS]);
-    text.setFillColor(sf::Color::Black);
+    text.setFillColor(sf::Color::White);
     for (const auto &door: room.links) {
         int nb = door.second.opened ? 4 : 3;
         _gameObject[nb]->setPosition(door.second.pos);
@@ -328,6 +328,39 @@ void LevelTwo::displayRoom(sf::RenderWindow &win, const RoomInfo &room, shaders_
 
 void LevelTwo::display(sf::RenderWindow &win, shaders_map &shaders)
 {
+    std::vector<sf::Vector2f> locations;
+    std::vector<sf::Glsl::Vec4> colors;
+    std::vector<float> powers;
+
+    if (_rooms.at(_actual).type == RoomType::TYPE_CLASSROOM) {
+        shaders[AMBIENT_LIGHTS].setUniform("light_number", 1);
+
+        locations.emplace_back(sf::Vector2f(785, 680));
+        shaders[AMBIENT_LIGHTS].setUniformArray("locations", locations.data(), locations.size());
+
+        for (int i = 0; i < 1; ++i)
+            colors.emplace_back(sf::Glsl::Vec4(1.0, 0.6, 0.4, 1.0));
+        shaders[AMBIENT_LIGHTS].setUniformArray("colors", colors.data(), colors.size());
+
+        for (int i = 0; i < 1; ++i)
+            powers.emplace_back(600.0);
+        shaders[AMBIENT_LIGHTS].setUniformArray("powers", powers.data(), powers.size());
+    } else if (_rooms.at(_actual).type == RoomType::TYPE_CORIDOR) {
+        shaders[AMBIENT_LIGHTS].setUniform("light_number", 5);
+
+        for (int i = 0; i < 5; ++i)
+            locations.emplace_back(sf::Vector2f(400 * i, 900));
+        shaders[AMBIENT_LIGHTS].setUniformArray("locations", locations.data(), locations.size());
+
+        for (int i = 0; i < 5; ++i)
+            colors.emplace_back(sf::Glsl::Vec4(1.0, 1.0, 1.0, 1.0));
+        shaders[AMBIENT_LIGHTS].setUniformArray("colors", colors.data(), colors.size());
+
+        for (int i = 0; i < 5; ++i)
+            powers.emplace_back(150.0);
+        shaders[AMBIENT_LIGHTS].setUniformArray("powers", powers.data(), powers.size());
+    }
+
     displayRoom(win, _rooms.at(_actual), shaders);
     win.draw(_gameObject[0]->getSprite(), &shaders[AMBIENT_LIGHTS]);
     _uiObject[0]->draw(win);
