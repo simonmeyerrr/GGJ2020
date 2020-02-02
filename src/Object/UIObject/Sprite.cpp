@@ -3,7 +3,6 @@
 //
 
 #include "Sprite.hpp"
-#include ".././../Utils/Collision/Collision.hpp"
 
 Sprite::Sprite(const std::string &filename, const sf::IntRect &rect, const sf::Vector2f &pos)
     : _texture(std::make_shared<sf::Texture>()), _sprite(std::make_shared<sf::Sprite>())

@@ -20,7 +20,6 @@ using Frames = std::vector<Frame>;
 using Animation = std::string;
 using Animations = std::unordered_map<std::string, std::tuple<Frames, float>>;
 
-struct Mask;
 
 class IGameObject {
 public:
@@ -40,7 +39,6 @@ public:
     virtual const sf::Vector2f &getPosition() const = 0;
     virtual void setTexture(const sf::Texture &) = 0;
     virtual void setPosition(const sf::Vector2f &) = 0;
-    virtual Mask *getMask() const = 0;
 
     // Methods
     virtual void update() = 0;

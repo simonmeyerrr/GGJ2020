@@ -15,7 +15,7 @@ public:
     StaticGameObject(const std::string &, sf::IntRect);
     StaticGameObject(const StaticGameObject &);
     StaticGameObject &operator=(const StaticGameObject &);
-    virtual ~StaticGameObject() = default;
+    virtual ~StaticGameObject() override = default;
 
     // Methods
     void update();

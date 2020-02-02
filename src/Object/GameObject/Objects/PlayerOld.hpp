@@ -15,7 +15,7 @@ public:
     PlayerOld();
     PlayerOld(const PlayerOld &) = delete;
     PlayerOld &operator=(const PlayerOld &) = delete;
-    virtual ~PlayerOld() = default;
+    virtual ~PlayerOld() override = default;
 };
 
 #endif /*CHARACTER_HPP*/

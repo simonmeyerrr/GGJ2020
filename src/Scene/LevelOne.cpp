@@ -3,7 +3,6 @@
 //
 
 #include "LevelOne.hpp"
-#include "../Utils/Collision/Collision.hpp"
 #include "../Object/GameObject/AnimatedGameObject.hpp"
 #include "../Object/GameObject/StaticGameObject.hpp"
 #include "../Object/GameObject/Objects/MilitaryCharacter.hpp"

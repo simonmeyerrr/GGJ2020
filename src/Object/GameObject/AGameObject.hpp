@@ -15,14 +15,13 @@ public:
     AGameObject(Type, const std::string &, const Frame &);
     AGameObject(const AGameObject &);
     AGameObject &operator=(const AGameObject &);
-    virtual ~AGameObject() = default;
+    virtual ~AGameObject() override = default;
 
     // Setters & Getters
     Type getType() const;
     const sf::Texture &getTexture() const;
     const sf::Sprite &getSprite() const;
     const sf::Vector2f &getPosition() const;
-    Mask *getMask() const override;
 
     void setTexture(const sf::Texture &);
     void setPosition(const sf::Vector2f &);
@@ -32,7 +31,6 @@ protected:
     Type _type;
     sf::Texture _t;
     sf::Sprite _s;
-    Mask *_mask;
 
 
 };

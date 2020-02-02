@@ -68,8 +68,6 @@ SET(SOURCES
         src/Scene/MainMenu.hpp
         src/Utils/Using.hpp
         src/Utils/FontLoader.hpp
-        src/Utils/Collision/Collision.cpp
-        src/Utils/Collision/Collision.hpp
         src/Utils/Exception/Exception.cpp
         src/Utils/Exception/Exception.hpp
         src/Utils/Exception/ObjectError.cpp
@@ -104,8 +102,6 @@ SET(SOURCES
         src/Object/GameObject/Objects/FamilyCharacter.cpp
         src/Object/GameObject/Objects/FamilyCharacter.hpp
         src/Utils/Shaders.hpp
-        src/Utils/Collision/Collision.cpp
-        src/Utils/Collision/Collision.hpp
         src/Scene/LevelThree.cpp
         src/Scene/LevelThree.hpp
         src/Object/GameObject/Objects/PlayerKid.cpp
