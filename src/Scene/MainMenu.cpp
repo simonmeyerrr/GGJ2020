@@ -26,6 +26,7 @@ MainMenu::MainMenu()
     _gameObject[3]->setPosition({3000, 200});
     _gameObject[4]->setPosition({500, 250});
     dynamic_cast<AnimatedGameObject &>(*_gameObject[4]).setCurrentAnimation("idleRight");
+    _erosion.setProgress(30);
 }
 
 int MainMenu::inFrontOf() const
@@ -56,6 +57,7 @@ IScene::Event MainMenu::update()
         else
             dynamic_cast<Text &>(*_uiObject[0]).setString("");
     }
+    _erosion.update();
     return Event{EVENT_NONE, SCENE_INTRO};
 }
 
@@ -102,6 +104,7 @@ void MainMenu::display(sf::RenderWindow &win, sf::Shader *shader)
         _uiObject[1]->draw(win);
         _uiObject[2]->draw(win);
     }
+    _erosion.display(win);
 }
 
 void MainMenu::resume()

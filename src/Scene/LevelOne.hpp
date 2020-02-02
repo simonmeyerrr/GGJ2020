@@ -9,6 +9,10 @@
 #include "AScene.hpp"
 
 class LevelOne : public AScene {
+    enum Type {
+        BACKGROUND,
+        CHARACTER
+    };
 public:
     LevelOne();
     LevelOne(LevelOne &) = delete;
@@ -27,7 +31,6 @@ private:
     void moveLeft();
     void gravity();
 
-    std::vector<s_ptr<IGameObject>> _objectCritic;
     sf::RectangleShape _bg;
     sf::Vector2f _pos;
     sf::RectangleShape _rect;
@@ -35,6 +38,8 @@ private:
     bool _left;
     float _angle;
     bool _isJumping;
+    bool _right;
+    bool _walking;
     sf::Vector2f _velocity;
 };
 

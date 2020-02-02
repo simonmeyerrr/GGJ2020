@@ -71,7 +71,7 @@ bool pixelPerfectTest(const Sprite &Object1, const Sprite &Object2,
     return false;
 }
 
-bool pixelPerfectTest(const AGameObject &Object1, const AGameObject &Object2,
+bool pixelPerfectTest(const IGameObject &Object1, const IGameObject &Object2,
     sf::Uint8 AlphaLimit
 )
 {

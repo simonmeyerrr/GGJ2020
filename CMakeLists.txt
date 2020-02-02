@@ -96,6 +96,8 @@ SET(SOURCES
         src/Scene/LevelTwo.hpp
         src/Scene/LevelOne.cpp
         src/Scene/LevelOne.hpp
+        src/Utils/Erosion.cpp
+        src/Utils/Erosion.hpp
         src/Object/UIObject/TippingText.cpp
         src/Object/UIObject/TippingText.hpp
         )
