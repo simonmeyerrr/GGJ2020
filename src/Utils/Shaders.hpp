@@ -17,7 +17,7 @@ enum ShaderType {
 };
 
 const std::string shaderPaths[SHADERS_SIZE] = {
-    "test_shader"
+    "main_menu_ambient"
 };
 
 using shaders_map = std::map<ShaderType, sf::Shader>;
