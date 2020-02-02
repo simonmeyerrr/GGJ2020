@@ -14,7 +14,7 @@ AGameObject::AGameObject(IGameObject::Type type, const std::string &path, const 
     _s.setTexture(_t);
     sf::Image image;
     image.loadFromFile(path);
-    _mask = createMask(_t, image);
+    _mask = createMask(&_t, image);
     _s.setTextureRect(r);
 }
 
@@ -65,7 +65,7 @@ void AGameObject::setPosition(const sf::Vector2f &pos)
     _s.setPosition(pos);
 }
 
-sf::Uint8 *AGameObject::getMask() const
+Mask *AGameObject::getMask() const
 {
     return _mask;
 }
