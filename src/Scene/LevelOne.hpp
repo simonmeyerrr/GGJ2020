@@ -13,6 +13,12 @@ class LevelOne : public AScene {
         BACKGROUND,
         CHARACTER
     };
+    enum Sounds {
+        FOREST,
+        JUMP_END,
+        STEPS,
+        WATER
+    };
 public:
     LevelOne();
     LevelOne(LevelOne &) = delete;
