@@ -97,9 +97,14 @@ IScene::Event MainMenu::event(sf::RenderWindow &win, sf::Event &e)
 
 void MainMenu::display(sf::RenderWindow &win, shaders_map &shaders)
 {
-    shaders[TEST_SHADER].setUniform("first", sf::Glsl::Vec2());
-    shaders[TEST_SHADER].setUniform("second", sf::Glsl::Vec2());
-    shaders[TEST_SHADER].setUniform("third", sf::Glsl::Vec2());
+    sf::Vector2f firstCenter = sf::Vector2f(_gameObject[1]->getSprite().getPosition().x + _gameObject[1]->getSprite().getLocalBounds().width / 2, 700);
+    sf::Vector2f secondCenter = sf::Vector2f(_gameObject[2]->getSprite().getPosition().x + _gameObject[2]->getSprite().getLocalBounds().width / 2, 700);
+    sf::Vector2f thirdCenter = sf::Vector2f(_gameObject[3]->getSprite().getPosition().x + _gameObject[3]->getSprite().getLocalBounds().width / 2, 700);
+    (&shaders[TEST_SHADER])->setUniform("first", firstCenter);
+    (&shaders[TEST_SHADER])->setUniform("second", secondCenter);
+    (&shaders[TEST_SHADER])->setUniform("third", thirdCenter);
+    
+    std::cout << "first: " << firstCenter.x << " / " << firstCenter.y << std::endl;
 
     win.draw(_gameObject[0]->getSprite(), &shaders[TEST_SHADER]);
     win.draw(_gameObject[1]->getSprite(), &shaders[TEST_SHADER]);
