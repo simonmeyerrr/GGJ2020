@@ -37,7 +37,6 @@ void Erosion::update()
     _update += 1;
 
     if (_update >= 10) {
-        std::cout << "update" << std::endl;
         _update = 0;
         redraw();
     }
