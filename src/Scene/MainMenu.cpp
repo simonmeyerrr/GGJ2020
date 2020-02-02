@@ -11,7 +11,7 @@
 #include "../Object/UIObject/Fade.hpp"
 
 MainMenu::MainMenu(Saves &save)
-        : AScene(SCENE_MAIN_MENU, save), _right(true), _walking(false), _escape(false), _x(0), _erosion(), _anim(false), _in(false), _zoom(1.0), _scene(SCENE_MAIN_MENU)
+        : AScene(SCENE_MAIN_MENU, save), _right(true), _walking(false), _escape(false), _x(0), _anim(false), _in(false), _zoom(1.0), _scene(SCENE_MAIN_MENU)
 {
     _uiObject[0] = std::make_shared<Text>("", _font.get(), sf::Vector2f{600, 800}, sf::Color::White);
     _uiObject[1] = std::make_shared<Rect>(sf::Color{0, 0, 0, 125});
@@ -33,8 +33,10 @@ MainMenu::MainMenu(Saves &save)
     _gameObject[5]->setPosition({1000, 150});
     _gameObject[6]->setPosition({2000, 150});
     _gameObject[7]->setPosition({3000, 150});
+    _sounds[MAIN] = std::make_shared<SoundObject>("./assets/sound/common/main_theme.ogg");
+    _sounds[MAIN]->setLoop(true);
+    _sounds[MAIN]->play();
     dynamic_cast<AnimatedGameObject &>(*_gameObject[4]).setCurrentAnimation("idleRight");
-    _erosion.setProgress(30);
     std::srand(std::time(nullptr));
     for (int i = 0; i < 3; ++i)
         _lights[i] = true;
@@ -60,9 +62,12 @@ IScene::Event MainMenu::update()
     _uiObject[3]->update();
     if (_anim) {
         _zoom += _in ? -0.01 : 0.01;
-        if (_in && _zoom <= 0.25)
+        _sounds[MAIN]->setVolume(_zoom * 100);
+        if (_in && _zoom <= 0.25) {
+            _sounds[MAIN]->stop();
             return Event{EVENT_PUSH_SCENE, _scene};
-        else if (!_in && _zoom >= 1.0) {
+        } else if (!_in && _zoom >= 1.0) {
+            _sounds[MAIN]->play();
             _zoom = 1.0;
             _anim = false;
         }
@@ -90,7 +95,6 @@ IScene::Event MainMenu::update()
         else
             dynamic_cast<Text &>(*_uiObject[0]).setString("");
     }
-    _erosion.update();
     return Event{EVENT_NONE, SCENE_INTRO};
 }
 
@@ -165,7 +169,6 @@ void MainMenu::display(sf::RenderWindow &win, shaders_map &shaders)
         _uiObject[1]->draw(win);
         _uiObject[2]->draw(win);
     }
-    _erosion.display(win);
     sf::View view = win.getDefaultView();
     view.zoom(_zoom);
     win.setView(view);

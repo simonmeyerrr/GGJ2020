@@ -9,10 +9,14 @@
 
     #include "AScene.hpp"
     #include "../Object/GameObject/Objects/PlayerOld.hpp"
-    #include "../Utils/Erosion.hpp"
 
 class MainMenu : public AScene {
 public:
+    // Enums
+    enum Sounds {
+        MAIN
+    };
+
     // Constructors
     ~MainMenu() override = default;
     MainMenu(Saves &save);
@@ -31,8 +35,6 @@ private:
     bool _walking;
     bool _escape;
     int _x;
-
-    Erosion _erosion;
 
     bool _anim;
     bool _in;
